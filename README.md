@@ -1,4 +1,4 @@
-# From
+# Form
 
 O sistema a ser desenvolvido consiste em uma plataforma Web para criação e disponibilização de formulários eletrônicos, que podem ser utilizados para diversas aplicações como pesquisas, obtenção de feedbacks por empresas, criação de avaliações online por professores, dentre outros.
 
