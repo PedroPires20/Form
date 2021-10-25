@@ -4,10 +4,10 @@ O sistema a ser desenvolvido consiste em uma plataforma Web para criação e dis
 
 ## Equipe
 
-- Henrique Faria de Paiva Fagundes
-- João Pedro Bahia Zica
-- Marlúcio Eduardo Faria Junior
-- Pedro Dias Pires
+- Henrique Faria de Paiva Fagundes (Desenvolvedor backend)
+- João Pedro Bahia Zica (Desenvolvedor full stack)
+- Marlúcio Eduardo Faria Junior (Desenvolvedor frontend)
+- Pedro Dias Pires (Desenvolvedor frontend)
 
 ## Tecnologias utilizadas
 
