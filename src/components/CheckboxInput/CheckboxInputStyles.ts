@@ -19,10 +19,12 @@ export const CheckboxSelector = styled.input`
     border: 1.5px solid #807e79;
     border-radius: 25%;
     transition: 200ms background-color ease-in-out;
-    
+
     &::before {
         content: "\\2713";
         display: flex;
+        width: 100%;
+        height: 100%;
         flex-flow: column nowrap;
         align-items: center;
         justify-content: center;
@@ -32,11 +34,14 @@ export const CheckboxSelector = styled.input`
         transform: scale(0);
         transition: 200ms transform ease-in-out;
     }
+
     &:checked::before {
         transform: scale(1);
     }
+    
     &:checked {
         background-color: #2279d6;
+        border-color: #42423e;
     }
 `
 
