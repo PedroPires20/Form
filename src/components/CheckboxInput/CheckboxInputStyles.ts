@@ -8,19 +8,18 @@ export const CheckboxContainer = styled.div`
 `
 
 export const CheckboxSelector = styled.input`
-    & {
-        appearance: none;
-        background-color: #fff;
-        margin: 0;
-        margin-right: 0.5rem;
-        display: inline-block;
-        box-sizing: border-box;
-        width: 1rem;
-        height: 1rem;
-        border: 1.5px solid #807e79;
-        border-radius: 25%;
-        transition: 200ms background-color ease-in-out;
-    }
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    margin-right: 0.5rem;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 1rem;
+    height: 1rem;
+    border: 1.5px solid #807e79;
+    border-radius: 25%;
+    transition: 200ms background-color ease-in-out;
+    
     &::before {
         content: "\\2713";
         display: flex;

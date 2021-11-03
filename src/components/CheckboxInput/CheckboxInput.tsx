@@ -1,18 +1,18 @@
 import React from "react";
 import { CheckboxContainer, CheckboxSelector, CheckboxLabel } from "./CheckboxInputStyles";
 
-export interface CheckboxInputProps {
-    inputName: string,
-    optionName: string,
+interface Props {
+    name: string,
+    value: string,
 }
 
-export function CheckboxInput(props: CheckboxInputProps) {
+export function CheckboxInput(props: Props) {
     return <CheckboxContainer>
         <CheckboxSelector 
         type="checkbox" 
-        name={props.inputName} 
-        value={props.optionName}
+        name={props.name} 
+        value={props.value}
         />
-        <CheckboxLabel htmlFor={props.inputName}>{props.optionName}</CheckboxLabel>
+        <CheckboxLabel htmlFor={props.name}>{props.value}</CheckboxLabel>
     </CheckboxContainer>
 }
