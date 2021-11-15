@@ -4,6 +4,7 @@ import { SelectContainer, SelectHeader, SelectArrow, SelectOptionList, SelectOpt
 interface Option {
     value: string,
     label: string,
+    disabled?: boolean
 }
 
 interface Props {
@@ -17,6 +18,11 @@ export function SelectInput(props: Props) {
     const [expanded, toggleExpanded] = useState(false);
     const [selectedOption, setSelectedOption] = useState(-1);
     const [maxOptionWidth, setMaxOptionWidth] = useState(0);
+
+    function handleOptionClick(optionIndex: number) {
+        setSelectedOption(optionIndex);
+        toggleExpanded(false);
+    }
 
     useEffect(() => {
         let maxLabelLength = props.defaultText.length;
@@ -51,10 +57,16 @@ export function SelectInput(props: Props) {
             <SelectArrow>&#12337;</SelectArrow>
         </SelectHeader>
         <SelectOptionList isExpanded={expanded}>
-            <SelectOption onClick={() => setSelectedOption(-1)}>{props.defaultText}</SelectOption>
+            <SelectOption onClick={() => handleOptionClick(-1)}>{props.defaultText}</SelectOption>
             {
                 props.options.map((option, index) => 
-                    <SelectOption key={index} onClick={() => setSelectedOption(index)}>{option.label}</SelectOption>
+                    <SelectOption
+                    key={index} 
+                    onClick={() => (!option?.disabled) && handleOptionClick(index)}
+                    disabled={option.disabled}
+                    >
+                        {option.label}
+                    </SelectOption>
                 )
             }
         </SelectOptionList>

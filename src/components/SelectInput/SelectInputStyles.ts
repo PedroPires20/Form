@@ -29,7 +29,11 @@ export const SelectArrow = styled.span`
     transform: rotate(-90deg);
 `
 
-export const SelectOption = styled.div`
+interface SelectOptionProps extends React.ComponentPropsWithoutRef<"div"> {
+    disabled?: boolean
+}
+
+export const SelectOption = styled.div<SelectOptionProps>`
     flex-grow: 1;
     flex-shrink: 0;
     font-size: 14px;
@@ -37,6 +41,7 @@ export const SelectOption = styled.div`
     border-bottom: 1px solid #888;
     user-select: none;
     box-sizing: border-box;
+    color: ${props => props?.disabled? "#aaa": "#000"};
 
     &:last-child {
         border-bottom: none;
@@ -47,11 +52,11 @@ export const SelectOption = styled.div`
     }
 `
 
-interface SelectOptionProps extends React.ComponentPropsWithoutRef<"div"> {
+interface SelectOptionListProps extends React.ComponentPropsWithoutRef<"div"> {
     isExpanded?: boolean
 }
 
-export const SelectOptionList = styled.div<SelectOptionProps>`
+export const SelectOptionList = styled.div<SelectOptionListProps>`
     display: ${props => props.isExpanded? "flex": "none"};
     flex-flow: column nowrap;
     align-items: stretch;
