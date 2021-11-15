@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SelectContainer, SelectHeader, SelectArrow, SelectOptionList, SelectOption } from "./SelectInputStyles";
 
 interface Option {
     value: string,
-    label: string
+    label: string,
 }
 
 interface Props {
@@ -16,11 +16,37 @@ interface Props {
 export function SelectInput(props: Props) {
     const [expanded, toggleExpanded] = useState(false);
     const [selectedOption, setSelectedOption] = useState(-1);
+    const [maxOptionWidth, setMaxOptionWidth] = useState(0);
+
+    useEffect(() => {
+        let maxLabelLength = props.defaultText.length;
+        for(const option of props.options)
+            if(option.label.length > maxLabelLength)
+                maxLabelLength = option.label.length;
+        // Calculating the width of the option with the largest label
+        let text = document.createElement("span");
+        text.innerHTML = "a".repeat(maxLabelLength);
+        // These style definitions are needed to calculate the text width
+        text.style.visibility = 'hidden';
+        text.style.height = 'auto';
+        text.style.width = 'auto';
+        text.style.position = 'absolute';
+        text.style.whiteSpace = 'no-wrap';
+        // These style definitions should match the styles of the "SelectOption" element
+        text.style.fontFamily = 'Arial, Helvetica, sans-serif';
+        text.style.fontSize = '14px';
+        // Calculating the text size
+        document.body.appendChild(text);
+        setMaxOptionWidth(text.clientWidth);
+        document.body.removeChild(text);
+    }, [props.options, props.defaultText]);
 
     return <SelectContainer id={props.id}>
         <SelectHeader onClick={() => toggleExpanded(!expanded)}>
             <SelectOption>
-                {(selectedOption < 0)? props.defaultText: props.options[selectedOption].label}
+                <span style={{display: "inline-block", minWidth: `${maxOptionWidth}px`}}>
+                    {(selectedOption < 0)? props.defaultText: props.options[selectedOption].label}
+                </span>
             </SelectOption>
             <SelectArrow>&#12337;</SelectArrow>
         </SelectHeader>

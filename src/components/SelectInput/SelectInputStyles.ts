@@ -9,7 +9,7 @@ export const SelectContainer = styled.div`
 export const SelectHeader = styled.div`
     display: flex;
     flex-flow: row nowrap;
-    width: 100%;
+    width: fit-content;
     border: 1px solid #000;
     border-radius: 0.5rem;
     user-select: none;
@@ -17,6 +17,10 @@ export const SelectHeader = styled.div`
     & div {
         margin-right: 0.8rem;
         border-bottom: none;
+    }
+
+    & div:hover {
+        background-color: transparent;
     }
 `
 
@@ -50,8 +54,8 @@ interface SelectOptionProps extends React.ComponentPropsWithoutRef<"div"> {
 export const SelectOptionList = styled.div<SelectOptionProps>`
     display: ${props => props.isExpanded? "flex": "none"};
     flex-flow: column nowrap;
-    width: max-content;
     align-items: stretch;
+    width: 100%;
     border: 1px solid #000;
     border-radius: 0.6rem;
     margin-top: 0.8rem;
