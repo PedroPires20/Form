@@ -11,7 +11,9 @@ interface Props {
     id?: string,
     name?: string,
     defaultText: string,
-    options: Option[]
+    defaultValue?: string,
+    options: Option[],
+    onChange: (newValue?: string) => void
 }
 
 export function SelectInput(props: Props) {
@@ -22,6 +24,7 @@ export function SelectInput(props: Props) {
     function handleOptionClick(optionIndex: number) {
         setSelectedOption(optionIndex);
         toggleExpanded(false);
+        props.onChange((optionIndex >= 0)? props.options[optionIndex].value: props.defaultValue)
     }
 
     useEffect(() => {
