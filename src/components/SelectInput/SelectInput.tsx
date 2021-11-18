@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SelectContainer, SelectHeader, SelectArrowContainer, SelectArrow, SelectOptionList, SelectOption } from "./SelectInputStyles";
+import { SelectContainer, SelectHeader, SelectArrowContainer, SelectArrow, SelectOptionList, SelectOption, SelectedOption } from "./SelectInputStyles";
 
 interface Option {
     value: string,
@@ -53,9 +53,9 @@ export function SelectInput(props: Props) {
     return <SelectContainer id={props.id}>
         <SelectHeader onClick={() => toggleExpanded(!expanded)}>
             <SelectOption>
-                <span style={{display: "inline-block", minWidth: `${maxOptionWidth}px`}}>
+                <SelectedOption maxOptionWidth={maxOptionWidth}>
                     {(selectedOption < 0)? props.defaultText: props.options[selectedOption].label}
-                </span>
+                </SelectedOption>
             </SelectOption>
             <SelectArrowContainer>
                 <SelectArrow isExpanded={expanded}>&#12337;</SelectArrow>
@@ -75,6 +75,5 @@ export function SelectInput(props: Props) {
                 )
             }
         </SelectOptionList>
-        <input name={props.name} type="hidden" value={(selectedOption < 0)? "": props.options[selectedOption].value}/>
     </SelectContainer>
 }

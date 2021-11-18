@@ -71,6 +71,15 @@ export const SelectOption = styled.div<SelectOptionProps>`
     }
 `
 
+interface SelectedOptionProps extends React.ComponentPropsWithoutRef<"span"> {
+    maxOptionWidth: number
+}
+
+export const SelectedOption = styled.span<SelectedOptionProps>`
+    display: inline-block;
+    min-width: ${props => props.maxOptionWidth}px;
+`
+
 interface SelectOptionListProps extends React.ComponentPropsWithoutRef<"div"> {
     isExpanded?: boolean
 }
