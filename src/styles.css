@@ -1,0 +1,14 @@
+:root {
+  --primary: #49d377;
+  --secondary: #8963ba;
+  --dark: #54428e;
+  --light: #f4ebd9;
+  --gray: #a39a92;
+  --dark-gray: #62615f;
+}
+
+body {
+  background: var(--light);
+  font-family: sans-serif;
+  letter-spacing: 1px;
+}

@@ -1,5 +1,17 @@
-import { BuilderContainer } from "./BuilderStyles";
+import {
+  BuilderContainer,
+  BuilderDescription,
+  BuilderForm,
+  BuilderTitle,
+} from "./BuilderStyles"
 
 export function Builder() {
-  return <BuilderContainer>Hi from builder!!</BuilderContainer>;
+  return (
+    <BuilderContainer>
+      <BuilderForm>
+        <BuilderTitle>Title</BuilderTitle>
+        <BuilderDescription>Description</BuilderDescription>
+      </BuilderForm>
+    </BuilderContainer>
+  )
 }
