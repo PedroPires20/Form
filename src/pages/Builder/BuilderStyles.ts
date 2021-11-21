@@ -17,7 +17,7 @@ export const BuilderContainer = styled.div`
 
 export const BuilderForm = styled.form`
   background: var(--light);
-  width: calc(100% - 20px);
+  width: calc(100% - 40px);
   height: 100%;
   box-shadow: #00000063 0 0 4px 0px;
 
@@ -25,7 +25,7 @@ export const BuilderForm = styled.form`
   display: flex;
   flex-flow: column;
   align-items: center;
-  padding: 10px;
+  padding: 10px 20px;
 `
 
 export const BuilderTitle = styled.div`
@@ -44,4 +44,21 @@ export const BuilderDescription = styled.div`
   min-width: 300px;
   text-align: left;
   margin-bottom: 20px;
+`
+
+export const BuilderFields = styled.div`
+  width: 100%;
+`
+
+export const BuilderSubmit = styled.button`
+  background: var(--secondary);
+  font-weight: bold;
+  font-size: 16px;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 5px 10px;
+  color: var(--light);
 `
