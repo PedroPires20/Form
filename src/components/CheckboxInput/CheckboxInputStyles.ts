@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import checkMark from "./assets/check-lg.svg";
 
 export const CheckboxContainer = styled.div`
   display: flex;
@@ -14,25 +15,20 @@ export const CheckboxSelector = styled.input`
   margin-right: 0.5rem;
   display: inline-block;
   box-sizing: border-box;
-  width: 1rem;
-  height: 1rem;
-  border: 1.5px solid #807e79;
-  border-radius: 25%;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--primary);
+  border-radius: 5px;
   transition: 200ms background-color ease-in-out;
 
   &::before {
-    content: "\\2713";
-    display: flex;
+    content: "";
+    display: block;
     width: 100%;
     height: 100%;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    color: #fff;
-    border-radius: 28%;
+    background-image: url(${checkMark});
     transform: scale(0);
-    transition: 200ms transform ease-in-out;
+    transition: 300ms transform ease-in-out;
   }
 
   &:checked::before {
@@ -40,12 +36,12 @@ export const CheckboxSelector = styled.input`
   }
 
   &:checked {
-    background-color: #2279d6;
-    border-color: #42423e;
+    background-color: var(--secondary);
+    border-color: var(--gray);
   }
 `
 
 export const CheckboxLabel = styled.label`
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--dark-gray);
   font-size: 14px;
 `
