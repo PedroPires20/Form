@@ -32,7 +32,6 @@ export const BuilderTitle = styled.div`
   color: var(--dark-gray);
   font-size: 20px;
   font-weight: bold;
-  min-width: 200px;
   text-align: center;
   margin-bottom: 20px;
 `
@@ -41,7 +40,6 @@ export const BuilderDescription = styled.div`
   color: var(--dark-gray);
   font-size: 16px;
   font-weight: bold;
-  min-width: 300px;
   text-align: left;
   margin-bottom: 20px;
 `

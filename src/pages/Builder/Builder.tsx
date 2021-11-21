@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form"
+import {InputType} from "../../components/InputType/InputType"
 import { TextInput } from "../../components/TextInput/TextInput"
 import {
   BuilderContainer,
@@ -27,6 +28,7 @@ export function Builder() {
             placeholder="Insira alguma coisa"
           />
         </BuilderFields>
+        <InputType onChange={() => {}}/>
         <BuilderSubmit
           onClick={(e) => {
             e.preventDefault()
