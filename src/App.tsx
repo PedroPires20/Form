@@ -1,6 +1,5 @@
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import {Builder} from "./pages/Builder/Builder";
+import { BrowserRouter, Route, Switch } from "react-router-dom"
+import { Builder } from "./pages/Builder/Builder"
 
 export function App() {
   return (
@@ -9,5 +8,5 @@ export function App() {
         <Route exact path="/" component={Builder} />
       </Switch>
     </BrowserRouter>
-  );
+  )
 }
