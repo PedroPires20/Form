@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   SelectContainer,
   SelectHeader,
@@ -17,34 +17,48 @@ interface Option {
 }
 
 interface Props {
-  id?: string
-  name?: string
-  defaultText: string
-  defaultValue?: string
+  selectorText: string
+  unselectedValue?: string
   options: Option[]
-  onChange: (newValue?: string) => void
+  disabled?: boolean
+  onChange?: (newValue?: string) => void
+  value?: string
 }
 
-export function SelectInput(props: Props) {
+export function SelectInput({
+  selectorText,
+  unselectedValue,
+  options,
+  disabled,
+  onChange,
+  value
+}: Props) {
   const [expanded, toggleExpanded] = useState(false)
-  const [selectedOption, setSelectedOption] = useState(-1)
+  const [selectedIndex, setSelectedIndex] = useState(indexFromValue(value))
 
   function handleOptionClick(optionIndex: number) {
-    setSelectedOption(optionIndex)
+    setSelectedIndex(optionIndex)
     toggleExpanded(false)
-    props.onChange(
-      optionIndex >= 0 ? props.options[optionIndex].value : props.defaultValue
+    onChange && onChange(
+      optionIndex >= 0 ? options[optionIndex].value : unselectedValue
     )
   }
 
+  function indexFromValue(optionValue: string | undefined) {
+    const valueIndex = optionValue && options.map(option => option.value).indexOf(optionValue)
+    return (typeof valueIndex === "number")? valueIndex: -1;
+  }
+
+  useEffect(() => setSelectedIndex(indexFromValue(value)), [value])
+
   return (
-    <SelectContainer id={props.id}>
-      <SelectHeader onClick={() => toggleExpanded(!expanded)}>
+    <SelectContainer>
+      <SelectHeader onClick={() => !disabled && toggleExpanded(!expanded)} disabled={disabled}>
         <SelectOption>
           <SelectedOption>
-            {selectedOption < 0
-              ? props.defaultText
-              : props.options[selectedOption].label}
+            {selectedIndex < 0
+              ? selectorText
+              : options[selectedIndex].label}
           </SelectedOption>
         </SelectOption>
         <SelectArrowContainer>
@@ -53,9 +67,9 @@ export function SelectInput(props: Props) {
       </SelectHeader>
       <SelectOptionList isExpanded={expanded}>
         <SelectOption onClick={() => handleOptionClick(-1)}>
-          {props.defaultText}
+          {selectorText}
         </SelectOption>
-        {props.options.map((option, index) => (
+        {options.map((option, index) => (
           <SelectOption
             key={index}
             onClick={() => !option?.disabled && handleOptionClick(index)}

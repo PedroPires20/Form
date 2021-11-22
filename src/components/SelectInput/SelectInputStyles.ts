@@ -9,14 +9,19 @@ export const SelectContainer = styled.div`
   margin: 20px 0;
 `
 
-export const SelectHeader = styled.div`
+interface SelectHeaderProps extends React.ComponentPropsWithoutRef<"div"> {
+  disabled?: boolean
+}
+
+export const SelectHeader = styled.div<SelectHeaderProps>`
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
   border: 2px solid var(--primary);
   border-radius: 5px;
   user-select: none;
-  background-color: #fff;
+  background-color: ${props => (props.disabled)? "#ebebeb": "#fff"};
+  color: ${props => (props.disabled)? "var(--gray)": "var(--dark-gray)"};
 
   & div {
     margin-right: 0.8rem;
