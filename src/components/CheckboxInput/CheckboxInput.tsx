@@ -2,26 +2,34 @@ import {
   CheckboxContainer,
   CheckboxSelector,
   CheckboxLabel,
-} from "./CheckboxInputStyles"
+} from "./CheckboxInputStyles";
+import { UseFormRegister } from "react-hook-form";
+
 
 interface Props {
-  name: string
-  value: string
-  onChange?: (newValue: boolean) => void
+  name: string,
+  value: string,
+  required?: boolean,
+  disabled?: boolean,
+  register: UseFormRegister<any>
 }
 
-export function CheckboxInput(props: Props) {
+export function CheckboxInput({
+  name,
+  value,
+  required,
+  disabled,
+  register
+}: Props) {
   return (
     <CheckboxContainer>
       <CheckboxSelector
         type="checkbox"
-        name={props.name}
-        value={props.value}
-        onChange={(event) =>
-          props.onChange && props.onChange(!!event.target.value)
-        }
+        value={value}
+        disabled={disabled}
+        {...register(name, { required: required })}
       />
-      <CheckboxLabel htmlFor={props.name}>{props.value}</CheckboxLabel>
+      <CheckboxLabel htmlFor={name}>{value}</CheckboxLabel>
     </CheckboxContainer>
   )
 }
