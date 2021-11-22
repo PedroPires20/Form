@@ -8,7 +8,7 @@ import {
   SelectOption,
   SelectedOption,
 } from "./SelectInputStyles"
-import chevronDown from "./assets/chevron-down.svg";
+import chevronDown from "./assets/chevron-down.svg"
 
 interface Option {
   value: string
@@ -31,7 +31,7 @@ export function SelectInput({
   options,
   disabled,
   onChange,
-  value
+  value,
 }: Props) {
   const [expanded, toggleExpanded] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(indexFromValue(value))
@@ -39,30 +39,31 @@ export function SelectInput({
   function handleOptionClick(optionIndex: number) {
     setSelectedIndex(optionIndex)
     toggleExpanded(false)
-    onChange && onChange(
-      optionIndex >= 0 ? options[optionIndex].value : unselectedValue
-    )
+    onChange &&
+      onChange(optionIndex >= 0 ? options[optionIndex].value : unselectedValue)
   }
 
   function indexFromValue(optionValue: string | undefined) {
-    const valueIndex = optionValue && options.map(option => option.value).indexOf(optionValue)
-    return (typeof valueIndex === "number")? valueIndex: -1;
+    const valueIndex =
+      optionValue && options.map((option) => option.value).indexOf(optionValue)
+    return typeof valueIndex === "number" ? valueIndex : -1
   }
 
   useEffect(() => setSelectedIndex(indexFromValue(value)), [value])
 
   return (
     <SelectContainer>
-      <SelectHeader onClick={() => !disabled && toggleExpanded(!expanded)} disabled={disabled}>
+      <SelectHeader
+        onClick={() => !disabled && toggleExpanded(!expanded)}
+        disabled={disabled}
+      >
         <SelectOption>
           <SelectedOption>
-            {selectedIndex < 0
-              ? selectorText
-              : options[selectedIndex].label}
+            {selectedIndex < 0 ? selectorText : options[selectedIndex].label}
           </SelectedOption>
         </SelectOption>
         <SelectArrowContainer>
-          <SelectArrow src={chevronDown} alt="seletor" isExpanded={expanded}/>
+          <SelectArrow src={chevronDown} alt="seletor" isExpanded={expanded} />
         </SelectArrowContainer>
       </SelectHeader>
       <SelectOptionList isExpanded={expanded}>

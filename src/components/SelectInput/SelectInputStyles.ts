@@ -6,7 +6,6 @@ export const SelectContainer = styled.div`
   flex-flow: column nowrap;
   position: relative;
   width: 100%;
-  margin: 20px 0;
 `
 
 interface SelectHeaderProps extends React.ComponentPropsWithoutRef<"div"> {
@@ -20,8 +19,8 @@ export const SelectHeader = styled.div<SelectHeaderProps>`
   border: 2px solid var(--primary);
   border-radius: 5px;
   user-select: none;
-  background-color: ${props => (props.disabled)? "#ebebeb": "#fff"};
-  color: ${props => (props.disabled)? "var(--gray)": "var(--dark-gray)"};
+  background-color: ${(props) => (props.disabled ? "#ebebeb" : "#fff")};
+  color: ${(props) => (props.disabled ? "var(--gray)" : "var(--dark-gray)")};
 
   & div {
     margin-right: 0.8rem;
