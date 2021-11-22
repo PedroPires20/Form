@@ -2,18 +2,21 @@ import React from "react"
 import styled from "styled-components"
 
 export const SelectContainer = styled.div`
-  width: max-content;
-  font-family: Arial, Helvetica, sans-serif;
+  display: block;
+  flex-flow: column nowrap;
   position: relative;
+  width: 100%;
+  margin: 20px 0;
 `
 
 export const SelectHeader = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  width: fit-content;
-  border: 1px solid #000;
-  border-radius: 0.5rem;
+  width: 100%;
+  border: 2px solid var(--primary);
+  border-radius: 5px;
   user-select: none;
+  background-color: #fff;
 
   & div {
     margin-right: 0.8rem;
@@ -32,15 +35,14 @@ export const SelectArrowContainer = styled.div`
   justify-content: center;
 `
 
-interface SelectArrowProps extends React.ComponentPropsWithoutRef<"span"> {
+interface SelectArrowProps extends React.ComponentPropsWithoutRef<"img"> {
   isExpanded?: boolean
 }
 
-export const SelectArrow = styled.span<SelectArrowProps>`
-  display: inline-block;
-  width: fit-content;
-  height: fit-content;
-  transform: rotate(${(props) => (props.isExpanded ? "90" : "-90")}deg);
+export const SelectArrow = styled.img<SelectArrowProps>`
+  width: 1rem;
+  height: auto;
+  transform: rotate(${(props) => (props.isExpanded ? "180" : "0")}deg);
   transition: all 200ms ease-in-out;
 `
 
@@ -52,11 +54,11 @@ export const SelectOption = styled.div<SelectOptionProps>`
   flex-grow: 1;
   flex-shrink: 0;
   font-size: 14px;
-  padding: 0.85rem 1rem;
-  border-bottom: 1px solid #888;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--gray);
   user-select: none;
   box-sizing: border-box;
-  color: ${(props) => (props?.disabled ? "#aaa" : "#000")};
+  color: ${(props) => (props?.disabled ? "var(--gray)" : "var(--dark-gray)")};
 
   &:last-child {
     border-bottom: none;
@@ -84,9 +86,9 @@ export const SelectOptionList = styled.div<SelectOptionListProps>`
   flex-flow: column nowrap;
   align-items: stretch;
   width: 100%;
-  border: 1px solid #000;
-  border-radius: 0.6rem;
-  margin-top: 0.6rem;
+  border: 2px solid var(--primary);
+  border-radius: 5px;
+  margin-top: 0.4rem;
   position: absolute;
   z-index: 100;
   background-color: #fff;

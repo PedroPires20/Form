@@ -8,6 +8,7 @@ import {
   SelectOption,
   SelectedOption,
 } from "./SelectInputStyles"
+import chevronDown from "./assets/chevron-down.svg";
 
 interface Option {
   value: string
@@ -47,7 +48,7 @@ export function SelectInput(props: Props) {
           </SelectedOption>
         </SelectOption>
         <SelectArrowContainer>
-          <SelectArrow isExpanded={expanded}>&#12337;</SelectArrow>
+          <SelectArrow src={chevronDown} alt="seletor" isExpanded={expanded}/>
         </SelectArrowContainer>
       </SelectHeader>
       <SelectOptionList isExpanded={expanded}>
