@@ -1,9 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 
-export const FieldBuilderContainer = styled.div`
-`
-
 export const FieldBuilderHeader = styled.div`
     display: flex;
     flex-flow: row nowrap;
@@ -16,7 +13,6 @@ export const NameContainer = styled.div`
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    width: 50%;
     margin-right: 0.8rem;
 `
 
@@ -27,18 +23,28 @@ export const NameDisplay = styled.p`
     font-size: 20px;
 `
 
-export const TransparentInput = styled.input`
-
-`
-
-export const EditButton = styled.button`
-    display: none;
+export const NameEdit = styled.input`
     background-color: transparent;
     border: none;
-    cursor: pointer;
+    border-bottom: 2px solid var(--primary);
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--dark-gray);
 
-    ${NameContainer}:hover & {
-        display: block;
+    &:focus {
+        border-width: 0 0 2px 0;
+        outline: none;
     }
 `
 
+export const EditButton = styled.button`
+    display: block;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    visibility: hidden;
+
+    ${NameContainer}:hover & {
+        visibility: visible;
+    }
+`

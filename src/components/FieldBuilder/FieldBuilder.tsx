@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { FieldBuilderContainer, FieldBuilderHeader, NameContainer, NameDisplay, TransparentInput, EditButton } from "./FieldBuilderStyles"
+import { FieldBuilderHeader, NameContainer, NameDisplay, NameEdit, EditButton } from "./FieldBuilderStyles"
 import { TextInput } from "../TextInput/TextInput"
 import { SelectInput } from "../SelectInput/SelectInput"
 import { useForm, useFormContext, Controller } from "react-hook-form"
@@ -20,13 +20,14 @@ export function FieldBuilder({ index, defaultName, defaultType }: Props) {
     const placeholder = watch(`fields.${index}.placeholder`)
 
    return (
-   <FieldBuilderContainer>
+   <div>
        <FieldBuilderHeader>
             <NameContainer onDoubleClick={() => toggleEditName(true)}>
                 {editName ? 
-                 <TransparentInput
+                 <NameEdit
+                 defaultValue={name || defaultName}
                  {...register(`fields.${index}.name`)}
-                 onBlur={() => toggleEditName(false)}
+                 onBlur={() => false && toggleEditName(false)}
                  onKeyDown={(e) => e.key === "Enter" && toggleEditName(false)}
                  />:
                  <NameDisplay>{name}</NameDisplay>}
@@ -73,6 +74,6 @@ export function FieldBuilder({ index, defaultName, defaultType }: Props) {
        register={nullRegister}
        required
        />
-    </FieldBuilderContainer>
+    </div>
     )
 }
