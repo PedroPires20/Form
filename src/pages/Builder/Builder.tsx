@@ -4,11 +4,17 @@ import {InputType} from "../../components/InputType/InputType"
 import { TextInput } from "../../components/TextInput/TextInput"
 import {
   BuilderContainer,
+  DescriptionContainer,
   BuilderDescription,
   BuilderForm,
   BuilderSubmit,
+  TitleContainer,
   BuilderTitle,
   BuilderFields,
+  EditTitle,
+  EditDescription,
+  NameInput,
+  DescriptionInput
 } from "./BuilderStyles"
 import { FieldBuilder } from "../../components/FieldBuilder/FieldBuilder"
 
@@ -25,7 +31,11 @@ interface BuilderFormValues {
 
 export function Builder() {
   const [fields, setFields] = useState<JSX.Element[]>([])
-  const methods = useForm<BuilderFormValues>()
+  const [editName, toggleEditName] = useState(true)
+  const [editDesc, toggleEditDesc] = useState(false)
+  const methods = useForm<BuilderFormValues>({defaultValues: {name: "Nome do formulário", description: "Descrição"}})
+  const name = methods.getValues("name")
+  const description = methods.getValues("description")
 
   function handleFieldAdd(inputType: string) {
     let currentFields = fields.slice()
@@ -37,8 +47,37 @@ export function Builder() {
     <FormProvider {...methods}>
       <BuilderContainer>
         <BuilderForm>
-          <BuilderTitle>Title</BuilderTitle>
-          <BuilderDescription>Description</BuilderDescription>
+          <TitleContainer>
+            {editName? 
+              <NameInput 
+              {...methods.register("name", {required: true})}
+              onKeyDown={(e) => e.key === "Enter" && toggleEditName(false)}
+              autoFocus
+              />:
+              <BuilderTitle>{name}</BuilderTitle>
+            }
+            <EditTitle 
+            onClick={(e) => {
+              e.preventDefault()
+              toggleEditName(true)
+            }}
+            />
+          </TitleContainer>
+          <DescriptionContainer>
+            {editDesc? 
+              <DescriptionInput 
+              {...methods.register("description", {required: true})}
+              onKeyDown={(e) => e.key === "Enter" && toggleEditDesc(false)}
+              />:
+              <BuilderDescription>{description}</BuilderDescription>
+            }
+            <EditDescription
+            onClick={(e) => {
+              e.preventDefault()
+              toggleEditDesc(true)
+            }}
+            />
+          </DescriptionContainer>
           <BuilderFields>
             {fields}
           </BuilderFields>
