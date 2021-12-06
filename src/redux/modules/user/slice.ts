@@ -6,15 +6,15 @@ type UserState = {
 const initialState: UserState = {
 };
 
-export const usersSlice = createSlice({
+export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
   },
 });
 
-export const usersReducer = usersSlice.reducer;
+export const userReducer = userSlice.reducer;
 
 export const {
   
-} = usersSlice.actions;
+} = userSlice.actions;
