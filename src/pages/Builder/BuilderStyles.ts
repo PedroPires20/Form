@@ -116,7 +116,7 @@ export const TransparentInput = styled.input`
   }
 `
 
-export const NameInput = styled(TransparentInput)`
+export const TitleInput = styled(TransparentInput)`
   color: var(--dark-gray);
   font-size: 20px;
   font-weight: bold;

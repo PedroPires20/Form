@@ -13,33 +13,45 @@ import {
   BuilderFields,
   EditTitle,
   EditDescription,
-  NameInput,
+  TitleInput,
   DescriptionInput
 } from "./BuilderStyles"
 import { FieldBuilder } from "../../components/FieldBuilder/FieldBuilder"
 
-interface BuilderFormValues {
+interface TextInputFormValues {
+  type: "text"
   name: string
-  description: string
-  inputs: {
+  label: string
+  placeholder: string
+}
+
+interface RadioInputFormValues {
+  type: "radio"
+  name: string
+  label: string
+  options: {
     name: string
-    type: string
-    label: string
-    placeholder?: string
-  }[]
+    value: string 
+  }[] 
+}
+
+interface BuilderFormValues {
+  title: string
+  description: string
+  fields: Array<TextInputFormValues | RadioInputFormValues>
 }
 
 export function Builder() {
   const [fields, setFields] = useState<JSX.Element[]>([])
   const [editName, toggleEditName] = useState(true)
   const [editDesc, toggleEditDesc] = useState(false)
-  const methods = useForm<BuilderFormValues>({defaultValues: {name: "Nome do formulário", description: "Descrição"}})
-  const name = methods.getValues("name")
+  const methods = useForm<BuilderFormValues>({defaultValues: {title: "Nome do formulário", description: "Descrição"}})
+  const title = methods.getValues("title")
   const description = methods.getValues("description")
 
   function handleFieldAdd(inputType: string) {
     let currentFields = fields.slice()
-    currentFields.push(<FieldBuilder index={currentFields.length} defaultName="Novo input" defaultType={inputType}/>)
+    currentFields.push(<FieldBuilder key={currentFields.length} index={currentFields.length} defaultName="Novo input" defaultType={inputType}/>)
     setFields(currentFields)
   }
 
@@ -49,12 +61,13 @@ export function Builder() {
         <BuilderForm>
           <TitleContainer>
             {editName? 
-              <NameInput 
-              {...methods.register("name", {required: true})}
+              <TitleInput 
+              {...methods.register("title", {required: true})}
               onKeyDown={(e) => e.key === "Enter" && toggleEditName(false)}
+              onBlur={() => toggleEditName(false)}
               autoFocus
               />:
-              <BuilderTitle>{name}</BuilderTitle>
+              <BuilderTitle>{title}</BuilderTitle>
             }
             <EditTitle 
             onClick={(e) => {
@@ -68,6 +81,7 @@ export function Builder() {
               <DescriptionInput 
               {...methods.register("description", {required: true})}
               onKeyDown={(e) => e.key === "Enter" && toggleEditDesc(false)}
+              onBlur={() => toggleEditDesc(false)}
               />:
               <BuilderDescription>{description}</BuilderDescription>
             }
