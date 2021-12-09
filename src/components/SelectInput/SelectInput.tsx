@@ -12,12 +12,12 @@ import chevronDown from "./assets/chevron-down.svg"
 
 interface Option {
   value: string
-  label: string
+  name: string
   disabled?: boolean
 }
 
 interface Props {
-  selectorText: string
+  placeholder: string
   unselectedValue?: string
   options: Option[]
   disabled?: boolean
@@ -26,7 +26,7 @@ interface Props {
 }
 
 export function SelectInput({
-  selectorText,
+  placeholder,
   unselectedValue,
   options,
   disabled,
@@ -59,7 +59,7 @@ export function SelectInput({
       >
         <SelectOption>
           <SelectedOption>
-            {selectedIndex < 0 ? selectorText : options[selectedIndex].label}
+            {selectedIndex < 0 ? placeholder : options[selectedIndex].name}
           </SelectedOption>
         </SelectOption>
         <SelectArrowContainer>
@@ -68,7 +68,7 @@ export function SelectInput({
       </SelectHeader>
       <SelectOptionList isExpanded={expanded}>
         <SelectOption onClick={() => handleOptionClick(-1)}>
-          {selectorText}
+          {placeholder}
         </SelectOption>
         {options.map((option, index) => (
           <SelectOption
@@ -76,7 +76,7 @@ export function SelectInput({
             onClick={() => !option?.disabled && handleOptionClick(index)}
             disabled={option.disabled}
           >
-            {option.label}
+            {option.name}
           </SelectOption>
         ))}
       </SelectOptionList>
