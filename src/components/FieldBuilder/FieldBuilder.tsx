@@ -17,6 +17,7 @@ export function FieldBuilder({ index, defaultName, defaultType }: Props) {
     const { register, watch } = useFormContext()
     const name = watch(`fields.${index}.name`) || defaultName
     const label = watch(`fields.${index}.label`)
+    const type = watch(`fields.${index}.type`) || defaultType
     const placeholder = watch(`fields.${index}.placeholder`)
 
    return (
@@ -59,21 +60,27 @@ export function FieldBuilder({ index, defaultName, defaultType }: Props) {
         required
         register={register}
         />
-        <TextInput 
-        name={`fields.${index}.placeholder`}
-        placeholder="Entre uma pequena descrição do campo"
-        label="Placeholder"
-        register={register}
-        required={false}
-        />
+        {
+            (type == "text") && <>
+                <TextInput
+                name={`fields.${index}.placeholder`}
+                placeholder="Entre uma pequena descrição do campo"
+                label="Placeholder"
+                register={register}
+                required={false}
+                />
+            </>
+        }
        <p>Pré-visualização:</p>
-       <TextInput 
-       name="test"
-       label={label}
-       placeholder={placeholder}
-       register={nullRegister}
-       required
-       />
+       {
+           (type == "text") && <TextInput
+           name={name}
+           placeholder={placeholder}
+           label={label}
+           register={nullRegister}
+           required
+           />
+       }
     </div>
     )
 }
