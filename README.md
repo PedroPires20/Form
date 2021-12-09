@@ -15,4 +15,7 @@ A linguagem de programação utilizada no backend é a linguagem JavaScript. Par
 
 ## Backlogs do sprint e produto
 
-Os backlogs da sprint e do produto foram criados usando o GitHub Projects. O backlog do produto pode ser encontrado nesse [link](https://github.com/PedroPires20/Form/projects/3). Já o backlog da sprint está disponível nesse [link](https://github.com/PedroPires20/Form/projects/1).
+Os backlogs da sprint e do produto foram criados usando o GitHub Projects. O backlog do produto pode ser encontrado nesse [link](https://github.com/PedroPires20/Form/projects/3). Já os backlogs de cada sprint estão disponíveis nos links a seguir:
+
+- [Sprint 1](https://github.com/PedroPires20/Form/projects/4)
+- [Sprint 2](https://github.com/PedroPires20/Form/projects/1)
