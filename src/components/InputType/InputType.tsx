@@ -36,6 +36,7 @@ export function InputType({ onChange }: Props) {
           <option value="textarea">Área de Texto</option>
           <option value="checkbox">Checkbox</option>
           <option value="radio">Radio</option>
+          <option value="select">Select</option>
         </InputTypeSelect>
       )}
     </InputTypeContainer>
