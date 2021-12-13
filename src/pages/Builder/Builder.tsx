@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import {InputType} from "../../components/InputType/InputType"
-import { TextInput } from "../../components/TextInput/TextInput"
+import { SelectInput } from "../../components/SelectInput/SelectInput"
 import {
   BuilderContainer,
   BuilderDescription,
@@ -8,6 +8,7 @@ import {
   BuilderSubmit,
   BuilderTitle,
   BuilderFields,
+  SelectLabel
 } from "./BuilderStyles"
 
 export function Builder() {
@@ -20,13 +21,8 @@ export function Builder() {
         <BuilderDescription>Description</BuilderDescription>
 
         <BuilderFields>
-          <TextInput
-            register={register}
-            name="test"
-            label="Campo de teste"
-            required
-            placeholder="Insira alguma coisa"
-          />
+          <SelectLabel>Campo de teste:</SelectLabel>
+          <SelectInput placeholder="Selecione uma opção" options={[{name: "Opção 1", value: "1"}, {name: "Opção 2", value: "2"}, {name: "Opção 3", value: "3"}]}/>
         </BuilderFields>
         <InputType onChange={() => {}}/>
         <BuilderSubmit

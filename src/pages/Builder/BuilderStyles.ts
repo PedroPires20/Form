@@ -60,3 +60,9 @@ export const BuilderSubmit = styled.button`
   padding: 5px 10px;
   color: var(--light);
 `
+
+export const SelectLabel = styled.label`
+  color: var(--dark-gray);
+  margin-bottom: 5px;
+  font-weight: bold;
+`
