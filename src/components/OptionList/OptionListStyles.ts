@@ -1,6 +1,9 @@
+import React from "react"
 import styled from "styled-components"
 import editIcon from "./assets/pencil-fill.svg"
 import deleteIcon from "./assets/trash-fill.svg"
+import confirmIcon from "./assets/check-lg.svg"
+import cancelIcon from "./assets/x-lg.svg"
 import addIcon from "./assets/plus.svg"
 
 export const OptionListContainer = styled.div`
@@ -10,6 +13,7 @@ export const OptionListContainer = styled.div`
     justify-content: space-evenly;
     width: max-content;
     height: 15rem;
+    align-self: center;
 `
 
 export const OptionListHeader = styled.p`
@@ -32,13 +36,16 @@ export const OptionContainer = styled.div`
 export const OptionInput = styled.input`
     border: none;
     background-color: transparent;
-    border-bottom: 1px solid var(--gray);
     outline: none;
     font-size: 16px;
     color: var(--dark);
 
     &:focus {
         border-bottom: 2px solid var(--secondary-dark);
+    }
+
+    &:enabled {
+        border-bottom: 1px solid var(--gray);
     }
 `
 
@@ -71,6 +78,15 @@ export const OptionEditButton = styled(OptionButton)`
 
 export const OptionDeleteButton = styled(OptionButton)`
     background-image: url(${deleteIcon});
+    margin-right: 0.5rem;
+`
+
+export const OptionConfirmButton = styled(OptionButton)`
+    background-image: url(${confirmIcon});
+`
+
+export const OptionCancelButton = styled(OptionButton)`
+    background-image: url(${cancelIcon});
     margin-right: 0.5rem;
 `
 
