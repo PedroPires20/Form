@@ -11,6 +11,13 @@ interface Props {
     defaultType: string
 }
 
+// Lista de componentes de formulário disponíveis para o usuário selecionar
+const availableComponents = [
+    {label: "Texto", value: "text"},
+    {label: "Texto grande", value: "textarea"},
+    {label: "Checkbox", value: "checkbox"}
+];
+
 export function FieldBuilder({ index, defaultName, defaultType }: Props) {
     const [editName, toggleEditName] = useState(true);
     const nullRegister = useForm().register
@@ -47,7 +54,7 @@ export function FieldBuilder({ index, defaultName, defaultType }: Props) {
             render={ ({ field: {value, onChange} }) => 
                 <SelectInput 
                 selectorText="Selecione um tipo de entrada"
-                options={[{label: "Texto", value: "text"}, {label: "Texto grande", value: "textarea"}, {label: "Checkbox", value: "checkbox"}]}
+                options={availableComponents}
                 value={value}
                 onChange={onChange}
                 />
