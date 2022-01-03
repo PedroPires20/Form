@@ -2,6 +2,8 @@ import { useState } from "react"
 import { useForm, FormProvider } from "react-hook-form"
 import {InputType} from "../../components/InputType/InputType"
 import { TextInput } from "../../components/TextInput/TextInput"
+import { getExample } from "../../redux/modules/example/thunks"
+import { useAppDispatch, useAppSelector } from "../../redux/store"
 import {
   BuilderContainer,
   DescriptionContainer,
