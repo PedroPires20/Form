@@ -10,10 +10,8 @@ export const OptionListContainer = styled.div`
     display: flex;
     flex-flow: column nowrap;
     align-self: flex-start;
-    justify-content: space-evenly;
+    gap: 1rem;
     width: max-content;
-    height: 15rem;
-    align-self: center;
 `
 
 export const OptionListHeader = styled.p`
@@ -24,13 +22,22 @@ export const OptionListHeader = styled.p`
     font-weight: bold;
 `
 
+export const Options = styled.div`
+    display: flex;
+    flex-flow: column nowrap;
+    align-self: flex-start;
+    gap: 0.95rem;
+    max-height: 13rem;
+    overflow: auto;
+`
+
 export const OptionContainer = styled.div`
     display: flex;
     flex-flow: row nowrap;
     align-items: baseline;
-    justify-content: space-evenly;
     width: 100%;
-    margin-right: 1.8rem;
+    padding-left: 0.8rem;
+    box-sizing: border-box;
 `
 
 export const OptionInput = styled.input`
@@ -52,6 +59,7 @@ export const OptionInput = styled.input`
 const OptionButton = styled.button`
     width: 1.1rem;
     height: 1.1rem;
+    margin: 0 0.4rem;
     border: none;
     background-color: transparent;
     background-repeat: no-repeat;
@@ -78,7 +86,6 @@ export const OptionEditButton = styled(OptionButton)`
 
 export const OptionDeleteButton = styled(OptionButton)`
     background-image: url(${deleteIcon});
-    margin-right: 0.5rem;
 `
 
 export const OptionConfirmButton = styled(OptionButton)`

@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import {
 OptionListContainer,
 OptionListHeader,
+Options,
 OptionContainer,
 OptionInput,
 OptionEditButton,
@@ -62,25 +63,27 @@ export function OptionList({optionNames, onOptionListChange}: Props) {
     return (
     <OptionListContainer>
         <OptionListHeader>Opções:</OptionListHeader>
-        {options.map((optionName, optionIndex) => 
-        <OptionContainer key={optionIndex}>
-            <OptionInput 
-            defaultValue={optionName}
-            onKeyDown={(e) => (e.key === "Enter") && handleOptionEditFinish(e, optionIndex)}
-            disabled={optionIndex !== optionEditIndex}
-            />
-            {(optionIndex === optionEditIndex)?
-                <>
-                    <OptionConfirmButton onClick={(e) => handleOptionEditFinish(e, optionIndex)}/>
-                    <OptionCancelButton onClick={(e) => handleOptionEditFinish(e, optionIndex, false)}/>
-                </>:
-                <>
-                    <OptionEditButton onClick={(e) => handleOptionEditStart(e, optionIndex)}/>
-                    <OptionDeleteButton onClick={(e) => handleOptionDelete(e, optionIndex)}/>
-                </>
-            }   
-        </OptionContainer>
-        )}
+        <Options>
+            {options.map((optionName, optionIndex) => 
+            <OptionContainer key={optionIndex}>
+                <OptionInput 
+                defaultValue={optionName}
+                onKeyDown={(e) => (e.key === "Enter") && handleOptionEditFinish(e, optionIndex)}
+                disabled={optionIndex !== optionEditIndex}
+                />
+                {(optionIndex === optionEditIndex)?
+                    <>
+                        <OptionConfirmButton onClick={(e) => handleOptionEditFinish(e, optionIndex)}/>
+                        <OptionCancelButton onClick={(e) => handleOptionEditFinish(e, optionIndex, false)}/>
+                    </>:
+                    <>
+                        <OptionEditButton onClick={(e) => handleOptionEditStart(e, optionIndex)}/>
+                        <OptionDeleteButton onClick={(e) => handleOptionDelete(e, optionIndex)}/>
+                    </>
+                }   
+            </OptionContainer>
+            )}
+        </Options>
         <AddOptionButton onClick={handleOptionAdd}>Adicionar opção</AddOptionButton>
     </OptionListContainer>
     )
