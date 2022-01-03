@@ -25,6 +25,11 @@ interface Props {
   value?: string
 }
 
+function indexFromValue(options: Option[], optionValue?: string) {
+  const valueIndex = optionValue && options.map(option => option.value).indexOf(optionValue)
+  return (typeof valueIndex === "number")? valueIndex: -1;
+}
+
 export function SelectInput({
   selectorText,
   unselectedValue,
@@ -34,7 +39,7 @@ export function SelectInput({
   value
 }: Props) {
   const [expanded, toggleExpanded] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState(indexFromValue(value))
+  const [selectedIndex, setSelectedIndex] = useState(indexFromValue(options, value))
 
   function handleOptionClick(optionIndex: number) {
     setSelectedIndex(optionIndex)
@@ -44,12 +49,7 @@ export function SelectInput({
     )
   }
 
-  function indexFromValue(optionValue: string | undefined) {
-    const valueIndex = optionValue && options.map(option => option.value).indexOf(optionValue)
-    return (typeof valueIndex === "number")? valueIndex: -1;
-  }
-
-  useEffect(() => setSelectedIndex(indexFromValue(value)), [value])
+  useEffect(() => setSelectedIndex(indexFromValue(options, value)), [value])
 
   return (
     <SelectContainer>
