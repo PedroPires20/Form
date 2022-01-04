@@ -8,16 +8,16 @@ import {
   SelectOption,
   SelectedOption,
 } from "./SelectInputStyles"
-import chevronDown from "./assets/chevron-down.svg";
+import chevronDown from "./assets/chevron-down.svg"
 
 interface Option {
   value: string
-  label: string
+  name: string
   disabled?: boolean
 }
 
 interface Props {
-  selectorText: string
+  placeholder: string
   unselectedValue?: string
   options: Option[]
   disabled?: boolean
@@ -31,12 +31,12 @@ function indexFromValue(options: Option[], optionValue?: string) {
 }
 
 export function SelectInput({
-  selectorText,
+  placeholder,
   unselectedValue,
   options,
   disabled,
   onChange,
-  value
+  value,
 }: Props) {
   const [expanded, toggleExpanded] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(indexFromValue(options, value))
@@ -44,30 +44,36 @@ export function SelectInput({
   function handleOptionClick(optionIndex: number) {
     setSelectedIndex(optionIndex)
     toggleExpanded(false)
-    onChange && onChange(
-      optionIndex >= 0 ? options[optionIndex].value : unselectedValue
-    )
+    onChange &&
+      onChange(optionIndex >= 0 ? options[optionIndex].value : unselectedValue)
   }
 
-  useEffect(() => setSelectedIndex(indexFromValue(options, value)), [value])
+  function indexFromValue(optionValue: string | undefined) {
+    const valueIndex =
+      optionValue && options.map((option) => option.value).indexOf(optionValue)
+    return typeof valueIndex === "number" ? valueIndex : -1
+  }
+
+  useEffect(() => setSelectedIndex(indexFromValue(value)), [value])
 
   return (
     <SelectContainer>
-      <SelectHeader onClick={() => !disabled && toggleExpanded(!expanded)} disabled={disabled}>
+      <SelectHeader
+        onClick={() => !disabled && toggleExpanded(!expanded)}
+        disabled={disabled}
+      >
         <SelectOption>
           <SelectedOption>
-            {selectedIndex < 0
-              ? selectorText
-              : options[selectedIndex].label}
+            {selectedIndex < 0 ? placeholder : options[selectedIndex].name}
           </SelectedOption>
         </SelectOption>
         <SelectArrowContainer>
-          <SelectArrow src={chevronDown} alt="seletor" isExpanded={expanded}/>
+          <SelectArrow src={chevronDown} alt="seletor" isExpanded={expanded} />
         </SelectArrowContainer>
       </SelectHeader>
       <SelectOptionList isExpanded={expanded}>
         <SelectOption onClick={() => handleOptionClick(-1)}>
-          {selectorText}
+          {placeholder}
         </SelectOption>
         {options.map((option, index) => (
           <SelectOption
@@ -75,7 +81,7 @@ export function SelectInput({
             onClick={() => !option?.disabled && handleOptionClick(index)}
             disabled={option.disabled}
           >
-            {option.label}
+            {option.name}
           </SelectOption>
         ))}
       </SelectOptionList>
