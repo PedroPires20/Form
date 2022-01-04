@@ -4,7 +4,7 @@ var path = require("path")
 var cookieParser = require("cookie-parser")
 var logger = require("morgan")
 var cors = require("cors")
-var { sequelize } = require("./sequelize")
+var { sequelize, associations } = require("./sequelize")
 
 var usersController = require("./modules/users/controller")
 
@@ -12,9 +12,10 @@ sequelize
   .authenticate()
   .then(() => { 
     console.log("Database Connected")
+    associations.apply()
     sequelize.sync().then(() => console.log("Database Synced"));
   })
-  .catch(() => console.log("Error connecting to database"))
+  .catch((err) => console.log("Error connecting to database", err))
 
 
 var app = express()

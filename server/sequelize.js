@@ -5,6 +5,19 @@ const sequelize = new Sequelize({
   storage: './database.sqlite'
 });
 
+function mkAssociations() {
+  const associations = []
+  return {
+    assign: function (association) {
+      associations.push(association)
+    },
+    apply: function () {
+      associations.forEach(assoc => assoc(sequelize.models))
+    }
+  }
+}
+
 module.exports = {
-  sequelize
+  sequelize,
+  associations: mkAssociations()
 }
