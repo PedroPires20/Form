@@ -18,6 +18,7 @@ sequelize
   .catch((err) => console.log("Error connecting to database", err))
 
 
+const PORT = process.env.PORT || 3000
 var app = express()
 app.use(cors({ origin: "http://localhost:8080" }))
 app.use(logger("dev"))
@@ -48,4 +49,6 @@ app.use(function (err, req, res, _) {
   res.render("error")
 })
 
-module.exports = app
+app.listen(PORT, () => {
+  console.log(`App listening on Local: http://localhost:${PORT}/`)
+})
