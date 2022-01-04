@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import editPencil from "./assets/pencil-fill.svg"
 
 export const BuilderContainer = styled.div`
   background: var(--primary);
@@ -28,20 +29,35 @@ export const BuilderForm = styled.form`
   padding: 10px 20px;
 `
 
+export const TitleContainer = styled.div` 
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  margin-bottom: 20px;
+  column-gap: 0.6rem;
+  width: 100%;
+`
+
 export const BuilderTitle = styled.div`
   color: var(--dark-gray);
   font-size: 20px;
   font-weight: bold;
   text-align: center;
+`
+
+export const DescriptionContainer = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
   margin-bottom: 20px;
+  column-gap: 0.6rem;
+  width: 100%;
 `
 
 export const BuilderDescription = styled.div`
   color: var(--dark-gray);
   font-size: 16px;
   font-weight: bold;
-  text-align: left;
-  margin-bottom: 20px;
 `
 
 export const BuilderFields = styled.div`
@@ -61,8 +77,56 @@ export const BuilderSubmit = styled.button`
   color: var(--light);
 `
 
-export const SelectLabel = styled.label`
+const EditButton = styled.button`
+  font-size: inherit;
+  background-image: url(${editPencil});
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  width: 1em;
+  height: auto;
+  padding: 0;
+  visibility: hidden;
+`
+
+export const EditTitle = styled(EditButton)`
+  ${TitleContainer}:hover & {
+    visibility: visible;
+  }
+`
+
+export const EditDescription = styled(EditButton)`
+  ${DescriptionContainer}:hover & {
+    visibility: visible;
+  }
+`
+
+export const TransparentInput = styled.input`
+  border: none;
+  outline: none;
+  background-color: transparent;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 0.2em;
+
+  &:focus {
+    border-color: var(--secondary);
+  }
+`
+
+export const TitleInput = styled(TransparentInput)`
   color: var(--dark-gray);
-  margin-bottom: 5px;
+  font-size: 20px;
   font-weight: bold;
+  text-align: center;
+  flex: 1;
+`
+
+export const DescriptionInput = styled(TransparentInput)`
+  color: var(--dark-gray);
+  font-size: 16px;
+  font-weight: bold;
+  flex: 1;
 `
