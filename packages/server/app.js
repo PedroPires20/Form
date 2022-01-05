@@ -1,25 +1,25 @@
-var createError = require("http-errors")
-var express = require("express")
-var path = require("path")
-var cookieParser = require("cookie-parser")
-var logger = require("morgan")
-var cors = require("cors")
-var { sequelize, associations } = require("./sequelize")
+const createError = require("http-errors")
+const express = require("express")
+const path = require("path")
+const cookieParser = require("cookie-parser")
+const logger = require("morgan")
+const cors = require("cors")
+const { sequelize, associations } = require("./sequelize")
 
-var usersController = require("./modules/users/controller")
+const usersController = require("./modules/users/controller")
+const formsController = require("./modules/forms/controller")
 
 sequelize
   .authenticate()
-  .then(() => { 
+  .then(() => {
     console.log("Database Connected")
     associations.apply()
-    sequelize.sync().then(() => console.log("Database Synced"));
+    sequelize.sync({ force: false }).then(() => console.log("Database Synced"))
   })
   .catch((err) => console.log("Error connecting to database", err))
 
-
 const PORT = process.env.PORT || 3000
-var app = express()
+const app = express()
 app.use(cors({ origin: "http://localhost:8080" }))
 app.use(logger("dev"))
 app.use(express.json())
@@ -27,7 +27,8 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, "dist")))
 
-app.use('/users', usersController);
+app.use("/users", usersController)
+app.use("/forms", formsController)
 
 app.get("*", function (_, res) {
   res.sendFile(__dirname + "/dist/index.html")

@@ -8,11 +8,11 @@ User.init(
     username: DataTypes.STRING,
     age: DataTypes.INTEGER,
   },
-  { sequelize, modelName: "User" }
+  { sequelize, modelName: "user" }
 )
 
-associations.assign(({ Form }) => {
-  User.hasMany(Form)
+associations.assign(({ form }) => {
+  User.Form = User.hasMany(form)
 })
 
 module.exports = User

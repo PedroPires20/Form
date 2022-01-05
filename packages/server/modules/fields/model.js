@@ -4,14 +4,17 @@ const { sequelize, associations } = require("../../sequelize")
 class Field extends Model {}
 Field.init(
   {
-    title: DataTypes.STRING,
+    label: DataTypes.STRING,
     description: DataTypes.TEXT,
+    type: DataTypes.STRING,
+
   },
-  { sequelize, modelName: "Field" }
+  { sequelize, modelName: "field" }
 )
 
-associations.assign(({ Form }) => {
-  Field.belongsTo(Form)
+associations.assign(({ form, option }) => {
+  Field.Form = Field.belongsTo(form)
+  Field.Options = Field.hasMany(option)
 })
 
 
