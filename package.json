@@ -3,39 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "nodemon ./server/bin/www",
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "serve": "vite preview"
+    "dev": "yarn lerna run dev --stream",
+    "server": "yarn workspace @form/server",
+    "client": "yarn workspace @form/client"
   },
-  "dependencies": {
-    "axios": "^0.24.0",
-    "cookie-parser": "~1.4.4",
-    "cors": "^2.8.5",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "morgan": "~1.9.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-hook-form": "^7.20.2",
-    "react-is": "^17.0.2",
-    "react-redux": "^7.2.6",
-    "react-router-dom": "^5.3.0",
-    "sequelize": "^6.12.1",
-    "sqlite3": "^5.0.2",
-    "styled-components": "^5.3.3"
-  },
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
-    "@reduxjs/toolkit": "^1.6.2",
-    "@types/react": "^17.0.33",
-    "@types/react-dom": "^17.0.10",
-    "@types/react-router-dom": "^5.3.2",
-    "@types/styled-components": "^5.1.15",
-    "@vitejs/plugin-react": "^1.0.0",
-    "nodemon": "^2.0.14",
-    "prettier": "2.4.1",
-    "typescript": "^4.4.4",
-    "vite": "^2.6.4"
+    "lerna": "^4.0.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.4.4"
   }
 }
