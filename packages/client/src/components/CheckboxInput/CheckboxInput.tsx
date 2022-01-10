@@ -29,7 +29,7 @@ export function CheckboxInput({
         disabled={disabled}
         {...register(name, { required: required })}
       />
-      <CheckboxLabel htmlFor={name}>{value}</CheckboxLabel>
+      <CheckboxLabel htmlFor={value}>{name}</CheckboxLabel>
     </CheckboxContainer>
   )
 }
