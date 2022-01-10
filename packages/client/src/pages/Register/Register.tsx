@@ -49,9 +49,12 @@ export function Register() {
                     placeholder='Senha'
                 />
                 {
-                errors.passwordValidade?.type === "required"? 
-                    <RegisterFormError>É necessário preencher esse campo.</RegisterFormError>:
-                    <RegisterFormError>As senhas entradas não coincidem.</RegisterFormError>
+                    (errors.passwordValidade && errors.passwordValidade?.type === "required") && 
+                        <RegisterFormError>É necessário preencher esse campo.</RegisterFormError>
+                }
+                {
+                    (errors.passwordValidade && errors.passwordValidade?.type !== "required") && 
+                        <RegisterFormError>As senhas entradas não coincidem.</RegisterFormError>
                 }
                 <RegisterFormButtons>
                     <button type="reset">Redefinir</button>
