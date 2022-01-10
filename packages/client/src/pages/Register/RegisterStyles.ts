@@ -25,6 +25,14 @@ export const RegisterFormLabel = styled.label`
     
 `
 
-export const RegisterFormButton = styled.button`
+export const RegisterFormInput = styled.input`
+
+`
+
+export const RegisterFormError = styled.label`
+
+`
+
+export const RegisterFormButtons = styled.div`
     
 `
