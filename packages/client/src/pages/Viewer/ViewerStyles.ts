@@ -41,8 +41,14 @@ export const FormDescription = styled.p`
 
 export const FormLabel = styled.label` 
     color: var(--dark-gray);
-    margin-bottom: 5px;
     font-weight: bold;
+`
+
+export const FieldDescription = styled.p`
+    color: var(--dark-gray);
+    margin: 0;
+    font-size: 14px;
+    margin-bottom: 0.5em;
 `
 
 export const OptionElementContainer = styled.div` 

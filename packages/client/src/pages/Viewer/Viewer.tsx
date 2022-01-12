@@ -5,6 +5,7 @@ import {
     FormHeader,
     FormDescription,
     FormLabel,
+    FieldDescription,
     OptionElementContainer,
     ViewerContainer,
     ViewerForm,
@@ -17,6 +18,7 @@ interface TextInputFormValues {
     type: "text"
     name: string
     label: string
+    description?: string
     placeholder: string
 }
   
@@ -24,6 +26,7 @@ interface RadioInputFormValues {
     type: "radio"
     name: string
     label: string
+    description?: string
     options: {
         name: string
         value: string 
@@ -52,6 +55,7 @@ export function Viewer() {
                 type: "radio",
                 name: "options",
                 label: "Este é um campo de opções checkbox",
+                description: "Descrição do campo aqui",
                 options: [
                     {
                         name: "Opção 1",
@@ -99,6 +103,10 @@ export function Viewer() {
                                 case "radio":
                                     return <OptionElementContainer key={index}>
                                         <FormLabel>{fieldData.label}</FormLabel>
+                                        {fieldData.description && <FieldDescription>
+                                            {fieldData.description}
+                                            </FieldDescription>
+                                        }
                                         {fieldData.options.map((optionData, index) => <CheckboxInput 
                                             key={index}
                                             name={optionData.name}
