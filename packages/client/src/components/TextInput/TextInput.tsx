@@ -4,7 +4,7 @@ import { UseFormRegister } from "react-hook-form"
 type Props = {
   name: string
   placeholder: string
-  required: boolean
+  required?: boolean
   disabled?: boolean
   register: UseFormRegister<any>
 }
