@@ -1,5 +1,13 @@
 import React, { useState } from "react"
-import { FieldBuilderHeader, NameContainer, NameDisplay, NameEdit, EditButton } from "./FieldBuilderStyles"
+import { 
+    FieldBuilderHeader,
+    NameContainer,
+    NameDisplay,
+    NameEdit,
+    EditButton,
+    FieldLabel,
+    FieldPreview
+} from "./FieldBuilderStyles"
 import { TextInput } from "../TextInput/TextInput"
 import { SelectInput } from "../SelectInput/SelectInput"
 import { useForm, useFormContext, Controller } from "react-hook-form"
@@ -13,9 +21,9 @@ interface Props {
 
 // Lista de componentes de formulário disponíveis para o usuário selecionar
 const availableComponents = [
-    {label: "Texto", value: "text"},
-    {label: "Texto grande", value: "textarea"},
-    {label: "Checkbox", value: "checkbox"}
+    {name: "Texto", value: "text"},
+    {name: "Texto grande", value: "textarea"},
+    {name: "Checkbox", value: "checkbox"}
 ];
 
 export function FieldBuilder({ index, defaultName, defaultType }: Props) {
@@ -53,7 +61,7 @@ export function FieldBuilder({ index, defaultName, defaultType }: Props) {
             defaultValue={defaultType}
             render={ ({ field: {value, onChange} }) => 
                 <SelectInput 
-                selectorText="Selecione um tipo de entrada"
+                placeholder="Selecione um tipo de entrada"
                 options={availableComponents}
                 value={value}
                 onChange={onChange}
@@ -63,7 +71,6 @@ export function FieldBuilder({ index, defaultName, defaultType }: Props) {
         <TextInput
         name={`fields.${index}.label`}
         placeholder="Entre um rótulo para o campo"
-        label="Rótulo"
         required
         register={register}
         />
@@ -72,22 +79,23 @@ export function FieldBuilder({ index, defaultName, defaultType }: Props) {
                 <TextInput
                 name={`fields.${index}.placeholder`}
                 placeholder="Entre uma pequena descrição do campo"
-                label="Placeholder"
                 register={register}
                 required={false}
                 />
             </>
         }
        <p>Pré-visualização:</p>
-       {
-           (type == "text") && <TextInput
-           name={name}
-           placeholder={placeholder}
-           label={label}
-           register={nullRegister}
-           required
-           />
-       }
+       <FieldPreview>
+           <FieldLabel>{label}</FieldLabel>
+            {
+                (type == "text") && <TextInput
+                name={name}
+                placeholder={placeholder}
+                register={nullRegister}
+                required
+                />
+            }
+        </FieldPreview>
     </div>
     )
 }
