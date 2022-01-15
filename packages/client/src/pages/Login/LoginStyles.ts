@@ -104,3 +104,10 @@ export const LoginLinks = styled.div`
         color: var(--secondary-dark);
     }
 `
+
+export const LoginFormError = styled.p`
+    align-self: flex-end;
+    margin: 0;
+    font-size: 16px;
+    color: #cf1313;
+`
