@@ -48,3 +48,12 @@ export const EditButton = styled.button`
         visibility: visible;
     }
 `
+export const FieldLabel = styled.label`
+    color: var(--dark-gray);
+    font-weight: bold;
+`
+
+export const FieldPreview = styled.div`
+    display: flex;
+    flex-flow: column wrap;
+`
