@@ -4,7 +4,7 @@ const { sequelize, associations } = require("../../sequelize")
 class Option extends Model {}
 Option.init(
   {
-    text: DataTypes.STRING,
+    name: DataTypes.STRING,
     value: DataTypes.STRING
   },
   { sequelize, modelName: "option" }

@@ -8,6 +8,8 @@ const { sequelize, associations } = require("./sequelize")
 
 const usersController = require("./modules/users/controller")
 const formsController = require("./modules/forms/controller")
+const fieldsController = require("./modules/fields/controller")
+const optionsController = require("./modules/options/controller")
 
 sequelize
   .authenticate()
@@ -29,6 +31,8 @@ app.use(express.static(path.join(__dirname, "dist")))
 
 app.use("/users", usersController)
 app.use("/forms", formsController)
+app.use("/fields", fieldsController)
+app.use("/options", optionsController)
 
 app.get("*", function (_, res) {
   res.sendFile(__dirname + "/dist/index.html")

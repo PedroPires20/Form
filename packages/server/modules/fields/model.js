@@ -17,5 +17,4 @@ associations.assign(({ form, option }) => {
   Field.Options = Field.hasMany(option)
 })
 
-
 module.exports = Field

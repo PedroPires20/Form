@@ -1,6 +1,5 @@
 const { Model, DataTypes } = require("sequelize")
 const { sequelize, associations } = require("../../sequelize")
-const Form = require("../forms/model")
 
 class User extends Model {}
 User.init(
@@ -12,7 +11,7 @@ User.init(
 )
 
 associations.assign(({ form }) => {
-  User.Form = User.hasMany(form)
+  User.Forms = User.hasMany(form)
 })
 
 module.exports = User
