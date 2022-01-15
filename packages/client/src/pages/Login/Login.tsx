@@ -15,10 +15,10 @@ export function Login() {
             <LoginHeaderL>Form</LoginHeaderL>
             <LoginHeaderSm>Faça seu login</LoginHeaderSm>
             <LoginForm>
-                <label>Entre seu email:</label>
-                <input/>
-                <label>Entre sua senha:</label>
-                <input/>
+                <label htmlFor="email">Entre seu email:</label>
+                <input type="mail" placeholder="Email"/>
+                <label htmlFor="password">Entre sua senha:</label>
+                <input type="password" placeholder="Senha"/>
                 <button>Entrar</button>
             </LoginForm>
             <LoginLinks>
