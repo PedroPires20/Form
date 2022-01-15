@@ -8,13 +8,12 @@ Form.init(
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
   },
-  { sequelize, modelName: "Form" }
+  { sequelize, modelName: "form" }
 )
 
-associations.assign(({ User, Field }) => {
-  Form.belongsTo(User)
-  Form.hasMany(Field)
+associations.assign(({ user, field }) => {
+  Form.User = Form.belongsTo(user)
+  Form.Fields = Form.hasMany(field)
 })
-
 
 module.exports = Form
