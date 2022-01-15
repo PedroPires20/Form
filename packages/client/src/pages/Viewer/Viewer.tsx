@@ -92,14 +92,20 @@ export function Viewer() {
                         formData.fields.map((fieldData, index) => {
                             switch(fieldData.type) {
                                 case "text":
-                                    return <TextInput
-                                        key={index} 
-                                        name={fieldData.name} 
-                                        label={fieldData.label} 
-                                        placeholder={fieldData.placeholder}
-                                        register={register}
-                                        required
-                                    />
+                                    return <>
+                                        <FormLabel>{fieldData.label}</FormLabel>
+                                        {fieldData.description && <FieldDescription>
+                                            {fieldData.description}
+                                            </FieldDescription>
+                                        }
+                                        <TextInput
+                                            key={index} 
+                                            name={fieldData.name} 
+                                            placeholder={fieldData.placeholder}
+                                            register={register}
+                                            required
+                                        />
+                                    </>
                                 case "radio":
                                     return <OptionElementContainer key={index}>
                                         <FormLabel>{fieldData.label}</FormLabel>
