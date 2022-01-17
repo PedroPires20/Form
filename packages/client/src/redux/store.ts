@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
 import { exampleReducer } from "./modules/example/slice"
-import { formsReducer } from "./modules/forms/slice"
+import { formReducer } from "./modules/forms/slice"
 import { userReducer } from "./modules/user/slice"
 
 const store = configureStore({
   reducer: {
     example: exampleReducer,
     user: userReducer,
-    forms: formsReducer,
+    form: formReducer,
   },
 })
 

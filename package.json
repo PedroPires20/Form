@@ -11,11 +11,13 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@types/uuid": "^8.3.4",
     "lerna": "^4.0.0",
     "prettier": "^2.5.1",
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "ramda": "^0.27.2"
+    "ramda": "^0.27.2",
+    "uuid": "^8.3.2"
   }
 }

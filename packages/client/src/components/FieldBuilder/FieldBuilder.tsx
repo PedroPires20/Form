@@ -1,101 +1,111 @@
-import React, { useState } from "react"
-import { 
-    FieldBuilderHeader,
-    NameContainer,
-    NameDisplay,
-    NameEdit,
-    EditButton,
-    FieldLabel,
-    FieldPreview
+import { useEffect, useState } from "react"
+import {
+  Actions,
+  AddDescription,
+  Description,
+  DescriptionContainer,
+  DescriptionDisplay,
+  DescriptionEdit,
+  FieldBuilderContainer,
+  Label,
+  LabelDisplay,
+  LabelEdit,
 } from "./FieldBuilderStyles"
 import { TextInput } from "../TextInput/TextInput"
-import { SelectInput } from "../SelectInput/SelectInput"
-import { useForm, useFormContext, Controller } from "react-hook-form"
-import editIcon from "./assets/pencil-fill.svg"
+import { Field } from "../../redux/modules/forms/types"
+import { useAppDispatch } from "../../redux/store"
+import ActionButton from "../../shared/components/ActionButton/ActionButton"
+import { TextAreaInput } from "../TextAreaInput/TextAreaInput"
+import {hasOptions} from "../../shared/functions/hasOptions"
+import OptionBuilder from "../OptionBuilder/OptionBuilder"
 
-interface Props {
-    index: number
-    defaultName: string
-    defaultType: string
+type Props = {
+  field: Field
 }
 
-// Lista de componentes de formulário disponíveis para o usuário selecionar
-const availableComponents = [
-    {name: "Texto", value: "text"},
-    {name: "Texto grande", value: "textarea"},
-    {name: "Checkbox", value: "checkbox"}
-];
+export function FieldBuilder({ field }: Props) {
+  const [editing, setEditing] = useState({ label: false, description: false })
+  const [hasDescription, setHasDescription] = useState(false)
+  const [fieldData, setFieldData] = useState({
+    label: field.label,
+    description: field.description,
+  })
+  const dispatch = useAppDispatch()
 
-export function FieldBuilder({ index, defaultName, defaultType }: Props) {
-    const [editName, toggleEditName] = useState(true);
-    const nullRegister = useForm().register
-    const { register, watch } = useFormContext()
-    const name = watch(`fields.${index}.name`) || defaultName
-    const label = watch(`fields.${index}.label`)
-    const type = watch(`fields.${index}.type`) || defaultType
-    const placeholder = watch(`fields.${index}.placeholder`)
+  useEffect(() => {
+    console.log("dispatch field change")
+    dispatch(() => {})
+  }, [fieldData])
 
-   return (
-   <div>
-       <FieldBuilderHeader>
-            <NameContainer onDoubleClick={() => toggleEditName(true)}>
-                {editName ? 
-                 <NameEdit
-                 defaultValue={name || defaultName}
-                 {...register(`fields.${index}.name`)}
-                 onBlur={() => false && toggleEditName(false)}
-                 onKeyDown={(e) => e.key === "Enter" && toggleEditName(false)}
-                 />:
-                 <NameDisplay>{name}</NameDisplay>}
-                <EditButton
-                onClick={(e) => {
-                    e.preventDefault()
-                    toggleEditName(true)
-                }}
-                >
-                    <img src={editIcon} alt="editar"/>
-                </EditButton>
-            </NameContainer>
-            <Controller 
-            name={`fields.${index}.type`}
-            defaultValue={defaultType}
-            render={ ({ field: {value, onChange} }) => 
-                <SelectInput 
-                placeholder="Selecione um tipo de entrada"
-                options={availableComponents}
-                value={value}
-                onChange={onChange}
-                />
-            }/>
-        </FieldBuilderHeader>
-        <TextInput
-        name={`fields.${index}.label`}
-        placeholder="Entre um rótulo para o campo"
-        required
-        register={register}
-        />
-        {
-            (type == "text") && <>
-                <TextInput
-                name={`fields.${index}.placeholder`}
-                placeholder="Entre uma pequena descrição do campo"
-                register={register}
-                required={false}
-                />
-            </>
-        }
-       <p>Pré-visualização:</p>
-       <FieldPreview>
-           <FieldLabel>{label}</FieldLabel>
-            {
-                (type == "text") && <TextInput
-                name={name}
-                placeholder={placeholder}
-                register={nullRegister}
-                required
-                />
+  return (
+    <FieldBuilderContainer>
+      <Label>
+        <Actions>
+          <ActionButton
+            icon="pencil"
+            onClick={() =>
+              setEditing((prev) => ({ ...prev, label: !prev.label }))
             }
-        </FieldPreview>
-    </div>
-    )
+          />
+          <ActionButton
+            icon="arrowup"
+            onClick={() =>
+              setEditing((prev) => ({ ...prev, label: !prev.label }))
+            }
+          />
+          <ActionButton
+            icon="arrowdown"
+            onClick={() =>
+              setEditing((prev) => ({ ...prev, label: !prev.label }))
+            }
+          />
+          <ActionButton
+            icon="bars"
+            onClick={() => setHasDescription((prev) => !prev)}
+          />
+        </Actions>
+        {editing.label ? (
+          <LabelEdit
+            value={fieldData.label}
+            onChange={(e) =>
+              setFieldData((prev) => ({ ...prev, label: e.target.value }))
+            }
+          />
+        ) : (
+          <LabelDisplay>{fieldData.label}</LabelDisplay>
+        )}
+      </Label>
+      <DescriptionContainer>
+        {hasDescription && (
+          <Description>
+            {editing.description ? (
+              <DescriptionEdit
+                value={fieldData.description}
+                onChange={(e) =>
+                  setFieldData((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
+              />
+            ) : (
+              <DescriptionDisplay>{fieldData.description}</DescriptionDisplay>
+            )}
+            <ActionButton
+              icon="pencil"
+              onClick={() =>
+                setEditing((prev) => ({
+                  ...prev,
+                  description: !prev.description,
+                }))
+              }
+            />
+          </Description>
+        )}
+      </DescriptionContainer>
+      {field.type === "text" && <TextInput />}
+      {field.type === "textarea" && <TextAreaInput />}
+      {hasOptions(field.type) && <OptionBuilder fieldType={field.type} options={[]} />}
+    </FieldBuilderContainer>
+  )
 }

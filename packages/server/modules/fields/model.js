@@ -7,7 +7,6 @@ Field.init(
     label: DataTypes.STRING,
     description: DataTypes.TEXT,
     type: DataTypes.STRING,
-
   },
   { sequelize, modelName: "field" }
 )

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import editPencil from "./assets/pencil-fill.svg"
+import styled, { css } from "styled-components"
+import editPencil from "../../shared/assets/pencil-fill.svg"
 
 export const BuilderContainer = styled.div`
   background: var(--primary);
@@ -29,7 +29,7 @@ export const BuilderForm = styled.form`
   padding: 10px 20px;
 `
 
-export const TitleContainer = styled.div` 
+export const TitleContainer = styled.div`
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -77,34 +77,7 @@ export const BuilderSubmit = styled.button`
   color: var(--light);
 `
 
-const EditButton = styled.button`
-  font-size: inherit;
-  background-image: url(${editPencil});
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center center;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  width: 1em;
-  height: auto;
-  padding: 0;
-  visibility: hidden;
-`
-
-export const EditTitle = styled(EditButton)`
-  ${TitleContainer}:hover & {
-    visibility: visible;
-  }
-`
-
-export const EditDescription = styled(EditButton)`
-  ${DescriptionContainer}:hover & {
-    visibility: visible;
-  }
-`
-
-export const TransparentInput = styled.input`
+export const transparentInput = css`
   border: none;
   outline: none;
   background-color: transparent;
@@ -116,7 +89,8 @@ export const TransparentInput = styled.input`
   }
 `
 
-export const TitleInput = styled(TransparentInput)`
+export const TitleInput = styled.input`
+  ${transparentInput}
   color: var(--dark-gray);
   font-size: 20px;
   font-weight: bold;
@@ -124,7 +98,8 @@ export const TitleInput = styled(TransparentInput)`
   flex: 1;
 `
 
-export const DescriptionInput = styled(TransparentInput)`
+export const DescriptionInput = styled.textarea`
+  ${transparentInput}
   color: var(--dark-gray);
   font-size: 16px;
   font-weight: bold;
