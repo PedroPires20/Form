@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import {
   Actions,
-  AddDescription,
   Description,
   DescriptionContainer,
   DescriptionDisplay,
@@ -16,7 +15,7 @@ import { Field } from "../../redux/modules/forms/types"
 import { useAppDispatch } from "../../redux/store"
 import ActionButton from "../../shared/components/ActionButton/ActionButton"
 import { TextAreaInput } from "../TextAreaInput/TextAreaInput"
-import {hasOptions} from "../../shared/functions/hasOptions"
+import { hasOptions } from "../../shared/functions/hasOptions"
 import OptionBuilder from "../OptionBuilder/OptionBuilder"
 
 type Props = {
@@ -105,7 +104,9 @@ export function FieldBuilder({ field }: Props) {
       </DescriptionContainer>
       {field.type === "text" && <TextInput />}
       {field.type === "textarea" && <TextAreaInput />}
-      {hasOptions(field.type) && <OptionBuilder fieldType={field.type} options={[]} />}
+      {hasOptions(field.type) && (
+        <OptionBuilder fieldType={field.type} options={[]} />
+      )}
     </FieldBuilderContainer>
   )
 }

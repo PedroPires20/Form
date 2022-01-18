@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "test": "echo No tests yet!"
   },
   "devDependencies": {
     "@reduxjs/toolkit": "^1.7.1",

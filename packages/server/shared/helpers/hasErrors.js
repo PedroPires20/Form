@@ -2,6 +2,7 @@ const { keysIn, pipe, without } = require("ramda")
 
 function hasErrors(errors) {
   if (!errors) return false
+  if(Array.isArray(errors)) return false
 
   const keys = pipe(keysIn, without(["_value"]))(errors)
 

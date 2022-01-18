@@ -7,13 +7,17 @@ function mkField(values) {
   const data = { ...values }
   const errors = { _value: values }
 
-  checkRequiredFields(["label", "description", "type", "options"], data, errors)
+  checkRequiredFields(["label", "type", "options"], data, errors)
 
   if (data.options) {
-    const options = data.options.map(mkOption)
-    const optionsErrors = options.map(prop("errors")).filter(hasErrors)
-    data.options = options.map(prop("data"))
-    if (optionsErrors.length) errors.options = optionsErrors
+    if (data.options.length) {
+      const options = data.options.map(mkOption)
+      const optionsErrors = options.map(prop("errors")).filter(hasErrors)
+      data.options = options.map(prop("data"))
+      if (optionsErrors.length) errors.options = optionsErrors
+    } else if (["checkbox", "radio", "select"].includes(data.type)) {
+      errors.options = { type: "empty list" }
+    }
   }
 
   return {
