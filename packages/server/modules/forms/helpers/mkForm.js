@@ -10,10 +10,14 @@ function mkForm(values) {
   checkRequiredFields(["title", "description", "fields"], data, errors)
 
   if (data.fields) {
-    const fields = data.fields.map(mkField)
-    const fieldsErrors = fields.map(prop("errors")).filter(hasErrors)
-    data.fields = fields.map(prop("data"))
-    if (fieldsErrors.length) errors.fields = fieldsErrors
+    if (data.fields.length) {
+      const fields = data.fields.map(mkField)
+      const fieldsErrors = fields.map(prop("errors")).filter(hasErrors)
+      data.fields = fields.map(prop("data"))
+      if (fieldsErrors.length) errors.fields = fieldsErrors
+    } else {
+      errors.fields = { type: "empty list" }
+    }
   }
 
   return {

@@ -1,26 +1,25 @@
 import { Input } from "./TextInputStyles"
-import { UseFormRegister } from "react-hook-form"
+import { ChangeEventHandler } from "react"
 
 type Props = {
-  name: string
-  placeholder: string
-  required?: boolean
+  value?: string
+  placeholder?: string
   disabled?: boolean
-  register: UseFormRegister<any>
+  onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
 export function TextInput({
-  name,
   placeholder,
   disabled = false,
-  required,
-  register,
+  value,
+  onChange,
 }: Props) {
   return (
     <Input
+      value={value}
       placeholder={placeholder}
       disabled={disabled}
-      {...register(name, { required })}
+      onChange={onChange}
     />
   )
 }

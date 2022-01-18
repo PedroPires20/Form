@@ -1,5 +1,4 @@
 import React from "react"
-import { useForm } from "react-hook-form"
 import { 
     FormContainer,
     FormHeader,
@@ -40,7 +39,6 @@ interface BuilderFormValues {
 }
 
 export function Viewer() {
-    const { register } = useForm();
     const formData: BuilderFormValues = {
         title: "Primeiro formulário",
         description: "Este é o primeiro formulário do Form, criado para testes.",
@@ -100,10 +98,8 @@ export function Viewer() {
                                         }
                                         <TextInput
                                             key={index} 
-                                            name={fieldData.name} 
                                             placeholder={fieldData.placeholder}
-                                            register={register}
-                                            required
+                                            onChange={() => {}}
                                         />
                                     </>
                                 case "radio":
@@ -117,7 +113,6 @@ export function Viewer() {
                                             key={index}
                                             name={optionData.name}
                                             value={optionData.value}
-                                            register={register}
                                         />)}
                                     </OptionElementContainer>
                             }

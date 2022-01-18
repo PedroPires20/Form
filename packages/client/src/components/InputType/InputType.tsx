@@ -19,7 +19,6 @@ export function InputType({ onChange }: Props) {
   }
 
   function handleSelectChange(e: ChangeEvent<HTMLSelectElement>) {
-    console.log(e.target.value)
     onChange(e.target.value)
     setActive(false)
   }
@@ -27,7 +26,7 @@ export function InputType({ onChange }: Props) {
   return (
     <InputTypeContainer>
       <InputTypeButton onClick={handleButtonClick}>
-        {active ? "Fechar" : "Adicionar um campo"}
+        {active ? "Fechar" : "Adicionar campo"}
       </InputTypeButton>
       {active && (
         <InputTypeSelect onChange={handleSelectChange}>

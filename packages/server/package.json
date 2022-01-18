@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node-dev --respawn ./app.js",
     "dev": "node-dev --respawn ./app.js",
-    "build": "echo Backend build"
+    "build": "echo Backend build",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
     "node-dev": "^7.1.0"
