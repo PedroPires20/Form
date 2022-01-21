@@ -7,7 +7,7 @@ function mkField(values) {
   const data = { ...values }
   const errors = { _value: values }
 
-  checkRequiredFields(["label", "type", "options"], data, errors)
+  checkRequiredFields(["label", "order", "type", "options"], data, errors)
 
   if (data.options) {
     if (data.options.length) {

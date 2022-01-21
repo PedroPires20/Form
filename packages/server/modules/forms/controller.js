@@ -19,8 +19,8 @@ router.get("/:id", async function (req, res) {
 })
 
 router.post("/", async function (req, res) {
-  // const user = await User.findByPk(req.body.userId)
-  const form = mkForm(req.body)
+  const user = await User.findByPk(req.body.userId)
+  const form = mkForm({ ...req.body, userId: user && user.id })
   if (hasErrors(form.errors)) {
     res.status(400).send({ errors: form.errors })
   } else {

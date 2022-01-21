@@ -7,7 +7,7 @@ function mkForm(values) {
   const data = { ...values }
   const errors = { _value: values }
 
-  checkRequiredFields(["title", "description", "fields"], data, errors)
+  checkRequiredFields(["title", "description", "fields", "userId"], data, errors)
 
   if (data.fields) {
     if (data.fields.length) {
