@@ -1,4 +1,4 @@
-import { FieldTypes, FieldWithOption } from "../../redux/modules/forms/types"
+import { FieldTypes, FieldWithOption } from "../../redux/modules/fields/types"
 
 export function hasOptions(
   fieldType: FieldTypes

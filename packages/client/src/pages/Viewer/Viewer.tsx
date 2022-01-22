@@ -117,7 +117,7 @@ export function Viewer() {
                       <CheckboxInput
                         key={index}
                         name={optionData.name}
-                        value={optionData.value}
+                        value={optionData.value === "true"}
                       />
                     ))}
                   </OptionElementContainer>

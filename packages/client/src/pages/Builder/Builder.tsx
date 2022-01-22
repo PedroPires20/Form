@@ -13,7 +13,7 @@ import {
   DescriptionInput,
 } from "./BuilderStyles"
 import { FieldBuilder } from "../../components/FieldBuilder/FieldBuilder"
-import { Field } from "../../redux/modules/forms/types"
+import { Field } from "../../redux/modules/fields/types"
 import { v4 } from "uuid"
 import ActionButton from "../../shared/components/ActionButton/ActionButton"
 

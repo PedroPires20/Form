@@ -25,11 +25,6 @@ interface Props {
   value?: string
 }
 
-function indexFromValue(options: Option[], optionValue?: string) {
-  const valueIndex = optionValue && options.map(option => option.value).indexOf(optionValue)
-  return (typeof valueIndex === "number")? valueIndex: -1;
-}
-
 export function SelectInput({
   placeholder,
   unselectedValue,
@@ -39,7 +34,7 @@ export function SelectInput({
   value,
 }: Props) {
   const [expanded, toggleExpanded] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState(indexFromValue(options, value))
+  const [selectedIndex, setSelectedIndex] = useState(indexFromValue(value))
 
   function handleOptionClick(optionIndex: number) {
     setSelectedIndex(optionIndex)

@@ -7,6 +7,12 @@ export const xmark = (
     role="img"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 320 512"
+    style={{
+      width: "10px",
+      height: "14px",
+      top: "2px",
+      position: "relative",
+    }}
   >
     <path
       fill="currentColor"

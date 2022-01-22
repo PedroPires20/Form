@@ -11,7 +11,7 @@ import {
   LabelEdit,
 } from "./FieldBuilderStyles"
 import { TextInput } from "../TextInput/TextInput"
-import { Field } from "../../redux/modules/forms/types"
+import { Field } from "../../redux/modules/fields/types"
 import { useAppDispatch } from "../../redux/store"
 import ActionButton from "../../shared/components/ActionButton/ActionButton"
 import { TextAreaInput } from "../TextAreaInput/TextAreaInput"
@@ -67,6 +67,12 @@ export function FieldBuilder({ field }: Props) {
             }
             icon="bars"
             onClick={() => setHasDescription((prev) => !prev)}
+          />
+          <ActionButton
+            color="var(--error)"
+            icon="xmark"
+            onClick={() => {}}
+            tooltip="Deletar opção"
           />
         </Actions>
         {editing.label ? (
