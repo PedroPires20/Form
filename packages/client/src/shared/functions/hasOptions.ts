@@ -1,5 +1,7 @@
-import { FieldTypes } from "../../redux/modules/forms/types"
+import { FieldTypes, FieldWithOption } from "../../redux/modules/forms/types"
 
-export function hasOptions(fieldType: FieldTypes) {
+export function hasOptions(
+  fieldType: FieldTypes
+): fieldType is FieldWithOption {
   return ["checkbox", "radio", "select"].includes(fieldType)
 }

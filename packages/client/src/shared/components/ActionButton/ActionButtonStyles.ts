@@ -1,10 +1,10 @@
-import styled from "styled-components"
+import styled, {css} from "styled-components"
 
-export const ActionButtonContainer = styled.div`
+export const ActionButtonContainer = styled.div<{active: boolean}>`
   cursor: pointer;
   height: min-content;
   width: min-content;
-  background: var(--secondary);
+  ${({active}) => css`background: ${active ? "var(--primary);" : "var(--secondary);"}`}
   border-right: 1px solid var(--light);
   border-radius: 5px;
   padding: 2px 5px;

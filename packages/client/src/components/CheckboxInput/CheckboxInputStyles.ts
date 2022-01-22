@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import checkMark from "./assets/check-lg.svg";
+import checkMark from "./assets/check-lg.svg"
 
 export const CheckboxContainer = styled.div`
   display: flex;
@@ -42,6 +42,16 @@ export const CheckboxSelector = styled.input`
 `
 
 export const CheckboxLabel = styled.label`
+  color: var(--dark-gray);
+  font-size: 14px;
+`
+
+export const EditCheckbox = styled.input`
+  border: none;
+  background: transparent;
+  outline: none;
+  max-width: 60%;
+
   color: var(--dark-gray);
   font-size: 14px;
 `
