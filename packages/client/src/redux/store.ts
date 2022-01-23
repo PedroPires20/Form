@@ -1,7 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
 import { exampleReducer } from "./modules/example/slice"
+import { fieldsReducer } from "./modules/fields/slice"
 import { formReducer } from "./modules/forms/slice"
+import { optionsReducer } from "./modules/options/slice"
 import { userReducer } from "./modules/user/slice"
 
 const store = configureStore({
@@ -9,6 +11,8 @@ const store = configureStore({
     example: exampleReducer,
     user: userReducer,
     form: formReducer,
+    options: optionsReducer,
+    fields: fieldsReducer,
   },
 })
 

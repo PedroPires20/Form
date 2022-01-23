@@ -12,6 +12,7 @@ export const InputTypeContainer = styled.div`
 `
 
 export const InputTypeButton = styled.button`
+  cursor: pointer;
   background: var(--primary);
   padding: 5px 10px;
   color: var(--light);

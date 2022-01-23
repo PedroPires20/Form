@@ -1,4 +1,4 @@
-import {useState} from "react"
+import { useState } from "react"
 import getSvg, { SVGS } from "../../functions/getSvg"
 import { ActionButtonContainer } from "./ActionButtonStyles"
 
@@ -7,15 +7,22 @@ type Props = {
   onClick: () => void
   tooltip?: string
   color?: string
+  initActive?: boolean
 }
 
 function hasActiveState(icon: SVGS) {
   return ["pencil", "bars"].includes(icon)
 }
 
-function ActionButton({ icon, onClick, tooltip, color = "var(--secondary)" }: Props) {
-  const [active, setActive] = useState(false)
-  
+function ActionButton({
+  icon,
+  onClick,
+  tooltip,
+  initActive = false,
+  color = "var(--secondary)",
+}: Props) {
+  const [active, setActive] = useState(initActive)
+
   return (
     <ActionButtonContainer
       className="action-button"
@@ -25,7 +32,7 @@ function ActionButton({ icon, onClick, tooltip, color = "var(--secondary)" }: Pr
       onClick={(e) => {
         e.preventDefault()
         onClick()
-        setActive(prev => !prev)
+        setActive((prev) => !prev)
       }}
     >
       {getSvg(icon)}

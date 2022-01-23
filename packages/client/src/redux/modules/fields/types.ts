@@ -8,9 +8,10 @@ export type FieldTypes = "text" | "textarea" | "select" | "radio" | "checkbox"
 export type Field = {
   id: string
   type: FieldTypes
+  order: number
   label: string
   options: OptionId[]
-  description?: string
+  description?: string | null
 }
 
 export type FieldsState = {

@@ -13,29 +13,34 @@ import {
   DescriptionInput,
 } from "./BuilderStyles"
 import { FieldBuilder } from "../../components/FieldBuilder/FieldBuilder"
-import { Field } from "../../redux/modules/fields/types"
+import { Field, FieldTypes } from "../../redux/modules/fields/types"
 import { v4 } from "uuid"
 import ActionButton from "../../shared/components/ActionButton/ActionButton"
+import { useAppDispatch, useAppSelector } from "../../redux/store"
+import { fieldAdded } from "../../redux/modules/fields/slice"
+import {saveForm} from "../../redux/modules/forms/thunks"
 
 export function Builder() {
-  const [fields, setFields] = useState<Field[]>([])
   const [editing, setEditing] = useState({ title: false, desc: false })
   const [formData, setFormData] = useState({
     title: "Insira o título do form",
     description: "Insira a descrição do form",
   })
+  const fields = useAppSelector((state) =>
+    Object.keys(state.fields.byId).map((key) => state.fields.byId[key])
+  )
+  const dispatch = useAppDispatch()
 
-  function handleFieldAdd(inputType: string) {
-    setFields((prev) => [
-      ...prev,
-      {
+  function handleFieldAdd(inputType: FieldTypes) {
+    dispatch(
+      fieldAdded({
         id: v4(),
         type: inputType,
         label: "Insira o nome do campo",
-        description: "Insira uma descrição",
+        description: null,
         options: [],
-      } as Field,
-    ])
+      })
+    )
   }
 
   function handleClickOutside(e: SyntheticEvent<HTMLDivElement>) {
@@ -110,6 +115,7 @@ export function Builder() {
         <BuilderSubmit
           onClick={(e) => {
             e.preventDefault()
+            dispatch(saveForm())
           }}
         >
           Salvar

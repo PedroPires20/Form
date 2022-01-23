@@ -9,8 +9,13 @@ export const fieldsSlice = createSlice({
   name: "fields",
   initialState,
   reducers: {
-    fieldAdded: (state, action: PayloadAction<Field>) => {},
-    fieldChanged: (state, action: PayloadAction<Field>) => {},
+    fieldAdded: (state, action: PayloadAction<Omit<Field, "order">>) => {
+      const order = Object.keys(state.byId).length
+      state.byId[action.payload.id] = { ...action.payload, order }
+    },
+    fieldChanged: (state, action: PayloadAction<Field>) => {
+      state.byId[action.payload.id] = action.payload
+    },
     fieldDeleted: (state, action: PayloadAction<Field>) => {},
   },
 })

@@ -12,11 +12,12 @@ import {
 } from "./FieldBuilderStyles"
 import { TextInput } from "../TextInput/TextInput"
 import { Field } from "../../redux/modules/fields/types"
-import { useAppDispatch } from "../../redux/store"
+import { useAppDispatch, useAppSelector } from "../../redux/store"
 import ActionButton from "../../shared/components/ActionButton/ActionButton"
 import { TextAreaInput } from "../TextAreaInput/TextAreaInput"
 import { hasOptions } from "../../shared/functions/hasOptions"
 import OptionsBuilder from "../OptionsBuilder/OptionsBuilder"
+import { fieldChanged } from "../../redux/modules/fields/slice"
 
 type Props = {
   field: Field
@@ -24,16 +25,30 @@ type Props = {
 
 export function FieldBuilder({ field }: Props) {
   const [editing, setEditing] = useState({ label: false, description: false })
-  const [hasDescription, setHasDescription] = useState(false)
+  const [hasDescription, setHasDescription] = useState(
+    !(field.description === null)
+  )
   const [fieldData, setFieldData] = useState({
     label: field.label,
-    description: field.description,
+    description:
+      field.description === null ? "Insira uma descrição" : field.description,
   })
+  const options = useAppSelector((state) =>
+    Object.keys(state.options.byId)
+      .map((key) => state.options.byId[key])
+      .filter((option) => option.fieldId === field.id)
+      .sort((a, b) => a.order - b.order)
+  )
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    console.log("dispatch field change")
-    dispatch(() => {})
+    dispatch(
+      fieldChanged({
+        ...field,
+        label: fieldData.label,
+        description: hasDescription ? fieldData.description : "",
+      })
+    )
   }, [fieldData])
 
   return (
@@ -62,6 +77,7 @@ export function FieldBuilder({ field }: Props) {
             }
           />
           <ActionButton
+            initActive={hasDescription}
             tooltip={
               hasDescription ? "Remover descrição" : "Adicionar descrição"
             }
@@ -121,23 +137,9 @@ export function FieldBuilder({ field }: Props) {
       {field.type === "textarea" && <TextAreaInput />}
       {hasOptions(field.type) && (
         <OptionsBuilder
+          fieldId={field.id}
           fieldType={field.type}
-          options={[
-            {
-              id: "53b54af7-5551-4ea2-8672-1759064ba4f6",
-              fieldId: field.id,
-              name: "option 1",
-              value: "true",
-              order: 0,
-            },
-            {
-              id: "c3320f12-3390-4e74-8613-551f41bdcbb3",
-              fieldId: field.id,
-              name: "option 2",
-              value: "false",
-              order: 1,
-            },
-          ]}
+          options={options}
         />
       )}
     </FieldBuilderContainer>
