@@ -6,7 +6,7 @@ O sistema a ser desenvolvido consiste em uma plataforma Web para criação e dis
 
 - Henrique Faria de Paiva Fagundes (Desenvolvedor backend)
 - João Pedro Bahia Zica (Desenvolvedor full stack)
-- Marlúcio Eduardo Faria Junior (Desenvolvedor frontend)
+- ~~Marlúcio Eduardo Faria Junior (Desenvolvedor frontend)~~
 - Pedro Dias Pires (Desenvolvedor frontend)
 
 ## Tecnologias utilizadas
@@ -19,3 +19,4 @@ Os backlogs da sprint e do produto foram criados usando o GitHub Projects. O bac
 
 - [Sprint 1](https://github.com/PedroPires20/Form/projects/1)
 - [Sprint 2](https://github.com/PedroPires20/Form/projects/4)
+- [Sprint 3](https://github.com/PedroPires20/Form/projects/5)
