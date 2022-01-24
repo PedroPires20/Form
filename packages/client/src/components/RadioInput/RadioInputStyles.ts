@@ -41,3 +41,13 @@ export const RadioLabel = styled.label`
     color: var(--dark-gray);
     font-size: 14px;
 `
+
+export const EditRadio = styled.input`
+  border: none;
+  background: transparent;
+  outline: none;
+  max-width: 60%;
+
+  color: var(--dark-gray);
+  font-size: 14px;
+`

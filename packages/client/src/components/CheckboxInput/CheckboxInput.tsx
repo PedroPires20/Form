@@ -16,7 +16,7 @@ type Props = {
 
 export function CheckboxInput({
   name,
-  value,
+  value = false,
   disabled,
   editing,
   onChange,

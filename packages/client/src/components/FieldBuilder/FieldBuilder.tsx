@@ -17,7 +17,12 @@ import ActionButton from "../../shared/components/ActionButton/ActionButton"
 import { TextAreaInput } from "../TextAreaInput/TextAreaInput"
 import { hasOptions } from "../../shared/functions/hasOptions"
 import OptionsBuilder from "../OptionsBuilder/OptionsBuilder"
-import { fieldChanged } from "../../redux/modules/fields/slice"
+import {
+  fieldChanged,
+  fieldDeleted,
+  fieldOrderChanged,
+} from "../../redux/modules/fields/slice"
+import { optionDeleted } from "../../redux/modules/options/slice"
 
 type Props = {
   field: Field
@@ -40,6 +45,11 @@ export function FieldBuilder({ field }: Props) {
       .sort((a, b) => a.order - b.order)
   )
   const dispatch = useAppDispatch()
+
+  function deleteField() {
+    options.forEach((option) => dispatch(optionDeleted(option)))
+    dispatch(fieldDeleted(field))
+  }
 
   useEffect(() => {
     dispatch(
@@ -65,16 +75,12 @@ export function FieldBuilder({ field }: Props) {
           <ActionButton
             tooltip="Subir campo"
             icon="arrowup"
-            onClick={() =>
-              setEditing((prev) => ({ ...prev, label: !prev.label }))
-            }
+            onClick={() => dispatch(fieldOrderChanged({ field, delta: -1 }))}
           />
           <ActionButton
             tooltip="Descer campo"
             icon="arrowdown"
-            onClick={() =>
-              setEditing((prev) => ({ ...prev, label: !prev.label }))
-            }
+            onClick={() => dispatch(fieldOrderChanged({ field, delta: 1 }))}
           />
           <ActionButton
             initActive={hasDescription}
@@ -87,8 +93,8 @@ export function FieldBuilder({ field }: Props) {
           <ActionButton
             color="var(--error)"
             icon="xmark"
-            onClick={() => {}}
-            tooltip="Deletar opção"
+            onClick={deleteField}
+            tooltip="Deletar campo"
           />
         </Actions>
         {editing.label ? (

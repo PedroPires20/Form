@@ -1,30 +1,44 @@
-import React from "react"
-import { RadioContainer, RadioSelector, RadioLabel } from "./RadioInputStyles"
-import { UseFormRegister } from "react-hook-form"
+import {
+  RadioContainer,
+  RadioSelector,
+  RadioLabel,
+  EditRadio,
+} from "./RadioInputStyles"
 
-interface Props {
-    name: string
-    value: string
-    required?: boolean
-    disabled?: boolean
-    register: UseFormRegister<any>
+type Props = {
+  name: string
+  value?: boolean
+  disabled?: boolean
+  editing?: boolean
+  onChange?: (value: boolean) => void
+  onEditChange?: (name: string) => void
 }
 
 export function RadioInput({
-    name,
-    value,
-    required,
-    disabled,
-    register
+  name,
+  value = false,
+  disabled,
+  editing,
+  onChange,
+  onEditChange,
 }: Props) {
-    return (
+  return (
     <RadioContainer>
-        <RadioSelector 
-            type="radio" 
-            value={value}
-            {...register(name, { required: required, disabled: disabled})}
+      <RadioSelector
+        onChange={(e) => onChange && onChange(e.target.checked)}
+        type="radio"
+        disabled={disabled}
+        checked={value}
+      />
+      {editing ? (
+        <EditRadio
+          defaultValue={name}
+          autoFocus={true}
+          onChange={(e) => onEditChange && onEditChange(e.target.value)}
         />
-        <RadioLabel>{value}</RadioLabel>
+      ) : (
+        <RadioLabel>{name}</RadioLabel>
+      )}
     </RadioContainer>
-    )
+  )
 }

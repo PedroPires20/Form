@@ -10,7 +10,6 @@ export type Field = {
   type: FieldTypes
   order: number
   label: string
-  options: OptionId[]
   description?: string | null
 }
 

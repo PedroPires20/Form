@@ -4,6 +4,7 @@ const User = require("../users/model")
 const Field = require("../fields/model")
 const mkForm = require("./helpers/mkForm")
 const hasErrors = require("../../shared/helpers/hasErrors")
+const createForm = require("./helpers/createForm")
 const router = express.Router()
 
 router.get("/full/:id", async function (req, res) {
@@ -20,7 +21,7 @@ router.get("/:id", async function (req, res) {
 
 router.post("/", async function (req, res) {
   const user = await User.findByPk(req.body.userId)
-  const form = mkForm({ ...req.body, userId: user && user.id })
+  const form = createForm({ ...req.body, userId: user && user.id })
   if (hasErrors(form.errors)) {
     res.status(400).send({ errors: form.errors })
   } else {

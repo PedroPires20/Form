@@ -7,6 +7,6 @@ export type Form = {
 export type FormState = {
   all: Form[]
   id: string
-  title: string
-  description: string
+  title: string | null
+  description: string | null
 }

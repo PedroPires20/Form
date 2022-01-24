@@ -11,6 +11,7 @@ import { FieldOption } from "../../redux/modules/options/types"
 import { useAppDispatch } from "../../redux/store"
 import ActionButton from "../../shared/components/ActionButton/ActionButton"
 import { CheckboxInput } from "../CheckboxInput/CheckboxInput"
+import { RadioInput } from "../RadioInput/RadioInput"
 import {
   Actions,
   AddOption,
@@ -67,7 +68,38 @@ function OptionEditor({ type, option }: EditorProps) {
         </Actions>
       </OptionItem>
     ),
-    radio: <OptionItem></OptionItem>,
+    radio: (
+      <OptionItem>
+        <RadioInput
+          name={option.name}
+          editing={editing}
+          onEditChange={(name) => dispatch(optionChanged({ ...option, name }))}
+        />
+        <Actions>
+          <ActionButton
+            icon="pencil"
+            onClick={() => setEditing((prev) => !prev)}
+            tooltip="Editar opção"
+          />
+          <ActionButton
+            icon="arrowup"
+            onClick={() => dispatch(optionOrderChanged({ option, delta: -1 }))}
+            tooltip="Subir opção"
+          />
+          <ActionButton
+            icon="arrowdown"
+            onClick={() => dispatch(optionOrderChanged({ option, delta: 1 }))}
+            tooltip="Descer opção"
+          />
+          <ActionButton
+            color="var(--error)"
+            icon="xmark"
+            onClick={() => dispatch(optionDeleted(option))}
+            tooltip="Deletar opção"
+          />
+        </Actions>
+      </OptionItem>
+    ),
     select: <OptionItem></OptionItem>,
   }
 

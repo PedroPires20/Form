@@ -18,7 +18,8 @@ import { v4 } from "uuid"
 import ActionButton from "../../shared/components/ActionButton/ActionButton"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
 import { fieldAdded } from "../../redux/modules/fields/slice"
-import {saveForm} from "../../redux/modules/forms/thunks"
+import { saveForm } from "../../redux/modules/forms/thunks"
+import {descriptionChanged, titleChanged} from "../../redux/modules/forms/slice"
 
 export function Builder() {
   const [editing, setEditing] = useState({ title: false, desc: false })
@@ -26,8 +27,12 @@ export function Builder() {
     title: "Insira o título do form",
     description: "Insira a descrição do form",
   })
+  const title = useAppSelector(state => state.form.title)
+  const description = useAppSelector(state => state.form.description)
   const fields = useAppSelector((state) =>
-    Object.keys(state.fields.byId).map((key) => state.fields.byId[key])
+    Object.keys(state.fields.byId)
+      .map((key) => state.fields.byId[key])
+      .sort((a, b) => a.order - b.order)
   )
   const dispatch = useAppDispatch()
 
@@ -63,19 +68,14 @@ export function Builder() {
         <TitleContainer>
           {editing.title ? (
             <TitleInput
-              defaultValue={formData.title}
-              onKeyDown={(e) =>
-                e.key === "Enter" &&
-                setEditing((prev) => ({ ...prev, title: false }))
-              }
-              onBlur={() => setEditing((prev) => ({ ...prev, title: false }))}
+              defaultValue={title ?? "Insira o título do form"}
               autoFocus
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, title: e.target.value }))
+                dispatch(titleChanged(e.target.value))
               }
             />
           ) : (
-            <BuilderTitle>{formData.title}</BuilderTitle>
+            <BuilderTitle>{title ?? "Insira o título do form"}</BuilderTitle>
           )}
           <ActionButton
             icon="pencil"
@@ -87,21 +87,13 @@ export function Builder() {
         <DescriptionContainer>
           {editing.desc ? (
             <DescriptionInput
-              defaultValue={formData.description}
-              onKeyDown={(e) =>
-                e.key === "Enter" &&
-                setEditing((prev) => ({ ...prev, desc: false }))
-              }
-              onBlur={() => setEditing((prev) => ({ ...prev, desc: false }))}
+              defaultValue={description ?? "Insira a descrição do form"}
               onChange={(e) =>
-                setFormData((prev) => ({
-                  ...prev,
-                  description: e.target.value,
-                }))
+                dispatch(descriptionChanged(e.target.value))
               }
             />
           ) : (
-            <BuilderDescription>{formData.description}</BuilderDescription>
+            <BuilderDescription>{description ?? "Insira a descrição do form"}</BuilderDescription>
           )}
           <ActionButton
             icon="pencil"
