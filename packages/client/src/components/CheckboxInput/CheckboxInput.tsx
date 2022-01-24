@@ -2,28 +2,43 @@ import {
   CheckboxContainer,
   CheckboxSelector,
   CheckboxLabel,
-} from "./CheckboxInputStyles";
+  EditCheckbox,
+} from "./CheckboxInputStyles"
 
-
-interface Props {
-  name: string,
-  value: string,
-  disabled?: boolean,
+type Props = {
+  name: string
+  value?: boolean
+  disabled?: boolean
+  editing?: boolean
+  onChange?: (value: boolean) => void
+  onEditChange?: (name: string) => void
 }
 
 export function CheckboxInput({
   name,
-  value,
+  value = false,
   disabled,
+  editing,
+  onChange,
+  onEditChange,
 }: Props) {
   return (
     <CheckboxContainer>
       <CheckboxSelector
         type="checkbox"
-        value={value}
+        checked={value}
         disabled={disabled}
+        onChange={(e) => onChange && onChange(e.target.checked)}
       />
-      <CheckboxLabel htmlFor={value}>{name}</CheckboxLabel>
+      {editing ? (
+        <EditCheckbox
+          defaultValue={name}
+          autoFocus={true}
+          onChange={(e) => onEditChange && onEditChange(e.target.value)}
+        />
+      ) : (
+        <CheckboxLabel>{name}</CheckboxLabel>
+      )}
     </CheckboxContainer>
   )
 }

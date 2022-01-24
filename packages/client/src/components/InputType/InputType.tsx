@@ -1,4 +1,5 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react"
+import { FieldTypes } from "../../redux/modules/fields/types"
 import {
   InputTypeButton,
   InputTypeContainer,
@@ -6,7 +7,7 @@ import {
 } from "./InputTypeStyle"
 
 type Props = {
-  onChange: (inputType: string) => void
+  onChange: (inputType: FieldTypes) => void
 }
 
 export function InputType({ onChange }: Props) {
@@ -19,7 +20,7 @@ export function InputType({ onChange }: Props) {
   }
 
   function handleSelectChange(e: ChangeEvent<HTMLSelectElement>) {
-    onChange(e.target.value)
+    onChange(e.target.value as FieldTypes)
     setActive(false)
   }
 
@@ -35,7 +36,7 @@ export function InputType({ onChange }: Props) {
           <option value="textarea">Área de Texto</option>
           <option value="checkbox">Checkbox</option>
           <option value="radio">Radio</option>
-          <option value="select">Select</option>
+          {/* <option value="select">Select</option> */}
         </InputTypeSelect>
       )}
     </InputTypeContainer>

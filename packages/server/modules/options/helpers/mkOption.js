@@ -4,7 +4,7 @@ function mkOption(values) {
   const data = { ...values }
   const errors = { _value: values }
 
-  checkRequiredFields(["name", "value"], data, errors)
+  checkRequiredFields(["name", "order", "value"], data, errors)
 
   return {
     errors,

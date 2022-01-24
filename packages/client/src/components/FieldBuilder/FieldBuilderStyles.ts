@@ -64,7 +64,7 @@ export const DescriptionContainer = styled.div`
 export const Description = styled.div`
   display: flex;
   flex-flow: row;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `
 
 export const DescriptionEdit = styled.textarea`

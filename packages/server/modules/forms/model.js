@@ -1,10 +1,16 @@
-const { Model, DataTypes } = require("sequelize")
+const { Model, DataTypes, Sequelize } = require("sequelize")
 const { sequelize, associations } = require("../../sequelize")
 require("../fields/model")
 
 class Form extends Model {}
 Form.init(
   {
+    id: {
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
   },

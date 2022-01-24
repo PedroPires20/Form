@@ -1,24 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { Field, FormState } from "./types"
+import { FormState } from "./types"
 
 const initialState: FormState = {
+  id: "",
+  title: null,
+  description: null,
   all: [],
-  options: [],
-  fields: [],
-  title: "",
-  description: "",
 }
 
 export const formSlice = createSlice({
   name: "forms",
   initialState,
   reducers: {
-    fieldAdded: (state, action: PayloadAction<Field>) => {},
-    fieldChanged: (state, action: PayloadAction<Field>) => {},
-    fieldDeleted: (state, action: PayloadAction<Field>) => {},
+    titleChanged: (state, action: PayloadAction<string>) => {
+      state.title = action.payload
+    },
+    descriptionChanged: (state, action: PayloadAction<string>) => {
+      state.description = action.payload
+    },
   },
 })
 
 export const formReducer = formSlice.reducer
 
-export const { fieldAdded, fieldChanged, fieldDeleted } = formSlice.actions
+export const { descriptionChanged, titleChanged } = formSlice.actions

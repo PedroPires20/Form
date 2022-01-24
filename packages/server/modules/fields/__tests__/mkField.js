@@ -16,6 +16,7 @@ describe("[Fields] - mkField", () => {
     const { errors } = mkField({})
 
     expect(errors).toMatchObject({
+      order: { type: "required" },
       label: { type: "required" },
       options: { type: "required" },
       type: { type: "required" },

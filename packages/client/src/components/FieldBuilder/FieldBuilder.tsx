@@ -11,12 +11,18 @@ import {
   LabelEdit,
 } from "./FieldBuilderStyles"
 import { TextInput } from "../TextInput/TextInput"
-import { Field } from "../../redux/modules/forms/types"
-import { useAppDispatch } from "../../redux/store"
+import { Field } from "../../redux/modules/fields/types"
+import { useAppDispatch, useAppSelector } from "../../redux/store"
 import ActionButton from "../../shared/components/ActionButton/ActionButton"
 import { TextAreaInput } from "../TextAreaInput/TextAreaInput"
 import { hasOptions } from "../../shared/functions/hasOptions"
-import OptionBuilder from "../OptionBuilder/OptionBuilder"
+import OptionsBuilder from "../OptionsBuilder/OptionsBuilder"
+import {
+  fieldChanged,
+  fieldDeleted,
+  fieldOrderChanged,
+} from "../../redux/modules/fields/slice"
+import { optionDeleted } from "../../redux/modules/options/slice"
 
 type Props = {
   field: Field
@@ -24,16 +30,35 @@ type Props = {
 
 export function FieldBuilder({ field }: Props) {
   const [editing, setEditing] = useState({ label: false, description: false })
-  const [hasDescription, setHasDescription] = useState(false)
+  const [hasDescription, setHasDescription] = useState(
+    !(field.description === null)
+  )
   const [fieldData, setFieldData] = useState({
     label: field.label,
-    description: field.description,
+    description:
+      field.description === null ? "Insira uma descrição" : field.description,
   })
+  const options = useAppSelector((state) =>
+    Object.keys(state.options.byId)
+      .map((key) => state.options.byId[key])
+      .filter((option) => option.fieldId === field.id)
+      .sort((a, b) => a.order - b.order)
+  )
   const dispatch = useAppDispatch()
 
+  function deleteField() {
+    options.forEach((option) => dispatch(optionDeleted(option)))
+    dispatch(fieldDeleted(field))
+  }
+
   useEffect(() => {
-    console.log("dispatch field change")
-    dispatch(() => {})
+    dispatch(
+      fieldChanged({
+        ...field,
+        label: fieldData.label,
+        description: hasDescription ? fieldData.description : "",
+      })
+    )
   }, [fieldData])
 
   return (
@@ -41,30 +66,40 @@ export function FieldBuilder({ field }: Props) {
       <Label>
         <Actions>
           <ActionButton
+            tooltip="Editar campo"
             icon="pencil"
             onClick={() =>
               setEditing((prev) => ({ ...prev, label: !prev.label }))
             }
           />
           <ActionButton
+            tooltip="Subir campo"
             icon="arrowup"
-            onClick={() =>
-              setEditing((prev) => ({ ...prev, label: !prev.label }))
-            }
+            onClick={() => dispatch(fieldOrderChanged({ field, delta: -1 }))}
           />
           <ActionButton
+            tooltip="Descer campo"
             icon="arrowdown"
-            onClick={() =>
-              setEditing((prev) => ({ ...prev, label: !prev.label }))
-            }
+            onClick={() => dispatch(fieldOrderChanged({ field, delta: 1 }))}
           />
           <ActionButton
+            initActive={hasDescription}
+            tooltip={
+              hasDescription ? "Remover descrição" : "Adicionar descrição"
+            }
             icon="bars"
             onClick={() => setHasDescription((prev) => !prev)}
+          />
+          <ActionButton
+            color="var(--error)"
+            icon="xmark"
+            onClick={deleteField}
+            tooltip="Deletar campo"
           />
         </Actions>
         {editing.label ? (
           <LabelEdit
+            autoFocus={true}
             value={fieldData.label}
             onChange={(e) =>
               setFieldData((prev) => ({ ...prev, label: e.target.value }))
@@ -79,6 +114,7 @@ export function FieldBuilder({ field }: Props) {
           <Description>
             {editing.description ? (
               <DescriptionEdit
+                autoFocus={true}
                 value={fieldData.description}
                 onChange={(e) =>
                   setFieldData((prev) => ({
@@ -91,6 +127,7 @@ export function FieldBuilder({ field }: Props) {
               <DescriptionDisplay>{fieldData.description}</DescriptionDisplay>
             )}
             <ActionButton
+              tooltip="Editar descrição"
               icon="pencil"
               onClick={() =>
                 setEditing((prev) => ({
@@ -105,7 +142,11 @@ export function FieldBuilder({ field }: Props) {
       {field.type === "text" && <TextInput />}
       {field.type === "textarea" && <TextAreaInput />}
       {hasOptions(field.type) && (
-        <OptionBuilder fieldType={field.type} options={[]} />
+        <OptionsBuilder
+          fieldId={field.id}
+          fieldType={field.type}
+          options={options}
+        />
       )}
     </FieldBuilderContainer>
   )
