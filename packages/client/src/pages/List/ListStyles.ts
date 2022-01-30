@@ -6,6 +6,7 @@ export const ListPageContainer = styled.div`
     align-items: center;
     width: 70vw;
     max-width: 600px;
+    max-height: calc(100vh - 100px);
     margin: 40px auto 0;
     padding: 20px;
     border-radius: 5px;
@@ -15,8 +16,9 @@ export const ListPageContainer = styled.div`
 export const FormListContainer = styled.div`
     display: flex;
     flex-flow: column nowrap;
-    width: calc(100% - 40px);
-    padding: 10px 20px;
+    width: calc(100% - 10px);
+    height: calc(100vh - 120px);
+    padding: 10px 0;
     box-shadow: #00000063 0 0 4px 0px;
     border-radius: 5px;
     background-color: var(--light);
@@ -29,20 +31,26 @@ export const FormListHeader = styled.h1`
 `
 
 export const FormList = styled.ul`
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+    overflow: auto;
     margin: 0;
-    padding: 0;
+    padding: 0 10px;
     list-style-type: none;
 `
 
 export const FormContainer =  styled.li`
-    border: 1px solid #000;
     display: flex;
     flex-flow: row nowrap;
     padding: 10px;
+    align-items: baseline;
 `
 
 export const FromTitle = styled.h2`
     margin: 0;
+    font-size: 18px;
+    color: var(--dark-gray);
 `
 
 export const FromButtonsContainer = styled.div`
@@ -50,19 +58,4 @@ export const FromButtonsContainer = styled.div`
     flex-flow: row nowrap;
     column-gap: 0.7rem;
     margin-left: auto;
-`
-
-const FromActionButton = styled.button`
-
-`
-
-export const FormEditButton = styled(FromActionButton)` 
-
-`
-export const FormResultsButton = styled(FromActionButton)` 
-    
-`
-
-export const FromDeleteButton = styled(FromActionButton)` 
-    
 `
