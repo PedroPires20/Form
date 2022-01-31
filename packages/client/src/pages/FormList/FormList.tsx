@@ -3,12 +3,12 @@ import {
     ListPageContainer,
     FormListContainer,
     FormListHeader,
-    FormList
-} from "./ListStyles"
+    FormInfoList
+} from "./FormListStyles"
 import { FormListItem } from "../../components/FormListItem/FormListItem"
 import type { Form } from "../../redux/modules/forms/types"
 
-export function List() {
+export function FormList() {
     const formList: Form[] = [...Array(10).keys()].map((i) => {
         return {
             id: `${i}`,
@@ -21,7 +21,7 @@ export function List() {
     <ListPageContainer>
         <FormListContainer>
             <FormListHeader>Meus formulários</FormListHeader>
-            <FormList>                
+            <FormInfoList>                
             {
                 formList.map((form) => <FormListItem 
                 key={form.id}
@@ -30,7 +30,7 @@ export function List() {
                 description={form.description}
                 />
             )}
-            </FormList>
+            </FormInfoList>
         </FormListContainer>
     </ListPageContainer>
     )

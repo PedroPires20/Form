@@ -30,7 +30,7 @@ export const FormListHeader = styled.h1`
     font-size: 38px;
 `
 
-export const FormList = styled.ul`
+export const FormInfoList = styled.ul`
     display: flex;
     flex-flow: column nowrap;
     height: 100%;
