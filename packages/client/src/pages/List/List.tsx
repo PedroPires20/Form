@@ -9,14 +9,19 @@ import {
     FromButtonsContainer
 } from "./ListStyles"
 import ActionButton from "../../shared/components/ActionButton/ActionButton"
+import type { Form } from "../../redux/modules/forms/types"
 
 export function List() {
-    const formList = ["Form 1", "Form 2", "Form 3", "Form 4", "Form 5", "Form 1", "Form 2", "Form 3", "Form 4", "Form 5", "Form 1", "Form 2", "Form 3", "Form 4", "Form 5"]
+    const formList: Form[] = [{
+        id: '1',
+        title: "Form 1",
+        description: 'Este é o formulário 1'
+    }];
 
-    function FormListItem({ formName }: { formName: string }) {
+    function FormListItem({ title }: { title: string }) {
         return (
         <FormContainer>
-            <FromTitle>{formName}</FromTitle>
+            <FromTitle>{title}</FromTitle>
             <FromButtonsContainer>
                 <ActionButton
                 icon="pencil" 
@@ -46,7 +51,7 @@ export function List() {
             <FormListHeader>Meus formulários</FormListHeader>
             <FormList>                
             {
-                formList.map((name, index) => <FormListItem key={index} formName={name}/>)
+                formList.map((form) => <FormListItem key={form.id} title={form.title}/>)
             }
             </FormList>
         </FormListContainer>
