@@ -14,6 +14,7 @@
     "@types/jest": "^27.4.0",
     "@types/ramda": "^0.27.64",
     "@types/uuid": "^8.3.4",
+    "cypress": "^9.4.1",
     "lerna": "^4.0.0",
     "prettier": "^2.5.1",
     "typescript": "^4.4.4"
