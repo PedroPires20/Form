@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node-dev --respawn ./app.js",
-    "dev": "node-dev --respawn ./app.js",
+    "start": "pm2 start ./app.js -- --port 3000",
+    "dev": "pm2 start ./app.js --no-daemon --watch -- --port 3000",
     "build": "echo Backend build",
     "test": "jest",
     "test:watch": "jest --watch"

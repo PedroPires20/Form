@@ -19,7 +19,10 @@ import ActionButton from "../../shared/components/ActionButton/ActionButton"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
 import { fieldAdded } from "../../redux/modules/fields/slice"
 import { saveForm } from "../../redux/modules/forms/thunks"
-import {descriptionChanged, titleChanged} from "../../redux/modules/forms/slice"
+import {
+  descriptionChanged,
+  titleChanged,
+} from "../../redux/modules/forms/slice"
 
 export function Builder() {
   const [editing, setEditing] = useState({ title: false, desc: false })
@@ -27,8 +30,8 @@ export function Builder() {
     title: "Insira o título do form",
     description: "Insira a descrição do form",
   })
-  const title = useAppSelector(state => state.form.title)
-  const description = useAppSelector(state => state.form.description)
+  const title = useAppSelector((state) => state.form.title)
+  const description = useAppSelector((state) => state.form.description)
   const fields = useAppSelector((state) =>
     Object.keys(state.fields.byId)
       .map((key) => state.fields.byId[key])
@@ -43,7 +46,6 @@ export function Builder() {
         type: inputType,
         label: "Insira o nome do campo",
         description: null,
-        options: [],
       })
     )
   }
@@ -70,9 +72,7 @@ export function Builder() {
             <TitleInput
               defaultValue={title ?? "Insira o título do form"}
               autoFocus
-              onChange={(e) =>
-                dispatch(titleChanged(e.target.value))
-              }
+              onChange={(e) => dispatch(titleChanged(e.target.value))}
             />
           ) : (
             <BuilderTitle>{title ?? "Insira o título do form"}</BuilderTitle>
@@ -88,12 +88,12 @@ export function Builder() {
           {editing.desc ? (
             <DescriptionInput
               defaultValue={description ?? "Insira a descrição do form"}
-              onChange={(e) =>
-                dispatch(descriptionChanged(e.target.value))
-              }
+              onChange={(e) => dispatch(descriptionChanged(e.target.value))}
             />
           ) : (
-            <BuilderDescription>{description ?? "Insira a descrição do form"}</BuilderDescription>
+            <BuilderDescription>
+              {description ?? "Insira a descrição do form"}
+            </BuilderDescription>
           )}
           <ActionButton
             icon="pencil"
@@ -107,7 +107,7 @@ export function Builder() {
         <BuilderSubmit
           onClick={(e) => {
             e.preventDefault()
-            dispatch(saveForm())
+            dispatch(saveForm("create"))
           }}
         >
           Salvar

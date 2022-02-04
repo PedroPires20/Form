@@ -2,7 +2,6 @@ const express = require("express")
 const Form = require("./model")
 const User = require("../users/model")
 const Field = require("../fields/model")
-const mkForm = require("./helpers/mkForm")
 const hasErrors = require("../../shared/helpers/hasErrors")
 const createForm = require("./helpers/createForm")
 const router = express.Router()
@@ -17,6 +16,13 @@ router.get("/full/:id", async function (req, res) {
 router.get("/:id", async function (req, res) {
   const form = await Form.findByPk(req.params.id)
   res.status(form ? 200 : 404).send(form)
+})
+
+router.get("/", async function (req, res) {
+  const user = await User.findOne()
+
+  const forms = await Form.findAll({ where: { userId: user.id } })
+  res.send(forms)
 })
 
 router.post("/", async function (req, res) {

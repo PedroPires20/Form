@@ -1,40 +1,20 @@
 import axios from "axios"
 import { flipProp } from "../../../shared/functions/flipProp"
-import {CREATE_FORM} from "../../../shared/urls"
+import { CREATE_FORM, GET_USER_FORMS, UPDATE_FORM } from "../../../shared/urls"
 import { AppThunk } from "../../store"
+import { formsReceived } from "./slice"
 
 export function getAllForms(): AppThunk {
-  return () => {}
+  return (dispatch) => {
+    axios.get(GET_USER_FORMS).then((res) => {
+      dispatch(formsReceived(res.data))
+    })
+  }
 }
 
-const exampleForm = {
-  title: "Test form",
-  description: "Description test form",
-  userId: "03d66140-c91f-45ef-afbf-489e6a161c92",
-  fields: [
-    {
-      type: "text",
-      description: null,
-      label: "Label Field 1",
-      order: 0,
-      options: [],
-    },
-    {
-      type: "checkbox",
-      description: "Field 2",
-      label: "Label Field 2",
-      order: 1,
-      options: [
-        { name: "option 5", value: "5", order: 0 },
-        { name: "option 6", value: "6", order: 1 },
-        { name: "option 7", value: "7", order: 2 },
-        { name: "option 8", value: "8", order: 3 },
-      ],
-    },
-  ],
-}
+type SaveFormMode = "create" | "update"
 
-export function saveForm(): AppThunk {
+export function saveForm(mode: SaveFormMode): AppThunk {
   return (dispatch, getState) => {
     const options = getState().options
     const fields = getState().fields
@@ -44,7 +24,7 @@ export function saveForm(): AppThunk {
     const optionsIds = Object.keys(options.byId)
 
     const requestForm = {
-      //id: form.id,
+      id: form.id,
       title: form.title,
       description: form.description,
       userId: "03d66140-c91f-45ef-afbf-489e6a161c92",
@@ -58,6 +38,10 @@ export function saveForm(): AppThunk {
       }),
     }
 
-    axios.post(CREATE_FORM, requestForm).then(res => console.log(res.data))
+    if (mode === "create") {
+      axios.post(CREATE_FORM, requestForm).then((res) => console.log(res.data))
+    } else if (mode === "update") {
+      axios.put(UPDATE_FORM, requestForm).then((res) => console.log(res.data))
+    }
   }
 }
