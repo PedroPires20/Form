@@ -18,6 +18,14 @@ export const formSlice = createSlice({
     descriptionChanged: (state, action: PayloadAction<string>) => {
       state.description = action.payload
     },
+    currentFormChanged: (state, action: PayloadAction<{ id: string }>) => {
+      const form = state.all.find((form) => form.id === action.payload.id)
+      if (form) {
+        state.title = form.title
+        state.description = form.description
+        state.id = form.id
+      }
+    },
     formsReceived: (state, action: PayloadAction<Form[]>) => {
       state.all = action.payload
     },
@@ -26,5 +34,9 @@ export const formSlice = createSlice({
 
 export const formReducer = formSlice.reducer
 
-export const { descriptionChanged, formsReceived, titleChanged } =
-  formSlice.actions
+export const {
+  currentFormChanged,
+  descriptionChanged,
+  formsReceived,
+  titleChanged,
+} = formSlice.actions

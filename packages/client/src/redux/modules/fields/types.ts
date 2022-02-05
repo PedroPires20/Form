@@ -11,6 +11,7 @@ export type Field = {
   order: number
   label: string
   description?: string | null
+  formId: string
 }
 
 export type FieldsState = {

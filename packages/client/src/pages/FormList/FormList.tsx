@@ -16,12 +16,7 @@ export function FormList() {
         <FormListHeader>Meus formulários</FormListHeader>
         <FormInfoList>
           {forms.map((form) => (
-            <FormListItem
-              key={form.id}
-              id={form.id}
-              title={form.title}
-              description={form.description}
-            />
+            <FormListItem key={form.id} form={form} />
           ))}
         </FormInfoList>
       </FormListContainer>

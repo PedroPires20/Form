@@ -2,7 +2,8 @@ import axios from "axios"
 import { flipProp } from "../../../shared/functions/flipProp"
 import { CREATE_FORM, GET_USER_FORMS, UPDATE_FORM } from "../../../shared/urls"
 import { AppThunk } from "../../store"
-import { formsReceived } from "./slice"
+import { fetchFormFields } from "../fields/thunks"
+import { currentFormChanged, formsReceived } from "./slice"
 
 export function getAllForms(): AppThunk {
   return (dispatch) => {
@@ -43,5 +44,12 @@ export function saveForm(mode: SaveFormMode): AppThunk {
     } else if (mode === "update") {
       axios.put(UPDATE_FORM, requestForm).then((res) => console.log(res.data))
     }
+  }
+}
+
+export function changeCurrentForm(id: string): AppThunk {
+  return (dispatch) => {
+    dispatch(currentFormChanged({ id }))
+    dispatch(fetchFormFields(id))
   }
 }

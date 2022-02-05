@@ -12,6 +12,9 @@ export const ListPageContainer = styled.div`
     border-radius: 5px;
     box-shadow: #00000099 0px 8px 12px 0px;
     background-color: var(--primary);
+    @media(max-width: 700px){
+        width: 85vw;
+    }
 `
 export const FormListContainer = styled.div`
     display: flex;
@@ -25,6 +28,7 @@ export const FormListContainer = styled.div`
 `
 
 export const FormListHeader = styled.h1`
+    text-align: center;
     align-self: center;
     color: var(--dark-gray);
     font-size: 38px;

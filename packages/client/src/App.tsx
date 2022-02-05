@@ -21,6 +21,7 @@ export function App() {
         <Route exact path="/list" component={FormList}/>
         <Route exact path="/view" component={Viewer}/>
         <Route exact path="/register" component={Register}/>
+        <Route exact path="/edit" component={Builder} />
         <Route exact path="/" component={Builder} />
       </Switch>
     </BrowserRouter>

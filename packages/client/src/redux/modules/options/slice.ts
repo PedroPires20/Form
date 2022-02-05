@@ -67,6 +67,11 @@ export const optionsSlice = createSlice({
   name: "options",
   initialState,
   reducers: {
+    optionsReceived: (state, action: PayloadAction<FieldOption[]>) => {
+      action.payload.forEach((option) => {
+        state.byId[option.id] = option
+      })
+    },
     optionAdded: (state, action: PayloadAction<Omit<FieldOption, "order">>) => {
       const order = Object.keys(state.byId)
         .map(flipProp(state.byId))
@@ -110,5 +115,10 @@ export const optionsSlice = createSlice({
 
 export const optionsReducer = optionsSlice.reducer
 
-export const { optionAdded, optionChanged, optionOrderChanged, optionDeleted } =
-  optionsSlice.actions
+export const {
+  optionAdded,
+  optionChanged,
+  optionOrderChanged,
+  optionDeleted,
+  optionsReceived,
+} = optionsSlice.actions

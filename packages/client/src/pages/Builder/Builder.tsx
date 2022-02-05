@@ -30,11 +30,13 @@ export function Builder() {
     title: "Insira o título do form",
     description: "Insira a descrição do form",
   })
+  const id = useAppSelector((state) => state.form.id)
   const title = useAppSelector((state) => state.form.title)
   const description = useAppSelector((state) => state.form.description)
   const fields = useAppSelector((state) =>
     Object.keys(state.fields.byId)
       .map((key) => state.fields.byId[key])
+      .filter(field => id ? field.formId === id : true)
       .sort((a, b) => a.order - b.order)
   )
   const dispatch = useAppDispatch()
@@ -46,6 +48,7 @@ export function Builder() {
         type: inputType,
         label: "Insira o nome do campo",
         description: null,
+        formId: id
       })
     )
   }

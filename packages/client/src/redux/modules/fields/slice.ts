@@ -9,7 +9,6 @@ const initialState: FieldsState = {
       type: "text",
       label: "Insira o seu nome",
       description: null,
-      options: [],
       order: 0,
     },
     "89bfcb5f-a582-4f02-9f80-d1312c8806d7": {
@@ -17,7 +16,6 @@ const initialState: FieldsState = {
       type: "checkbox",
       label: "Criptos que gosta",
       description: "Selecione uma ou mais criptos que goste",
-      options: [],
       order: 1,
     },
     "8dd20b2b-b2d5-49a5-b27d-a5d2af5c3fed": {
@@ -25,7 +23,6 @@ const initialState: FieldsState = {
       type: "textarea",
       label: "Descreva seu protocolo favorito",
       description: null,
-      options: [],
       order: 2,
     },
     "21aa1196-d551-4de5-bed9-15641b8c5442": {
@@ -33,7 +30,6 @@ const initialState: FieldsState = {
       type: "radio",
       label: "Chain preferida",
       description: null,
-      options: [],
       order: 3,
     },
   },
@@ -43,6 +39,11 @@ export const fieldsSlice = createSlice({
   name: "fields",
   initialState,
   reducers: {
+    fieldsReceived: (state, action: PayloadAction<Field[]>) => {
+      action.payload.forEach((field) => {
+        state.byId[field.id] = field
+      })
+    },
     fieldAdded: (state, action: PayloadAction<Omit<Field, "order">>) => {
       const order = Object.keys(state.byId).length
       state.byId[action.payload.id] = { ...action.payload, order }
@@ -80,5 +81,10 @@ export const fieldsSlice = createSlice({
 
 export const fieldsReducer = fieldsSlice.reducer
 
-export const { fieldAdded, fieldChanged, fieldOrderChanged, fieldDeleted } =
-  fieldsSlice.actions
+export const {
+  fieldAdded,
+  fieldChanged,
+  fieldOrderChanged,
+  fieldDeleted,
+  fieldsReceived,
+} = fieldsSlice.actions
