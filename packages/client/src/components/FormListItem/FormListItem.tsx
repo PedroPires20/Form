@@ -7,17 +7,18 @@ import {
 } from "./FormListItemStyles"
 import ActionButton from "../../shared/components/ActionButton/ActionButton"
 import { Form } from "../../redux/modules/forms/types"
-import { useAppDispatch } from "../../redux/store"
-import { changeCurrentForm } from "../../redux/modules/forms/thunks"
-import {useHistory} from "react-router-dom"
+import { useHistory } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { formDeleted } from "../../redux/modules/forms/slice"
+import {deleteForm} from "../../redux/modules/forms/thunks"
 
 type Props = {
   form: Form
 }
 
 export function FormListItem({ form }: Props) {
-  const dispatch = useAppDispatch()
   const history = useHistory()
+  const dispatch = useDispatch()
   return (
     <FormListItemContainer>
       <FormInfoContainer>
@@ -29,21 +30,28 @@ export function FormListItem({ form }: Props) {
           icon="pencil"
           tooltip="Editar form"
           onClick={() => {
-            dispatch(changeCurrentForm(form.id))
-            history.push("/edit")
+            history.push("/edit/" + form.id)
           }}
         />
         <ActionButton
-          icon="bars"
-          tooltip="Visualizar resultados"
+          icon="arrowDownToBracket"
+          tooltip="Baixar resultados"
           color="var(--primary)"
+          onClick={() => {}}
+        />
+        <ActionButton
+          icon="arrowRightFromBracket"
+          tooltip="Visualizar form"
+          color="orange"
           onClick={() => {}}
         />
         <ActionButton
           icon="xmark"
           tooltip="Apagar formulário"
           color="var(--error)"
-          onClick={() => {}}
+          onClick={() => {
+            dispatch(deleteForm(form.id))
+          }}
         />
       </FromButtonsContainer>
     </FormListItemContainer>

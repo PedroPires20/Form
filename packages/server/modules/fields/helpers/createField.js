@@ -6,6 +6,7 @@ const mkField = require("./mkField")
 function createField(values) {
   const { data, errors } = mkField(values)
   delete data.id
+  delete data.formId
 
   if (data.options) {
     if (data.options.length) {

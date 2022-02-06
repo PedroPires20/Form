@@ -1,9 +1,23 @@
 import axios from "axios"
 import { flipProp } from "../../../shared/functions/flipProp"
-import { CREATE_FORM, GET_USER_FORMS, UPDATE_FORM } from "../../../shared/urls"
+import {
+  CREATE_FORM,
+  DELETE_FORM,
+  GET_USER_FORMS,
+  UPDATE_FORM,
+} from "../../../shared/urls"
 import { AppThunk } from "../../store"
 import { fetchFormFields } from "../fields/thunks"
-import { currentFormChanged, formsReceived } from "./slice"
+import {
+  currentFormChanged,
+  formAdded,
+  formDeleted,
+  formRequest,
+  formRequestError,
+  formsReceived,
+  formUpdated,
+} from "./slice"
+import { Form } from "./types"
 
 export function getAllForms(): AppThunk {
   return (dispatch) => {
@@ -13,10 +27,12 @@ export function getAllForms(): AppThunk {
   }
 }
 
-type SaveFormMode = "create" | "update"
-
-export function saveForm(mode: SaveFormMode): AppThunk {
+export function saveForm(
+  mode: "create" | "edit",
+  callback: () => void
+): AppThunk {
   return (dispatch, getState) => {
+    dispatch(formRequest())
     const options = getState().options
     const fields = getState().fields
     const form = getState().form
@@ -40,9 +56,33 @@ export function saveForm(mode: SaveFormMode): AppThunk {
     }
 
     if (mode === "create") {
-      axios.post(CREATE_FORM, requestForm).then((res) => console.log(res.data))
-    } else if (mode === "update") {
-      axios.put(UPDATE_FORM, requestForm).then((res) => console.log(res.data))
+      axios
+        .post<Form>(CREATE_FORM, requestForm)
+        .then((res) => {
+          callback()
+          dispatch(formAdded(res.data))
+        })
+        .catch((err) => {
+          dispatch(formRequestError())
+          console.log(err)
+        })
+    } else if (mode === "edit") {
+      axios
+        .put(UPDATE_FORM, requestForm)
+        .then(() => {
+          callback()
+          dispatch(
+            formUpdated({
+              id: form.id,
+              title: form.title,
+              description: form.description,
+            } as Form)
+          )
+        })
+        .catch((err) => {
+          dispatch(formRequestError())
+          console.log(err)
+        })
     }
   }
 }
@@ -51,5 +91,14 @@ export function changeCurrentForm(id: string): AppThunk {
   return (dispatch) => {
     dispatch(currentFormChanged({ id }))
     dispatch(fetchFormFields(id))
+  }
+}
+
+export function deleteForm(formId: string): AppThunk {
+  return (dispatch) => {
+    dispatch(formDeleted({ id: formId }))
+    axios
+      .delete(DELETE_FORM(formId))
+      .then(() => console.log("form deleted", formId))
   }
 }

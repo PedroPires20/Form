@@ -6,7 +6,8 @@ export type Form = {
 
 export type FormState = {
   all: Form[]
-  id: string
+  id: string | null
   title: string | null
   description: string | null
+  loading: boolean;
 }

@@ -1,5 +1,3 @@
-import { OptionId } from "../options/types"
-
 export type FieldId = string
 
 export type FieldWithOption = "checkbox" | "radio" | "select"
@@ -11,7 +9,7 @@ export type Field = {
   order: number
   label: string
   description?: string | null
-  formId: string
+  formId: string | null
 }
 
 export type FieldsState = {

@@ -16,9 +16,6 @@ export const formSlice = createSlice({
     formRequest: (state) => {
       state.loading = true
     },
-    formRequestError: (state) => {
-      state.loading = false
-    },
     titleChanged: (state, action: PayloadAction<string>) => {
       console.log(action.payload)
       state.title = action.payload
@@ -36,7 +33,7 @@ export const formSlice = createSlice({
     },
     formAdded: (state, action: PayloadAction<Form>) => {
       const { payload } = action
-      state.all.unshift({
+      state.all.push({
         id: payload.id,
         title: payload.title,
         description: payload.description,
@@ -74,7 +71,6 @@ export const {
   formAdded,
   formDeleted,
   formRequest,
-  formRequestError,
   formUpdated,
   formsReceived,
   titleChanged,

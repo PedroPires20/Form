@@ -1,3 +1,5 @@
+import {arrowDownToBracket} from "../assets/svg/arrow-down-to-bracket-solid"
+import {arrowRightFromBracket} from "../assets/svg/arrow-right-from-bracket-solid"
 import { arrowdown } from "../assets/svg/arrowdown"
 import { arrowup } from "../assets/svg/arrowup"
 import { bars } from "../assets/svg/bars"
@@ -11,6 +13,8 @@ const svgs = {
   xmark,
   arrowdown,
   arrowup,
+  arrowRightFromBracket,
+  arrowDownToBracket,
   bars,
   chevronLeft,
   chevronRight,

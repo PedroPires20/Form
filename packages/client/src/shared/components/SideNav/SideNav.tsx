@@ -18,8 +18,8 @@ function SideNav() {
         {getSvg("chevronRight")}
       </OpenBtn>
       <LinksContainer onClick={() => setActive(false)} active={active}>
-        <Link to="list">Forms</Link>
-        <Link to="register">Registre-se</Link>
+        <Link to="/">Forms</Link>
+        <Link to="/create">Criar Form</Link>
       </LinksContainer>
     </SideNavContainer>
   )
