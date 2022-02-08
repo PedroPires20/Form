@@ -7,7 +7,7 @@ export type Field = {
   id: string
   type: FieldTypes
   order: number
-  label: string
+  label: string | null
   description?: string | null
   formId: string | null
 }

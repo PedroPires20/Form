@@ -35,8 +35,6 @@ export const optionsSlice = createSlice({
         .filter((opt) => opt.fieldId === option.fieldId)
         .find((opt) => opt.order === currentOrder + delta)?.id
 
-      console.log(currentOrder, targetPositionId)
-
       if (targetPositionId) {
         state.byId[option.id].order = currentOrder + delta
         state.byId[targetPositionId].order = currentOrder

@@ -85,7 +85,7 @@ export function FieldBuilder({ field }: Props) {
         {editing.label ? (
           <LabelEdit
             autoFocus={true}
-            value={field.label}
+            value={field.label ?? "Insira o nome do campo"}
             onChange={(e) => {
               dispatch(
                 fieldChanged({
@@ -96,7 +96,7 @@ export function FieldBuilder({ field }: Props) {
             }}
           />
         ) : (
-          <LabelDisplay>{field.label}</LabelDisplay>
+          <LabelDisplay>{field.label ?? "Insira o nome do campo"}</LabelDisplay>
         )}
       </Label>
       <DescriptionContainer>

@@ -50,7 +50,6 @@ export function Builder({ type }: Props) {
   const history = useHistory()
 
   useEffect(() => {
-    console.log(type)
     if (id && type === "edit") {
       dispatch(changeCurrentForm(id))
     } else {
@@ -67,7 +66,7 @@ export function Builder({ type }: Props) {
       fieldAdded({
         id: v4(),
         type: inputType,
-        label: "Insira o nome do campo",
+        label: null,
         description: null,
         formId: id || null,
       })

@@ -7,6 +7,7 @@ const createForm = require("./helpers/createForm")
 const mkForm = require("./helpers/mkForm")
 const Option = require("../options/model")
 const { differenceWith } = require("ramda")
+const updateForm = require("./helpers/updateForm")
 const router = express.Router()
 
 router.get("/full/:id", async function (req, res) {
@@ -51,7 +52,7 @@ router.post("/", async function (req, res) {
 
 router.put("/", async function (req, res) {
   const user = await User.findOne()
-  const form = mkForm({ ...req.body, userId: user && user.id })
+  const form = updateForm({ ...req.body, userId: user && user.id })
   if (hasErrors(form.errors)) {
     res.status(400).send({ errors: form.errors })
   } else {

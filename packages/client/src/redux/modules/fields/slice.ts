@@ -35,8 +35,6 @@ export const fieldsSlice = createSlice({
         .filter((fiel) => fiel.formId === field.formId)
         .find((fie) => fie.order === currentOrder + delta)?.id
 
-      console.log(currentOrder, targetPositionId)
-
       if (targetPositionId) {
         state.byId[field.id].order = currentOrder + delta
         state.byId[targetPositionId].order = currentOrder

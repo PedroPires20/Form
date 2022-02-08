@@ -20,7 +20,6 @@ export const formSlice = createSlice({
       state.loading = false
     },
     titleChanged: (state, action: PayloadAction<string>) => {
-      console.log(action.payload)
       state.title = action.payload
     },
     descriptionChanged: (state, action: PayloadAction<string>) => {
