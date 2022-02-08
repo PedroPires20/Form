@@ -10,6 +10,7 @@ const usersController = require("./modules/users/controller")
 const formsController = require("./modules/forms/controller")
 const fieldsController = require("./modules/fields/controller")
 const optionsController = require("./modules/options/controller")
+const resultsController = require("./modules/results/controller")
 
 sequelize
   .authenticate()
@@ -33,6 +34,7 @@ app.use("/users", usersController)
 app.use("/forms", formsController)
 app.use("/fields", fieldsController)
 app.use("/options", optionsController)
+app.use("/results", resultsController)
 
 app.get("*", function (_, res) {
   res.sendFile(__dirname + "/dist/index.html")
