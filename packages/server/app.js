@@ -10,6 +10,7 @@ const usersController = require("./modules/users/controller")
 const formsController = require("./modules/forms/controller")
 const fieldsController = require("./modules/fields/controller")
 const optionsController = require("./modules/options/controller")
+const resultsController = require("./modules/results/controller")
 
 sequelize
   .authenticate()
@@ -33,6 +34,7 @@ app.use("/users", usersController)
 app.use("/forms", formsController)
 app.use("/fields", fieldsController)
 app.use("/options", optionsController)
+app.use("/results", resultsController)
 
 app.get("*", function (_, res) {
   res.sendFile(__dirname + "/dist/index.html")
@@ -44,14 +46,17 @@ app.use(function (_, _, next) {
 })
 
 // error handler
-app.use(function (err, req, res, _) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
+  if (res.headersSent) {
+    return next(err)
+  }
   res.locals.message = err.message
   res.locals.error = req.app.get("env") === "development" ? err : {}
 
   // render the error page
   res.status(err.status || 500)
-  res.render("error")
+  res.send("Request error")
 })
 
 app.listen(PORT, () => {

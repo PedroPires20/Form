@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {
   Actions,
   Description,
@@ -33,11 +33,6 @@ export function FieldBuilder({ field }: Props) {
   const [hasDescription, setHasDescription] = useState(
     !(field.description === null)
   )
-  const [fieldData, setFieldData] = useState({
-    label: field.label,
-    description:
-      field.description === null ? "Insira uma descrição" : field.description,
-  })
   const options = useAppSelector((state) =>
     Object.keys(state.options.byId)
       .map((key) => state.options.byId[key])
@@ -50,16 +45,6 @@ export function FieldBuilder({ field }: Props) {
     options.forEach((option) => dispatch(optionDeleted(option)))
     dispatch(fieldDeleted(field))
   }
-
-  useEffect(() => {
-    dispatch(
-      fieldChanged({
-        ...field,
-        label: fieldData.label,
-        description: hasDescription ? fieldData.description : "",
-      })
-    )
-  }, [fieldData])
 
   return (
     <FieldBuilderContainer>
@@ -100,13 +85,18 @@ export function FieldBuilder({ field }: Props) {
         {editing.label ? (
           <LabelEdit
             autoFocus={true}
-            value={fieldData.label}
-            onChange={(e) =>
-              setFieldData((prev) => ({ ...prev, label: e.target.value }))
-            }
+            value={field.label ?? "Insira o nome do campo"}
+            onChange={(e) => {
+              dispatch(
+                fieldChanged({
+                  ...field,
+                  label: e.target.value,
+                })
+              )
+            }}
           />
         ) : (
-          <LabelDisplay>{fieldData.label}</LabelDisplay>
+          <LabelDisplay>{field.label ?? "Insira o nome do campo"}</LabelDisplay>
         )}
       </Label>
       <DescriptionContainer>
@@ -115,16 +105,20 @@ export function FieldBuilder({ field }: Props) {
             {editing.description ? (
               <DescriptionEdit
                 autoFocus={true}
-                value={fieldData.description}
-                onChange={(e) =>
-                  setFieldData((prev) => ({
-                    ...prev,
-                    description: e.target.value,
-                  }))
-                }
+                value={field.description ?? "Insira uma descrição"}
+                onChange={(e) => {
+                  dispatch(
+                    fieldChanged({
+                      ...field,
+                      description: e.target.value,
+                    })
+                  )
+                }}
               />
             ) : (
-              <DescriptionDisplay>{fieldData.description}</DescriptionDisplay>
+              <DescriptionDisplay>
+                {field.description ?? "Insira uma descrição"}
+              </DescriptionDisplay>
             )}
             <ActionButton
               tooltip="Editar descrição"

@@ -1,16 +1,14 @@
 const { prop } = require("ramda")
 const hasErrors = require("../../../shared/helpers/hasErrors")
-const createOption = require("../../options/helpers/createOption")
+const updateOption = require("../../options/helpers/updateOption")
 const mkField = require("./mkField")
 
-function createField(values) {
+function updateField(values) {
   const { data, errors } = mkField(values)
-  delete data.id
-  delete data.formId
 
   if (data.options) {
     if (data.options.length) {
-      const options = data.options.map(createOption)
+      const options = data.options.map(updateOption)
       const optionsErrors = options.map(prop("errors")).filter(hasErrors)
       data.options = options.map(prop("data"))
       if (optionsErrors.length) errors.options = optionsErrors
@@ -22,4 +20,4 @@ function createField(values) {
   return { data, errors }
 }
 
-module.exports = createField
+module.exports = updateField

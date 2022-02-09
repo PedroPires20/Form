@@ -5,6 +5,7 @@ import { fieldsReducer } from "./modules/fields/slice"
 import { formReducer } from "./modules/forms/slice"
 import { optionsReducer } from "./modules/options/slice"
 import { userReducer } from "./modules/user/slice"
+import logger from "redux-logger"
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     options: optionsReducer,
     fields: fieldsReducer,
   },
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 })
 
 export type RootState = ReturnType<typeof store.getState>

@@ -17,9 +17,10 @@ Form.init(
   { sequelize, modelName: "form" }
 )
 
-associations.assign(({ user, field }) => {
+associations.assign(({ user, field, result }) => {
   Form.User = Form.belongsTo(user)
   Form.Fields = Form.hasMany(field)
+  Form.Results = Form.hasMany(result)
 })
 
 module.exports = Form
