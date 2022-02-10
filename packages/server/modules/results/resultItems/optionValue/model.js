@@ -10,6 +10,7 @@ OptionValue.init(
       allowNull: false,
       primaryKey: true,
     },
+    fieldId: DataTypes.STRING,
     optionId: DataTypes.STRING,
     value: DataTypes.STRING,
   },

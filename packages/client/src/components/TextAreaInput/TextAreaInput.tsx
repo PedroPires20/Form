@@ -1,15 +1,9 @@
 import { TextInput } from "./TextAreaInputStyles"
 
-interface Props {
-    placeholder?: string
-    disabled?: boolean
+type Props =  {
+  onChange?: (value: string) => void
 }
 
-export function TextAreaInput({
-    placeholder,
-    disabled,
-}: Props) {
-    return <TextInput 
-        placeholder={placeholder}
-    />
+export function TextAreaInput({ onChange }: Props) {
+  return <TextInput onChange={e => onChange && onChange(e.target.value)} />
 }

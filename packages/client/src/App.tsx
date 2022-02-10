@@ -18,7 +18,7 @@ export function App() {
     <BrowserRouter>
       <SideNav />
       <Switch>
-        <Route exact path="/view" component={Viewer} />
+        <Route exact path="/view/:id" component={Viewer} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/edit/:id">
           <Builder type="edit" />

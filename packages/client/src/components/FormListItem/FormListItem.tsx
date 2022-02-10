@@ -10,7 +10,7 @@ import { Form } from "../../redux/modules/forms/types"
 import { useHistory } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { formDeleted } from "../../redux/modules/forms/slice"
-import {deleteForm} from "../../redux/modules/forms/thunks"
+import { deleteForm } from "../../redux/modules/forms/thunks"
 
 type Props = {
   form: Form
@@ -43,7 +43,9 @@ export function FormListItem({ form }: Props) {
           icon="arrowRightFromBracket"
           tooltip="Visualizar form"
           color="orange"
-          onClick={() => {}}
+          onClick={() => {
+            history.push("/view/" + form.id)
+          }}
         />
         <ActionButton
           icon="xmark"

@@ -6,6 +6,7 @@ import { formReducer } from "./modules/forms/slice"
 import { optionsReducer } from "./modules/options/slice"
 import { userReducer } from "./modules/user/slice"
 import logger from "redux-logger"
+import { resultsReducer } from "./modules/results/slice"
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     form: formReducer,
     options: optionsReducer,
     fields: fieldsReducer,
+    results: resultsReducer,
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 })
