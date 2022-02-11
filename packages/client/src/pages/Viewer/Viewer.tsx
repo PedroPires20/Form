@@ -1,4 +1,3 @@
-import React from "react"
 import {
   FormContainer,
   FormHeader,
@@ -12,121 +11,203 @@ import {
 } from "./ViewerStyles"
 import { TextInput } from "./../../components/TextInput/TextInput"
 import { CheckboxInput } from "./../../components/CheckboxInput/CheckboxInput"
+import { useAppDispatch, useAppSelector } from "../../redux/store"
+import { useHistory, useParams } from "react-router-dom"
+import { Field } from "../../redux/modules/fields/types"
+import { RadioInput } from "../../components/RadioInput/RadioInput"
+import { MouseEvent, useEffect, useState } from "react"
+import { changeCurrentForm } from "../../redux/modules/forms/thunks"
+import { TextAreaInput } from "../../components/TextAreaInput/TextAreaInput"
+import { currentFormChanged } from "../../redux/modules/forms/slice"
+import { FieldOption } from "../../redux/modules/options/types"
+import { sendAnswer } from "../../redux/modules/results/thunks"
 
-interface TextInputFormValues {
-  type: "text"
-  name: string
-  label: string
-  description?: string
-  placeholder: string
+function OptionsViewer({
+  options,
+  type,
+  onChange,
+}: {
+  options: FieldOption[]
+  type: string
+  onChange: (options: string[]) => void
+}) {
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([])
+
+  useEffect(() => {
+    onChange(selectedOptions)
+  }, [selectedOptions])
+
+  return (
+    <>
+      {options.map((option) => {
+        const checked = selectedOptions.includes(option.id)
+
+        switch (type) {
+          case "checkbox":
+            return (
+              <CheckboxInput
+                key={option.id}
+                name={option.name}
+                value={checked}
+                onChange={(value) =>
+                  value
+                    ? setSelectedOptions((prev) => [...prev, option.id])
+                    : setSelectedOptions((prev) =>
+                        prev.filter((optId) => optId !== option.id)
+                      )
+                }
+              />
+            )
+          case "radio":
+            return (
+              <RadioInput
+                key={option.id}
+                name={option.name}
+                value={checked}
+                onChange={() => setSelectedOptions([option.id])}
+              />
+            )
+          default:
+            return <></>
+        }
+      })}
+    </>
+  )
 }
 
-interface RadioInputFormValues {
-  type: "radio"
-  name: string
-  label: string
-  description?: string
-  options: {
-    name: string
-    value: string
-  }[]
-}
-
-interface BuilderFormValues {
-  title: string
-  description: string
-  fields: Array<TextInputFormValues | RadioInputFormValues>
+function FieldViewer({
+  field,
+  onChange,
+}: {
+  field: Field
+  onChange: (value: { value?: string; options?: string[] }) => void
+}) {
+  const options = useAppSelector((state) =>
+    Object.keys(state.options.byId)
+      .map((key) => state.options.byId[key])
+      .filter((option) => option.fieldId === field.id)
+      .sort((a, b) => a.order - b.order)
+  )
+  switch (field.type) {
+    case "text":
+      return (
+        <>
+          <FormLabel>{field.label}</FormLabel>
+          {field.description && (
+            <FieldDescription>{field.description}</FieldDescription>
+          )}
+          <TextInput
+            onChange={(e) => {
+              onChange({ value: e.target.value })
+            }}
+          />
+        </>
+      )
+    case "textarea":
+      return (
+        <>
+          <FormLabel>{field.label}</FormLabel>
+          {field.description && (
+            <FieldDescription>{field.description}</FieldDescription>
+          )}
+          <TextAreaInput
+            onChange={(value) => {
+              onChange({ value })
+            }}
+          />
+        </>
+      )
+    case "checkbox":
+      return (
+        <OptionElementContainer>
+          <FormLabel>{field.label}</FormLabel>
+          {field.description && (
+            <FieldDescription>{field.description}</FieldDescription>
+          )}
+          {
+            <OptionsViewer
+              options={options}
+              type={field.type}
+              onChange={(options) => onChange({ options })}
+            />
+          }
+        </OptionElementContainer>
+      )
+    case "radio":
+      return (
+        <OptionElementContainer>
+          <FormLabel>{field.label}</FormLabel>
+          {field.description && (
+            <FieldDescription>{field.description}</FieldDescription>
+          )}
+          <OptionsViewer
+            options={options}
+            type={field.type}
+            onChange={(options) => onChange({ options })}
+          />
+        </OptionElementContainer>
+      )
+    default:
+      return <></>
+  }
 }
 
 export function Viewer() {
-  const formData: BuilderFormValues = {
-    title: "Primeiro formulário",
-    description: "Este é o primeiro formulário do Form, criado para testes.",
-    fields: [
-      {
-        type: "text",
-        name: "test",
-        label: "Este é um campo de texto",
-        placeholder: "Entre um texto aqui",
-      },
-      {
-        type: "radio",
-        name: "options",
-        label: "Este é um campo de opções checkbox",
-        description: "Descrição do campo aqui",
-        options: [
-          {
-            name: "Opção 1",
-            value: "1",
-          },
-          {
-            name: "Opção 2",
-            value: "2",
-          },
-          {
-            name: "Opção 3",
-            value: "3",
-          },
-          {
-            name: "Opção 4",
-            value: "4",
-          },
-          {
-            name: "Opção 5",
-            value: "5",
-          },
-        ],
-      },
-    ],
+  const { id } = useParams<{ id: string }>()
+  const form = useAppSelector((state) => state.form)
+  const fields = useAppSelector((state) =>
+    Object.keys(state.fields.byId)
+      .map((key) => state.fields.byId[key])
+      .filter((field) => field.formId === id)
+      .sort((a, b) => a.order - b.order)
+  )
+  const loading = useAppSelector(state => state.results.loading)
+  const dispatch = useAppDispatch()
+  const history = useHistory()
+  const [answers, setAnswers] = useState<
+    Record<string, { value?: string; options?: string[] }>
+  >({})
+
+  function handleSubmit(e: MouseEvent<HTMLButtonElement>) {
+    e.preventDefault()
+    dispatch(sendAnswer(answers, () => {
+      history.push("/")
+    }))
   }
+
+  useEffect(() => {
+    dispatch(currentFormChanged({ id }))
+  }, [form.all])
+
+  useEffect(() => {
+    dispatch(changeCurrentForm(id))
+  }, [])
+
+  useEffect(() => {
+    // console.log(answers)
+  }, [answers])
 
   return (
     <ViewerContainer>
       <FormContainer>
-        <FormHeader>{formData.title}</FormHeader>
-        <FormDescription>{formData.description}</FormDescription>
+        <FormHeader>{form.title}</FormHeader>
+        {form.description && (
+          <FormDescription>{form.description}</FormDescription>
+        )}
         <ViewerForm>
-          {formData.fields.map((fieldData, index) => {
-            switch (fieldData.type) {
-              case "text":
-                return (
-                  <>
-                    <FormLabel>{fieldData.label}</FormLabel>
-                    {fieldData.description && (
-                      <FieldDescription>
-                        {fieldData.description}
-                      </FieldDescription>
-                    )}
-                    <TextInput
-                      key={index}
-                      placeholder={fieldData.placeholder}
-                      onChange={() => {}}
-                    />
-                  </>
-                )
-              case "radio":
-                return (
-                  <OptionElementContainer key={index}>
-                    <FormLabel>{fieldData.label}</FormLabel>
-                    {fieldData.description && (
-                      <FieldDescription>
-                        {fieldData.description}
-                      </FieldDescription>
-                    )}
-                    {fieldData.options.map((optionData, index) => (
-                      <CheckboxInput
-                        key={index}
-                        name={optionData.name}
-                        value={optionData.value === "true"}
-                      />
-                    ))}
-                  </OptionElementContainer>
-                )
-            }
-          })}
+          {fields.map((field) => (
+            <FieldViewer
+              key={field.id}
+              field={field}
+              onChange={(value) =>
+                setAnswers((prev) => ({ ...prev, [field.id]: value }))
+              }
+            />
+          ))}
           <ViewerButtons>
-            <button type="reset">Redefinir</button>
-            <button type="submit">Enviar respostas</button>
+            <button type="button" disabled={loading} onClick={handleSubmit}>
+              Enviar respostas
+            </button>
           </ViewerButtons>
         </ViewerForm>
       </FormContainer>
