@@ -11,13 +11,19 @@ const formsController = require("./modules/forms/controller")
 const fieldsController = require("./modules/fields/controller")
 const optionsController = require("./modules/options/controller")
 const resultsController = require("./modules/results/controller")
+const User = require("./modules/users/model")
 
 sequelize
   .authenticate()
-  .then(() => {
+  .then(async () => {
     console.log("Database Connected")
     associations.apply()
-    sequelize.sync({ force: false }).then(() => console.log("Database Synced"))
+    await sequelize.sync({ force: false }).then(() => console.log("Database Synced"))
+    const user = await User.findOne()
+    if(!user) {
+      await User.create({ username: "baseuser" })
+      console.log("Base user created!")
+    }
   })
   .catch((err) => console.log("Error connecting to database", err))
 
