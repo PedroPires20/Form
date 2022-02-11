@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "yarn lerna run dev --stream",
     "server": "yarn workspace @form/server",
-    "client": "yarn workspace @form/client"
+    "client": "yarn workspace @form/client",
+    "build": "rm -rf dist && yarn client build && mv ./packages/client/dist ./dist",
+    "start": "yarn server start"
   },
   "workspaces": [
     "packages/*"

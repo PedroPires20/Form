@@ -4,10 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "pm2:start": "pm2 start ./app.js -- --port 3000",
+    "pm2:start": "pm2 start ./app.js --no-daemon -- --port 3000",
     "pm2:dev": "pm2 start ./app.js --no-daemon --watch -- --port 3000",
+    "start": "node ./app.js",
     "dev": "node-dev ./app.js --respawn",
-    "start": "node-dev ./app.js --respawn",
     "build": "echo Backend build",
     "test": "jest",
     "test:watch": "jest --watch"

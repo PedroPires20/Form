@@ -28,7 +28,7 @@ app.use(logger("dev"))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, "dist")))
+app.use(express.static(path.join(__dirname, "/../../dist")))
 
 app.use("/users", usersController)
 app.use("/forms", formsController)
@@ -37,7 +37,7 @@ app.use("/options", optionsController)
 app.use("/results", resultsController)
 
 app.get("*", function (_, res) {
-  res.sendFile(__dirname + "/dist/index.html")
+  res.sendFile(__dirname + "/../../dist/index.html")
 })
 
 // catch 404 and forward to error handler
