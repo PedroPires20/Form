@@ -83,11 +83,15 @@ export const ViewerButtons = styled.div`
     font-weight: 600;
   }
 
+  button:disabled {
+    background-color: var(--dark-gray);
+  }
+
   button:hover {
     filter: brightness(120%);
   }
 
-  & button:active {
+  button:active {
     filter: brightness(80%);
   }
 `

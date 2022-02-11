@@ -12,7 +12,7 @@ import {
 import { TextInput } from "./../../components/TextInput/TextInput"
 import { CheckboxInput } from "./../../components/CheckboxInput/CheckboxInput"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
-import { useParams } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import { Field } from "../../redux/modules/fields/types"
 import { RadioInput } from "../../components/RadioInput/RadioInput"
 import { MouseEvent, useEffect, useState } from "react"
@@ -161,14 +161,18 @@ export function Viewer() {
       .filter((field) => field.formId === id)
       .sort((a, b) => a.order - b.order)
   )
+  const loading = useAppSelector(state => state.results.loading)
   const dispatch = useAppDispatch()
+  const history = useHistory()
   const [answers, setAnswers] = useState<
     Record<string, { value?: string; options?: string[] }>
   >({})
 
   function handleSubmit(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
-    dispatch(sendAnswer(answers))
+    dispatch(sendAnswer(answers, () => {
+      history.push("/")
+    }))
   }
 
   useEffect(() => {
@@ -201,7 +205,7 @@ export function Viewer() {
             />
           ))}
           <ViewerButtons>
-            <button type="button" onClick={handleSubmit}>
+            <button type="button" disabled={loading} onClick={handleSubmit}>
               Enviar respostas
             </button>
           </ViewerButtons>

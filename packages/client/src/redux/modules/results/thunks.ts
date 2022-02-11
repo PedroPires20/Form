@@ -4,7 +4,8 @@ import { AppThunk } from "../../store"
 import { answerSent, resultRequest, sendAnswerFailed } from "./slice"
 
 export function sendAnswer(
-  answers: Record<string, { value?: string; options?: string[] }>
+  answers: Record<string, { value?: string; options?: string[] }>,
+  callback: () => void
 ): AppThunk {
   return (dispatch, getState) => {
     dispatch(resultRequest())
@@ -38,6 +39,7 @@ export function sendAnswer(
       .then((res) => {
         console.log(res.data)
         dispatch(answerSent())
+        callback()
       })
       .catch(() => {
         dispatch(sendAnswerFailed())
