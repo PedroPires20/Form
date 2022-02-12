@@ -10,7 +10,7 @@ Field.init(
       allowNull: false,
       primaryKey: true,
     },
-    order: DataTypes.NUMBER,
+    order: DataTypes.INTEGER,
     label: DataTypes.STRING,
     description: DataTypes.TEXT,
     type: DataTypes.STRING,
