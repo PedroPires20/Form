@@ -75,6 +75,9 @@ export const BuilderSubmit = styled.button`
   margin-top: 20px;
   padding: 5px 10px;
   color: var(--light);
+  &:disabled {
+    background: var(--dark-gray);
+  }
 `
 
 export const transparentInput = css`

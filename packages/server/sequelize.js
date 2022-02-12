@@ -1,9 +1,24 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require("sequelize")
+let sequelize;
 
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: './database.sqlite'
-});
+if (process.env.NODE_ENV === "production") {
+  console.log("-------- production -----------")
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+  })
+} else {
+  console.log("-------- development -----------")
+  sequelize = new Sequelize({
+    dialect: "sqlite",
+    storage: "./database.sqlite",
+    logging: false,
+  })
+}
 
 function mkAssociations() {
   const associations = []
@@ -12,12 +27,12 @@ function mkAssociations() {
       associations.push(association)
     },
     apply: function () {
-      associations.forEach(assoc => assoc(sequelize.models))
-    }
+      associations.forEach((assoc) => assoc(sequelize.models))
+    },
   }
 }
 
 module.exports = {
   sequelize,
-  associations: mkAssociations()
+  associations: mkAssociations(),
 }

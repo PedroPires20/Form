@@ -27,27 +27,4 @@ describe("[Forms] - mkForm", () => {
       fields: { type: "required" },
     })
   })
-  it("Should check for emtpy fields", () => {
-    const { errors } = mkForm({ ...validForm, fields: [] })
-
-    expect(errors).toMatchObject({
-      fields: { type: "empty list" },
-    })
-  })
-  it("Should check for invalid fields", () => {
-    const { errors } = mkForm({
-      ...validForm,
-      fields: [
-        { type: "text", lacklabel: "anything", options: [] },
-        { type: "checkbox", label: "anything", options: [{ name: "option1" }] },
-      ],
-    })
-
-    expect(errors).toMatchObject({
-      fields: [
-        { label: { type: "required" } },
-        { options: [{ value: { type: "required" } }] },
-      ],
-    })
-  })
 })
