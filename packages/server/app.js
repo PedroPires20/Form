@@ -43,7 +43,7 @@ app.use("/options", optionsController)
 app.use("/results", resultsController)
 
 app.get("*", function (_, res) {
-  res.sendFile(__dirname + "/../../dist/index.html")
+  res.sendFile(path.resolve(__dirname , "../../dist/index.html"))
 })
 
 // catch 404 and forward to error handler
