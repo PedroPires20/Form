@@ -5,13 +5,17 @@
   "scripts": {
     "dev": "yarn lerna run dev --stream",
     "server": "yarn workspace @form/server",
-    "client": "yarn workspace @form/client"
+    "client": "yarn workspace @form/client",
+    "build": "rm -rf dist && yarn client build && mv ./packages/client/dist ./dist",
+    "test": "yarn lerna run test --stream",
+    "start": "yarn server start"
   },
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
     "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.17",
     "@types/ramda": "^0.27.64",
     "@types/uuid": "^8.3.4",
     "lerna": "^4.0.0",

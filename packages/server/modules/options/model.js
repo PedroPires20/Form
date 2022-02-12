@@ -12,7 +12,7 @@ Option.init(
     },
     name: DataTypes.STRING,
     value: DataTypes.STRING,
-    order: DataTypes.NUMBER,
+    order: DataTypes.INTEGER,
   },
   { sequelize, modelName: "option" }
 )

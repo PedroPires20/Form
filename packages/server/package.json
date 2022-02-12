@@ -4,10 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "pm2:start": "pm2 start ./app.js -- --port 3000",
+    "pm2:start": "pm2 start ./app.js --no-daemon -- --port 3000",
     "pm2:dev": "pm2 start ./app.js --no-daemon --watch -- --port 3000",
+    "start": "node ./app.js",
     "dev": "node-dev ./app.js --respawn",
-    "start": "node-dev ./app.js --respawn",
     "build": "echo Backend build",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -22,6 +22,8 @@
     "http-errors": "^2.0.0",
     "morgan": "^1.10.0",
     "node-dev": "^7.1.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.12.5",
     "sqlite3": "^5.0.2"
   }
