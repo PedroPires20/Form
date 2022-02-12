@@ -7,7 +7,7 @@
     "server": "yarn workspace @form/server",
     "client": "yarn workspace @form/client",
     "build": "rm -rf dist && yarn client build && mv ./packages/client/dist ./dist",
-    "test": "yarn lerna run test",
+    "test": "yarn lerna run test --stream",
     "start": "yarn server start"
   },
   "workspaces": [
