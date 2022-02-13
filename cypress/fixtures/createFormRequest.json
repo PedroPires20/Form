@@ -1,0 +1,126 @@
+{
+    "serverBaseUrl": "http://localhost:3000",
+    "requestData": {
+        "id": null,
+        "title": "Sistemas operacionais e sociedade",
+        "description": "O objetivo deste formulário é auxiliar na compreensão do papel dos principais sistemas operacionais na vida das pessoas.\nRespondendo este formulário com informações sobre como você interage com sistemas operacionais no seu dia a dia auxiliará bastante em uma pesquisa que busca compreender mais sobre esse tema",
+        "userId": "03d66140-c91f-45ef-afbf-489e6a161c92",
+        "fields": [
+            {
+                "id": "d11c9622-b4c6-4f7d-ad19-d1b4d65b4c35",
+                "type": "text",
+                "label": "Entre sua idade",
+                "description": "Não se preocupe. Mantemos toda informação anonimizada, mas a idade é um dado importante para o nosso estudo",
+                "formId": null,
+                "order": 0,
+                "options": []
+            },
+            {
+                "id": "9002ae34-24b8-4204-bdfa-ecb70dd496a8",
+                "type": "radio",
+                "label": "Selecione seu sistema operacional preferido",
+                "description": null,
+                "formId": null,
+                "order": 1,
+                "options": [
+                    {
+                        "id": "55e53ac5-cf8e-4351-9647-b1e9fb69f36e",
+                        "fieldId": "9002ae34-24b8-4204-bdfa-ecb70dd496a8",
+                        "name": "Windows",
+                        "value": "false",
+                        "order": 2
+                    },
+                    {
+                        "id": "16759ea6-edfe-4ede-b4a1-cb3d084a3d25",
+                        "fieldId": "9002ae34-24b8-4204-bdfa-ecb70dd496a8",
+                        "name": "Linux",
+                        "value": "false",
+                        "order": 1
+                    },
+                    {
+                        "id": "851ac80e-a218-4997-8a02-5a9387238be2",
+                        "fieldId": "9002ae34-24b8-4204-bdfa-ecb70dd496a8",
+                        "name": "macOS",
+                        "value": "false",
+                        "order": 0
+                    },
+                    {
+                        "id": "6ab77a26-580f-4246-af05-f6436ef80f7b",
+                        "fieldId": "9002ae34-24b8-4204-bdfa-ecb70dd496a8",
+                        "name": "Outro",
+                        "value": "false",
+                        "order": 3
+                    }
+                ]
+            },
+            {
+                "id": "8952d52d-73c8-478f-925e-6ac91055f0fc",
+                "type": "checkbox",
+                "label": "Marque a seguir os sistemas operacionais com os quais você tem contado diariamente:",
+                "description": null,
+                "formId": null,
+                "order": 2,
+                "options": [
+                    {
+                        "id": "78391e8c-6bdd-41ad-92f1-d6122e5c099e",
+                        "fieldId": "8952d52d-73c8-478f-925e-6ac91055f0fc",
+                        "name": "Android",
+                        "value": "false",
+                        "order": 0
+                    },
+                    {
+                        "id": "215e4585-3d71-434b-83ba-b3a563024438",
+                        "fieldId": "8952d52d-73c8-478f-925e-6ac91055f0fc",
+                        "name": "iOS",
+                        "value": "false",
+                        "order": 1
+                    },
+                    {
+                        "id": "d19059d2-bcc3-402e-adda-1d92e585d7e4",
+                        "fieldId": "8952d52d-73c8-478f-925e-6ac91055f0fc",
+                        "name": "Windows",
+                        "value": "false",
+                        "order": 2
+                    },
+                    {
+                        "id": "05633626-66d9-4663-a464-7e3d7f413cdd",
+                        "fieldId": "8952d52d-73c8-478f-925e-6ac91055f0fc",
+                        "name": "Linux",
+                        "value": "false",
+                        "order": 3
+                    },
+                    {
+                        "id": "2fb9e2c1-ffff-4b33-8459-bc6cfa769541",
+                        "fieldId": "8952d52d-73c8-478f-925e-6ac91055f0fc",
+                        "name": "macOS",
+                        "value": "false",
+                        "order": 4
+                    },
+                    {
+                        "id": "d87d2181-5588-4d10-8a86-2be81e08d18f",
+                        "fieldId": "8952d52d-73c8-478f-925e-6ac91055f0fc",
+                        "name": "Chrome OS",
+                        "value": "false",
+                        "order": 5
+                    },
+                    {
+                        "id": "f4f86b2c-3cfb-42ed-889e-28c4c82c1ac0",
+                        "fieldId": "8952d52d-73c8-478f-925e-6ac91055f0fc",
+                        "name": "Outro",
+                        "value": "false",
+                        "order": 6
+                    }
+                ]
+            },
+            {
+                "id": "4f61d05e-fa47-45c4-80fb-812db9374076",
+                "type": "textarea",
+                "label": "Comente brevemente sobre a sua experiência com os sistemas operacionais que usa:",
+                "description": "Responder com informações relevantes ajudará bastante nas conclusões de nosso estudo",
+                "formId": null,
+                "order": 3,
+                "options": []
+            }
+        ]
+    }
+}

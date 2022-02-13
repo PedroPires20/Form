@@ -21,6 +21,7 @@ import { TextAreaInput } from "../../components/TextAreaInput/TextAreaInput"
 import { currentFormChanged } from "../../redux/modules/forms/slice"
 import { FieldOption } from "../../redux/modules/options/types"
 import { sendAnswer } from "../../redux/modules/results/thunks"
+import { setTestTarget } from "../../shared/functions/setTestTarget"
 
 function OptionsViewer({
   options,
@@ -92,9 +93,9 @@ function FieldViewer({
     case "text":
       return (
         <>
-          <FormLabel>{field.label}</FormLabel>
+          <FormLabel {...setTestTarget("VF-item-label")}>{field.label}</FormLabel>
           {field.description && (
-            <FieldDescription>{field.description}</FieldDescription>
+            <FieldDescription {...setTestTarget("VF-item-description")}>{field.description}</FieldDescription>
           )}
           <TextInput
             onChange={(e) => {
@@ -106,9 +107,9 @@ function FieldViewer({
     case "textarea":
       return (
         <>
-          <FormLabel>{field.label}</FormLabel>
+          <FormLabel {...setTestTarget("VF-item-label")}>{field.label}</FormLabel>
           {field.description && (
-            <FieldDescription>{field.description}</FieldDescription>
+            <FieldDescription {...setTestTarget("VF-item-description")}>{field.description}</FieldDescription>
           )}
           <TextAreaInput
             onChange={(value) => {
@@ -120,9 +121,9 @@ function FieldViewer({
     case "checkbox":
       return (
         <OptionElementContainer>
-          <FormLabel>{field.label}</FormLabel>
+          <FormLabel {...setTestTarget("VF-item-label")}>{field.label}</FormLabel>
           {field.description && (
-            <FieldDescription>{field.description}</FieldDescription>
+            <FieldDescription {...setTestTarget("VF-item-label")}>{field.description}</FieldDescription>
           )}
           {
             <OptionsViewer
@@ -136,9 +137,9 @@ function FieldViewer({
     case "radio":
       return (
         <OptionElementContainer>
-          <FormLabel>{field.label}</FormLabel>
+          <FormLabel {...setTestTarget("VF-item-label")}>{field.label}</FormLabel>
           {field.description && (
-            <FieldDescription>{field.description}</FieldDescription>
+            <FieldDescription {...setTestTarget("VF-item-label")}>{field.description}</FieldDescription>
           )}
           <OptionsViewer
             options={options}
@@ -192,9 +193,9 @@ export function Viewer() {
       <FormContainer>
         <FormHeader>{form.title}</FormHeader>
         {form.description && (
-          <FormDescription>{form.description}</FormDescription>
+          <FormDescription {...setTestTarget("viewer-form-description")}>{form.description}</FormDescription>
         )}
-        <ViewerForm>
+        <ViewerForm {...setTestTarget("viewer-form")}>
           {fields.map((field) => (
             <FieldViewer
               key={field.id}
@@ -205,7 +206,7 @@ export function Viewer() {
             />
           ))}
           <ViewerButtons>
-            <button type="button" disabled={loading} onClick={handleSubmit}>
+            <button type="button" disabled={loading} onClick={handleSubmit} {...setTestTarget("viewer-form-submit")}>
               Enviar respostas
             </button>
           </ViewerButtons>
