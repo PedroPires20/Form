@@ -3,6 +3,10 @@
 const testTargetSelector = (targetId: String) => `[data-test-target=${targetId}]`
 
 describe("Testing if a form can be created", () => {
+    before(() => {
+        cy.fixture("formCreateData.json").then((data) => this.data = data)
+    })
+
     it("Home loads properly", () => {
         // Alice decide acessar o novo app Form
         cy.visit("/")
@@ -30,17 +34,15 @@ describe("Testing if a form can be created", () => {
         cy.getTestTarget("form-title").find("input").should("have.length", 1)
         /* Ela então digita o título desejado, apagando o anterior e pressiona o botão novamente para salvá-lo, 
         verificando que ele passa a ser o título do form */
-        const formTitle = "Sistemas operacionais e sociedade"
-        cy.get(`${testTargetSelector("form-title")} input`).type(`{selectall}{del}${formTitle}`)
+        cy.get(`${testTargetSelector("form-title")} input`).type(`{selectall}{del}${this.data.formTitle}`)
         cy.get(`${testTargetSelector("form-title")} ${testTargetSelector("action-button")}`).click()
-        cy.getTestTarget("form-title").should("contain.text", formTitle)
+        cy.getTestTarget("form-title").should("contain.text", this.data.formTitle)
         // Alicie, então repete os passos anteriores para mudar a descrição do form
         cy.get(`${testTargetSelector("form-description")} ${testTargetSelector("action-button")}`).click()
         cy.getTestTarget("form-description").find("textarea").should("have.length", 1)
-        const formDescription = "O objetivo deste formulário é auxiliar na compreensão do papel dos principais sistemas operacionais na vida das pessoas.\nRespondendo este formulário com informações sobre como você interage com sistemas operacionais no seu dia a dia auxiliará bastante em uma pesquisa que busca compreender mais sobre esse tema"
-        cy.get(`${testTargetSelector("form-description")} textarea`).type(`{selectall}{del}${formDescription}`)
+        cy.get(`${testTargetSelector("form-description")} textarea`).type(`{selectall}{del}${this.data.formDescription}`)
         cy.get(`${testTargetSelector("form-description")} ${testTargetSelector("action-button")}`).click()
-        cy.getTestTarget("form-description").should("contain.text", formDescription)
+        cy.getTestTarget("form-description").should("contain.text", this.data.formDescription)
     })
 
     it("Can add a text input", () => {
@@ -53,9 +55,8 @@ describe("Testing if a form can be created", () => {
         cy.getTestTarget("form-input-add").click()
         cy.getTestTarget("form-input-types").should("have.length", 1).and("contain.text", "Selecione um tipo de input")
         cy.getTestTarget("form-input-types").children().should("have.length", 5)
-        const options = ["Selecione um tipo de input","Texto", "Área de Texto", "Checkbox", "Radio"]
         cy.getTestTarget("form-input-types").children("option")
-            .each((option, index) => cy.wrap(option).should("contain", options[index]))
+            .each((option, index) => cy.wrap(option).should("contain", this.data.availableInputTypes[index]))
         // Ela, então, seleciona o tipo texto e verifica que apareceu um campo de edição na lista de inputs
         cy.getTestTarget("form-input-types").select(1)
         cy.getTestTarget("builder-fields").children().should("have.length", 1)
@@ -67,8 +68,7 @@ describe("Testing if a form can be created", () => {
         cy.getTestTarget("builder-field-actions").children(testTargetSelector("action-button")).first().click()
         cy.getTestTarget("BF-label-container").find("input").should("have.length", 1)
         // Ela, então, renomeia o campo, verificando que as alterações são aplicadas
-        const fieldName = "Entre sua idade"
-        cy.getTestTarget("BF-label-container").find("input").type(`{selectall}{del}${fieldName}`)
+        cy.getTestTarget("BF-label-container").find("input").type(`{selectall}{del}${this.data.fields[0].name}`)
         cy.getTestTarget("builder-field-actions").children(testTargetSelector("action-button")).first().click()
         /* 
             Alice, então, decide adicionar uma descrição ao campo de idade para informar sobre a 
@@ -78,15 +78,14 @@ describe("Testing if a form can be created", () => {
         cy.getTestTarget("BF-desc-container").children().should("have.length", 0)
         cy.getTestTarget("builder-field-actions").children(testTargetSelector("action-button")).eq(3).click()
         cy.getTestTarget("BF-desc-container").children().should("have.length", 1).and("contain.text", "Insira uma descrição")
-        cy.getTestTarget("BF-desc-container").parent().children().first().should("contain.text", fieldName)
+        cy.getTestTarget("BF-desc-container").parent().children().first().should("contain.text", this.data.fields[0].name)
         // Ela clica no botão para editar descrição e adiciona a descrição desejada
         cy.getTestTarget("BF-desc-container").find(testTargetSelector("action-button")).click()
         cy.getTestTarget("BF-desc-container").find("textarea").should("have.length", 1)
-        const fieldDescription = "Não se preocupe. Mantemos toda informação anonimizada, mas a idade é um dado importante para o nosso estudo"
-        cy.getTestTarget("BF-desc-container").find("textarea").type(`{selectall}{del}${fieldDescription}`)
+        cy.getTestTarget("BF-desc-container").find("textarea").type(`{selectall}{del}${this.data.fields[0].description}`)
         cy.getTestTarget("BF-desc-container").find(testTargetSelector("action-button")).click()
         // Ela verifica que a descrição aparece corretamente
-        cy.getTestTarget("BF-desc-container").children().should("contain.text", fieldDescription)
+        cy.getTestTarget("BF-desc-container").children().should("contain.text", this.data.fields[0].description)
     }) 
 
     it("Can add a radio input", () => {
@@ -102,22 +101,20 @@ describe("Testing if a form can be created", () => {
         // Ela, então, renomeia o novo campo
         cy.get('@current-field').find(testTargetSelector("action-button")).first().click()
         cy.get('@current-field').find(testTargetSelector("BF-label-container") + " input").should("have.length", 1)
-        const fieldName = "Selecione seu sistema operacional preferido"
-        cy.get('@current-field').find(testTargetSelector("BF-label-container") + " input").type(`{selectall}{del}${fieldName}`)
+        cy.get('@current-field').find(testTargetSelector("BF-label-container") + " input").type(`{selectall}{del}${this.data.fields[1].name}`)
         cy.get('@current-field').find(testTargetSelector("action-button")).first().click()
         // Agora ela cria quatro opções clicando 4 vezes em "+ opção"
         Cypress._.times(4, () => cy.get('@current-field').find(testTargetSelector("BF-options-add")).click())
         cy.get('@current-field').find(testTargetSelector("BF-options")).children().should("have.length", 5)
         // Ela, então, nomeia as 4 opções de forma apropriada
-        const optionNames = ["Windows", "Linux", "macOS", "Outro"]
         cy.get('@current-field').find(`${testTargetSelector("BF-options")} > ${testTargetSelector("BF-option-edit")}`)
         .each((option, index) => {
             cy.wrap(option).find(testTargetSelector("BF-option-actions")).children().first().click()
-            cy.wrap(option).find('input:not([type="radio"])').type(`{selectall}{del}${optionNames[index]}`)
+            cy.wrap(option).find('input:not([type="radio"])').type(`{selectall}{del}${this.data.fields[1].options[index]}`)
             cy.wrap(option).find(testTargetSelector("BF-option-actions")).children().first().click()
         })
         cy.get('@current-field').find(`${testTargetSelector("BF-options")} > :not(${testTargetSelector("BF-options-add")})`)
-            .each((option, index) => cy.wrap(option).should('contain.text', optionNames[index]))
+            .each((option, index) => cy.wrap(option).should('contain.text', this.data.fields[1].options[index]))
         // Ela, então, decide mudar a ordem das opções, movendo a quarta para o topo e a primeira para a penúltima posição
         cy.get('@current-field').find(`${testTargetSelector("BF-options")} > ${testTargetSelector("BF-option-edit")}`).eq(2)
             .find(testTargetSelector("BF-option-actions")).children().eq(1).click()
@@ -126,9 +123,8 @@ describe("Testing if a form can be created", () => {
         cy.get('@current-field').find(`${testTargetSelector("BF-options")} > ${testTargetSelector("BF-option-edit")}`).eq(1)
                 .find(testTargetSelector("BF-option-actions")).children().eq(2).click()
         // Ela verifica que as opções agora aparecem na ordem correta
-        const newOptionOrder = ["macOS", "Linux", "Windows", "Outro"]
         cy.get('@current-field').find(`${testTargetSelector("BF-options")} > :not(${testTargetSelector("BF-options-add")})`)
-            .each((option, index) => cy.wrap(option).should('contain.text', newOptionOrder[index]))
+            .each((option, index) => cy.wrap(option).should('contain.text', this.data.fields[1].optionsReordered[index]))
     })
 
     it("Can add a checkbox input", () => {
@@ -144,23 +140,21 @@ describe("Testing if a form can be created", () => {
         // Ela, então, renomeia o novo campo
         cy.get('@current-field').find(testTargetSelector("action-button")).first().click()
         cy.get('@current-field').find(testTargetSelector("BF-label-container") + " input").should("have.length", 1)
-        const fieldName = "Marque a seguir os sistemas operacionais com os quais você tem contado diariamente:"
-        cy.get('@current-field').find(testTargetSelector("BF-label-container") + " input").type(`{selectall}{del}${fieldName}`)
+        cy.get('@current-field').find(testTargetSelector("BF-label-container") + " input").type(`{selectall}{del}${this.data.fields[2].name}`)
         cy.get('@current-field').find(testTargetSelector("action-button")).first().click()
         // Agora ela cria sete opções clicando 7 vezes em "+ opção"
         Cypress._.times(7, () => cy.get('@current-field').find(testTargetSelector("BF-options-add")).click())
         cy.get('@current-field').find(testTargetSelector("BF-options")).children().should("have.length", 8)
         // Ela, então, nomeia as 7 opções de forma apropriada
-        const optionNames = ["Android", "iOS", "Windows", "Linux", "macOS", "Chrome OS", "Outro"]
         cy.get('@current-field').find(`${testTargetSelector("BF-options")} > ${testTargetSelector("BF-option-edit")}`)
         .each((option, index) => {
             cy.wrap(option).find(testTargetSelector("BF-option-actions")).children().first().click()
-            cy.wrap(option).find('input:not([type="checkbox"])').type(`{selectall}{del}${optionNames[index]}`)
+            cy.wrap(option).find('input:not([type="checkbox"])').type(`{selectall}{del}${this.data.fields[2].options[index]}`)
             cy.wrap(option).find(testTargetSelector("BF-option-actions")).children().first().click()
         })
         // Ela verifica que as opções aparecem com o nome correto
         cy.get('@current-field').find(`${testTargetSelector("BF-options")} > :not(${testTargetSelector("BF-options-add")})`)
-            .each((option, index) => cy.wrap(option).should('contain.text', optionNames[index]))
+            .each((option, index) => cy.wrap(option).should('contain.text', this.data.fields[2].options[index]))
     })
 
     it("Can add a textarea input", () => {
@@ -183,8 +177,7 @@ describe("Testing if a form can be created", () => {
             .children(testTargetSelector("action-button")).first().click()
         cy.get('@current-field').find(`${testTargetSelector("BF-label-container")} > input`).should("have.length", 1)
         // Ela, então, renomeia o campo, verificando que as alterações são aplicadas
-        const fieldName = "Comente brevemente sobre a sua experiência com os sistemas operacionais que usa:"
-        cy.get('@current-field').find(`${testTargetSelector("BF-label-container")} > input`).type(`{selectall}{del}${fieldName}`)
+        cy.get('@current-field').find(`${testTargetSelector("BF-label-container")} > input`).type(`{selectall}{del}${this.data.fields[3].name}`)
         cy.get('@current-field').find(`${testTargetSelector("BF-label-container")} > ${testTargetSelector('builder-field-actions')}`)
             .children(testTargetSelector("action-button")).first().click()
         /* 
@@ -195,15 +188,15 @@ describe("Testing if a form can be created", () => {
         cy.get('@current-field').find(testTargetSelector("BF-desc-container")).children().should("have.length", 0)
         cy.get('@current-field').find(testTargetSelector("builder-field-actions")).children(testTargetSelector("action-button")).eq(3).click()
         cy.get('@current-field').find(testTargetSelector("BF-desc-container")).children().should("have.length", 1).and("contain.text", "Insira uma descrição")
-        cy.get('@current-field').find(testTargetSelector("BF-desc-container")).parent().children().first().should("contain.text", fieldName)
+        cy.get('@current-field').find(testTargetSelector("BF-desc-container")).parent().children().first().should("contain.text", this.data.fields[3].name)
         // Ela clica no botão para editar descrição e adiciona a descrição desejada
         cy.get('@current-field').find(testTargetSelector("BF-desc-container")).find(testTargetSelector("action-button")).click()
         cy.get('@current-field').find(testTargetSelector("BF-desc-container")).find("textarea").should("have.length", 1)
-        const fieldDescription = "Responder com informações relevantes ajudará bastante nas conclusões de nosso estudo"
-        cy.get('@current-field').find(testTargetSelector("BF-desc-container")).find("textarea").type(`{selectall}{del}${fieldDescription}`)
+        
+        cy.get('@current-field').find(testTargetSelector("BF-desc-container")).find("textarea").type(`{selectall}{del}${this.data.fields[3].description}`)
         cy.get('@current-field').find(testTargetSelector("BF-desc-container")).find(testTargetSelector("action-button")).click()
         // Ela verifica que a descrição aparece corretamente
-        cy.get('@current-field').find(testTargetSelector("BF-desc-container")).children().should("contain.text", fieldDescription)
+        cy.get('@current-field').find(testTargetSelector("BF-desc-container")).children().should("contain.text", this.data.fields[3].description)
     })
 
     it("Can save a form", () => {
@@ -216,11 +209,9 @@ describe("Testing if a form can be created", () => {
         cy.getTestTarget("empty-form-message").should("have.length", 0)
         cy.getTestTarget("form-list").children().should("have.length", 1)
         // Ela verifica que o nome e a descrição do from criado estão corretos
-        const formTitle = "Sistemas operacionais e sociedade"
-        const formDescription = "O objetivo deste formulário é auxiliar na compreensão do papel dos principais sistemas operacionais na vida das pessoas.\nRespondendo este formulário com informações sobre como você interage com sistemas operacionais no seu dia a dia auxiliará bastante em uma pesquisa que busca compreender mais sobre esse tema"
         cy.getTestTarget("form-list").children().find(testTargetSelector("FL-item-info")).as('current-form-info')
-        cy.get('@current-form-info').first().should('contain.text', formTitle)
-        cy.get('@current-form-info').last().should('contain.text', formDescription)
+        cy.get('@current-form-info').first().should('contain.text', this.data.formTitle)
+        cy.get('@current-form-info').last().should('contain.text', this.data.formDescription)
         // Satisfeita, ela vai dormir
     })
 
