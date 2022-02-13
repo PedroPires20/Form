@@ -5,6 +5,7 @@ import {
   InputTypeContainer,
   InputTypeSelect,
 } from "./InputTypeStyle"
+import { setTestTarget } from "../../shared/functions/setTestTarget"
 
 type Props = {
   onChange: (inputType: FieldTypes) => void
@@ -26,17 +27,16 @@ export function InputType({ onChange }: Props) {
 
   return (
     <InputTypeContainer>
-      <InputTypeButton onClick={handleButtonClick}>
+      <InputTypeButton onClick={handleButtonClick} {...setTestTarget("form-input-add")}>
         {active ? "Fechar" : "Adicionar campo"}
       </InputTypeButton>
       {active && (
-        <InputTypeSelect onChange={handleSelectChange}>
+        <InputTypeSelect onChange={handleSelectChange}  {...setTestTarget("form-input-types")}>
           <option value="">Selecione um tipo de input</option>
           <option value="text">Texto</option>
           <option value="textarea">Área de Texto</option>
           <option value="checkbox">Checkbox</option>
           <option value="radio">Radio</option>
-          {/* <option value="select">Select</option> */}
         </InputTypeSelect>
       )}
     </InputTypeContainer>

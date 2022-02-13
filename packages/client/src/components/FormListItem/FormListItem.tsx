@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { formDeleted } from "../../redux/modules/forms/slice"
 import { deleteForm } from "../../redux/modules/forms/thunks"
+import { setTestTarget } from "../../shared/functions/setTestTarget"
 
 type Props = {
   form: Form
@@ -20,12 +21,12 @@ export function FormListItem({ form }: Props) {
   const history = useHistory()
   const dispatch = useDispatch()
   return (
-    <FormListItemContainer>
-      <FormInfoContainer>
+    <FormListItemContainer {...setTestTarget("FL-item-container")}>
+      <FormInfoContainer {...setTestTarget("FL-item-info")}>
         <FromTitle>{form.title}</FromTitle>
         <FormDescription>{form.description}</FormDescription>
       </FormInfoContainer>
-      <FromButtonsContainer>
+      <FromButtonsContainer {...setTestTarget("FLI-action-buttons")}>
         <ActionButton
           icon="pencil"
           tooltip="Editar form"

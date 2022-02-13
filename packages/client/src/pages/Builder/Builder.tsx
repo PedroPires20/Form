@@ -26,6 +26,7 @@ import {
   titleChanged,
 } from "../../redux/modules/forms/slice"
 import { useHistory, useParams } from "react-router-dom"
+import { setTestTarget } from "../../shared/functions/setTestTarget"
 
 type Props = {
   type: "create" | "edit"
@@ -81,8 +82,8 @@ export function Builder({ type }: Props) {
     <BuilderContainer
       className="builder-container"
     >
-      <BuilderForm>
-        <TitleContainer>
+      <BuilderForm {...setTestTarget("form:creation-form")}>
+        <TitleContainer {...setTestTarget("form-title")}>
           {editing.title ? (
             <TitleInput
               defaultValue={title ?? "Insira o título do form"}
@@ -99,7 +100,7 @@ export function Builder({ type }: Props) {
             }}
           />
         </TitleContainer>
-        <DescriptionContainer>
+        <DescriptionContainer {...setTestTarget("form-description")}>
           {editing.desc ? (
             <DescriptionInput
               defaultValue={description ?? "Insira a descrição do form"}
@@ -118,7 +119,7 @@ export function Builder({ type }: Props) {
             }}
           />
         </DescriptionContainer>
-        <BuilderFields>{fields.map(renderField)}</BuilderFields>
+        <BuilderFields {...setTestTarget("builder-fields")}>{fields.map(renderField)}</BuilderFields>
         <InputType onChange={handleFieldAdd} />
         <BuilderSubmit
           disabled={loading}
@@ -130,6 +131,7 @@ export function Builder({ type }: Props) {
               })
             )
           }}
+          {...setTestTarget("builder-save")}
         >
           Salvar
         </BuilderSubmit>

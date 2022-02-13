@@ -23,6 +23,7 @@ import {
   fieldOrderChanged,
 } from "../../redux/modules/fields/slice"
 import { optionDeleted } from "../../redux/modules/options/slice"
+import { setTestTarget } from "../../shared/functions/setTestTarget"
 
 type Props = {
   field: Field
@@ -48,8 +49,8 @@ export function FieldBuilder({ field }: Props) {
 
   return (
     <FieldBuilderContainer>
-      <Label>
-        <Actions>
+      <Label {...setTestTarget("BF-label-container")}>
+        <Actions {...setTestTarget("builder-field-actions")}>
           <ActionButton
             tooltip="Editar campo"
             icon="pencil"
@@ -96,10 +97,10 @@ export function FieldBuilder({ field }: Props) {
             }}
           />
         ) : (
-          <LabelDisplay>{field.label ?? "Insira o nome do campo"}</LabelDisplay>
+          <LabelDisplay {...setTestTarget("builder-field-label")}>{field.label ?? "Insira o nome do campo"}</LabelDisplay>
         )}
       </Label>
-      <DescriptionContainer>
+      <DescriptionContainer {...setTestTarget("BF-desc-container")}>
         {hasDescription && (
           <Description>
             {editing.description ? (

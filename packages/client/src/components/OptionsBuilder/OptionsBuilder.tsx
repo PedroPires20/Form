@@ -19,6 +19,7 @@ import {
   OptionEdit,
   OptionItem,
 } from "./OptionsBuilderStyles"
+import { setTestTarget } from "../../shared/functions/setTestTarget"
 
 type Props = {
   fieldType: FieldWithOption
@@ -43,7 +44,7 @@ function OptionEditor({ type, option }: EditorProps) {
           editing={editing}
           onEditChange={(name) => dispatch(optionChanged({ ...option, name }))}
         />
-        <Actions>
+        <Actions {...setTestTarget("BF-option-actions")}>
           <ActionButton
             icon="pencil"
             onClick={() => setEditing((prev) => !prev)}
@@ -75,7 +76,7 @@ function OptionEditor({ type, option }: EditorProps) {
           editing={editing}
           onEditChange={(name) => dispatch(optionChanged({ ...option, name }))}
         />
-        <Actions>
+        <Actions {...setTestTarget("BF-option-actions")}>
           <ActionButton
             icon="pencil"
             onClick={() => setEditing((prev) => !prev)}
@@ -103,7 +104,7 @@ function OptionEditor({ type, option }: EditorProps) {
     select: <OptionItem></OptionItem>,
   }
 
-  return <OptionEdit>{optionTypes[type]}</OptionEdit>
+  return <OptionEdit {...setTestTarget("BF-option-edit")}>{optionTypes[type]}</OptionEdit>
 }
 
 function OptionsBuilder({ fieldType, fieldId, options }: Props) {
@@ -121,8 +122,8 @@ function OptionsBuilder({ fieldType, fieldId, options }: Props) {
   }
 
   return (
-    <OptionBuilderContainer>
-      <AddOption onClick={handleAddOption}>+ opção</AddOption>
+    <OptionBuilderContainer {...setTestTarget("BF-options")}>
+      <AddOption onClick={handleAddOption} {...setTestTarget("BF-options-add")}>+ opção</AddOption>
       {options.map((option) => (
         <OptionEditor key={option.id} type={fieldType} option={option} />
       ))}

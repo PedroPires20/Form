@@ -1,6 +1,7 @@
 import { useState } from "react"
 import getSvg, { SVGS } from "../../functions/getSvg"
 import { ActionButtonContainer } from "./ActionButtonStyles"
+import { setTestTarget } from "../../functions/setTestTarget"
 
 type Props = {
   icon: SVGS
@@ -34,6 +35,7 @@ function ActionButton({
         onClick()
         setActive((prev) => !prev)
       }}
+      {...setTestTarget("action-button")}
     >
       {getSvg(icon)}
     </ActionButtonContainer>
