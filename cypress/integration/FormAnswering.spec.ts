@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
-const testTargetSelector = (targetId: String) => `[data-test-target=${targetId}]`
+const downloadsFolder = Cypress.config("downloadsFolder")
+const testTargetSelector = (targetId: string) => `[data-test-target=${targetId}]`
 
 describe("Test if a form can be answered by someone else", () => {
     before(() => {
@@ -73,7 +74,33 @@ describe("Test if a form can be answered by someone else", () => {
     })
 
     it("Can retrieve the answers from other users", () => {
-        
+        // Sabendo que Bob respondeu seu formulário, Alice acessa o sistema Form para verificar o que ele respondeu
+        cy.visit('/')
+        // Ela vê, novamente, a listagem de forms com o form criado por ela
+        cy.title().should("contain", "Form")
+        cy.get('h1').should("contain.text", "Forms")
+        cy.getTestTarget("form-list").children().should("have.length", 1)
+        cy.getTestTarget("form-list").find(testTargetSelector("FL-item-info")).children().first().should("contain.text", this.formName)
+        cy.getTestTarget("form-list").find(testTargetSelector("FL-item-info")).children().last().should("contain.text", this.formDesc)
+        // Em seguida, ela clica no botão para fazer download dos resultados como CSV
+        cy.getTestTarget("form-list").first().find(testTargetSelector("FLI-action-buttons")).children().eq(1).click()
+        // Ao clicar no botão, ela vê que é feito o download de um arquivo chamado "(Nome do Form)-resultados.csv"
+        cy.readFile(`${downloadsFolder}/${this.formName}-resultados.csv`).should("exist")
+        // Ela abre o arquivo baixado e verifica as informações fornecidas por Bob, que coincidem com o fornecido por ele ao formulário
+        cy.readFile(`${downloadsFolder}/${this.formName}-resultados.csv`).then((fileData) => {
+            expect(fileData).to.not.be.null
+            cy.task('parse-csv', fileData).then((resultData) => {
+                expect(resultData).to.have.length(2)
+                expect(resultData[0]).to.have.length(4)
+                expect(resultData[1]).to.have.length(4)
+                const expectedHeader = this.formFields.map((field) => field.label)
+                expect(resultData[0][0].trim()).to.eq(expectedHeader[0])
+                expect(resultData[0][1].trim()).to.eq(expectedHeader[1])
+                expect(resultData[0][2].trim()).to.eq(expectedHeader[2])
+                expect(resultData[0][3].trim()).to.eq(expectedHeader[3])
+                const expectedData = [this.fillData.age, this.fillData.os, String(this.fillData.usedOs), this.fillData.comments]
+            })
+        })
     })
 
     after(() => {
