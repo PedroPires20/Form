@@ -4,7 +4,7 @@ public
 dist
 dist-ssr
 *.local
-database.sqlite
+*.sqlite
 coverage
 cypress/downloads
 cypress/videos

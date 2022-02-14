@@ -13,16 +13,22 @@ const optionsController = require("./modules/options/controller")
 const resultsController = require("./modules/results/controller")
 const User = require("./modules/users/model")
 
+function log(v) {
+  if (["development", "production", "logtest"].includes(process.env.NODE_ENV)) {
+    console.log(v)
+  }
+}
+
 sequelize
   .authenticate()
   .then(async () => {
-    console.log("Database Connected")
+    log("Database Connected")
     associations.apply()
-    await sequelize.sync({ force: false }).then(() => console.log("Database Synced"))
+    await sequelize.sync({ force: false }).then(() => log("Database Synced"))
     const user = await User.findOne()
-    if(!user) {
+    if (!user) {
       await User.create({ username: "baseuser" })
-      console.log("Base user created!")
+      log("Base user created!")
     }
   })
   .catch((err) => console.log("Error connecting to database", err))
@@ -43,11 +49,11 @@ app.use("/options", optionsController)
 app.use("/results", resultsController)
 
 app.get("*", function (_, res) {
-  res.sendFile(path.resolve(__dirname , "../../dist/index.html"))
+  res.sendFile(path.resolve(__dirname, "../../dist/index.html"))
 })
 
 // catch 404 and forward to error handler
-app.use(function (_, _, next) {
+app.use(function (req, res, next) {
   next(createError(404))
 })
 
@@ -65,6 +71,10 @@ app.use(function (err, req, res, next) {
   res.send("Request error")
 })
 
-app.listen(PORT, () => {
-  console.log(`App listening on Local: http://localhost:${PORT}/`)
-})
+if (require.main === module) {
+  app.listen(PORT, () => {
+    log(`App listening on Local: http://localhost:${PORT}/`)
+  })
+}
+
+module.exports = app

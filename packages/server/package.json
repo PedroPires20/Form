@@ -7,13 +7,15 @@
     "pm2:start": "pm2 start ./app.js --no-daemon -- --port 3000",
     "pm2:dev": "pm2 start ./app.js --no-daemon --watch -- --port 3000",
     "start": "node ./app.js",
-    "dev": "node-dev ./app.js --respawn",
+    "dev": "NODE_ENV=development node-dev ./app.js --respawn",
     "build": "echo Backend build",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "node scripts/init_test.js && jest",
+    "test:watch": "node scripts/init_test.js && jest --watch"
   },
   "devDependencies": {
-    "node-dev": "^7.1.0"
+    "@types/supertest": "^2.0.11",
+    "node-dev": "^7.1.0",
+    "supertest": "^6.2.2"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",

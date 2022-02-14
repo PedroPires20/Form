@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { InputType } from "../../components/InputType/InputType"
 import {
   BuilderContainer,

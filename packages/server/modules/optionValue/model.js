@@ -1,8 +1,8 @@
 const { Model, Sequelize, DataTypes } = require("sequelize")
-const { sequelize, associations } = require("../../../../sequelize")
+const { sequelize, associations } = require("../../sequelize")
 
-class FieldValue extends Model {}
-FieldValue.init(
+class OptionValue extends Model {}
+OptionValue.init(
   {
     id: {
       type: Sequelize.UUID,
@@ -11,13 +11,14 @@ FieldValue.init(
       primaryKey: true,
     },
     fieldId: DataTypes.STRING,
+    optionId: DataTypes.STRING,
     value: DataTypes.STRING,
   },
-  { sequelize, modelName: "fieldValue" }
+  { sequelize, modelName: "optionValue" }
 )
 
 associations.assign(({ resultItem }) => {
-  FieldValue.ResultItem = FieldValue.belongsTo(resultItem)
+  OptionValue.ResultItem = OptionValue.belongsTo(resultItem)
 })
 
-module.exports = FieldValue
+module.exports = OptionValue
