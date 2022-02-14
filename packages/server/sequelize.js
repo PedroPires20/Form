@@ -1,5 +1,7 @@
 const { Sequelize } = require("sequelize")
-let sequelize;
+const fs = require("fs")
+const path = require("path")
+let sequelize
 
 if (process.env.NODE_ENV === "production") {
   console.log("-------- production -----------")
@@ -11,12 +13,19 @@ if (process.env.NODE_ENV === "production") {
       },
     },
   })
-} else {
+} else if (process.env.NODE_ENV === "development") {
   console.log("-------- development -----------")
   sequelize = new Sequelize({
     dialect: "sqlite",
-    storage: "./database.sqlite",
+    storage: "./development.sqlite",
     logging: false,
+  })
+} else {
+  console.log("-------- test -----------")
+  sequelize = new Sequelize({
+    dialect: "sqlite",
+    storage: "./test.sqlite",
+    logging: false
   })
 }
 
@@ -32,7 +41,15 @@ function mkAssociations() {
   }
 }
 
+function importModels() {
+  const modules = fs.readdirSync(path.resolve(__dirname, "modules"))
+  return modules.map((module) =>
+    require(path.resolve(__dirname, "modules", module, "model"))
+  )
+}
+
 module.exports = {
   sequelize,
+  importModels,
   associations: mkAssociations(),
 }

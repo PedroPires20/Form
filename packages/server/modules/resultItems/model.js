@@ -1,5 +1,5 @@
 const { Model, Sequelize } = require("sequelize")
-const { sequelize, associations } = require("../../../sequelize")
+const { sequelize, associations } = require("../../sequelize")
 
 class ResultItem extends Model {}
 ResultItem.init(
