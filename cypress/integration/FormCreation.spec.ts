@@ -181,9 +181,8 @@ describe("Testing if a form can be created", () => {
         cy.get('@current-field').find(`${testTargetSelector("BF-label-container")} > ${testTargetSelector('builder-field-actions')}`)
             .children(testTargetSelector("action-button")).first().click()
         /* 
-            Alice, então, decide adicionar uma descrição ao campo de idade para informar sobre a 
-            confidencialidade dos dados. Para isso ela clica no botão de adicionar descrição e nota que 
-            um campo de descrição é adicionado abaixo do nome com um valor padrão
+            Alice, então, decide adicionar uma descrição ao campo de comentários para informar sobre a importância 
+            de preencher esse campo
         */
         cy.get('@current-field').find(testTargetSelector("BF-desc-container")).children().should("have.length", 0)
         cy.get('@current-field').find(testTargetSelector("builder-field-actions")).children(testTargetSelector("action-button")).eq(3).click()
