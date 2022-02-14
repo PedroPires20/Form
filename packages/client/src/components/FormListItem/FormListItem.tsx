@@ -18,6 +18,24 @@ type Props = {
   form: Form
 }
 
+/* 
+  Auxiliary function that converts an array of objects to a CSV string. The objects
+  in the array must all have the same keys and the keys are used as the CSV header.
+  Each object values represents a row of the resulting CSV table. The object values
+  must be strings or convertible to strings
+*/
+function objArrayToCSV(objects: any[]): string {
+  const stringfy = (value: any) => value? String(value): ''
+  const escape = (str: string) => str.match(/(,|"|\n|\r)/g)? `"${str.replace(/"/g, '""')}"`: str
+  const keys = Object.keys(objects[0])
+  const header = keys.map(key => escape(key))
+  const csvLines = [
+    header.join(','),
+    ...objects.map(obj => keys.map(key => escape(stringfy(obj[key]))).join(','))
+  ]
+  return csvLines.join('\r\n');
+}
+
 export function FormListItem({ form }: Props) {
   const history = useHistory()
   const dispatch = useDispatch()
@@ -64,7 +82,7 @@ export function FormListItem({ form }: Props) {
         }
         results.push(responseEntry)
       }
-      console.log(results)
+      console.log(objArrayToCSV(results))
     }catch(e) {
       console.log("Erro ao obter os resultados do formulário:")
       console.log(e)
