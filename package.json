@@ -8,7 +8,8 @@
     "client": "yarn workspace @form/client",
     "build": "rm -rf dist && yarn client build && mv ./packages/client/dist ./dist",
     "test": "yarn lerna run test --stream",
-    "test:system": "cypress open",
+    "test:system": "cypress run",
+    "cy:open": "cypress open",
     "start": "yarn server start"
   },
   "workspaces": [

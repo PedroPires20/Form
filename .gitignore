@@ -7,3 +7,4 @@ dist-ssr
 database.sqlite
 coverage
 cypress/downloads
+cypress/videos
