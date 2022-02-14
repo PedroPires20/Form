@@ -1,0 +1,25 @@
+{
+    
+    "availableInputTypes": ["Selecione um tipo de input","Texto", "Área de Texto", "Checkbox", "Radio"] ,
+    "formTitle": "Sistemas operacionais e sociedade",
+    "formDescription": "O objetivo deste formulário é auxiliar na compreensão do papel dos principais sistemas operacionais na vida das pessoas.\nRespondendo este formulário com informações sobre como você interage com sistemas operacionais no seu dia a dia auxiliará bastante em uma pesquisa que busca compreender mais sobre esse tema",
+    "fields": [
+        {
+            "name": "Entre sua idade",
+            "description": "Não se preocupe. Mantemos toda informação anonimizada, mas a idade é um dado importante para o nosso estudo"
+        },
+        {
+            "name": "Selecione seu sistema operacional preferido",
+            "options": ["Windows", "Linux", "macOS", "Outro"],
+            "optionsReordered": ["macOS", "Linux", "Windows", "Outro"]
+        },
+        {
+            "name": "Marque a seguir os sistemas operacionais com os quais você tem contado diariamente:",
+            "options": ["Android", "iOS", "Windows", "Linux", "macOS", "Chrome OS", "Outro"]
+        },
+        {
+            "name": "Comente brevemente sobre a sua experiência com os sistemas operacionais que usa:",
+            "description": "Responder com informações relevantes ajudará bastante nas conclusões de nosso estudo"
+        }
+    ]
+}

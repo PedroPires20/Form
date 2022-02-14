@@ -6,3 +6,5 @@ dist-ssr
 *.local
 *.sqlite
 coverage
+cypress/downloads
+cypress/videos
