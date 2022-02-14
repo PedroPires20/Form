@@ -48,15 +48,17 @@ export function FormListItem({ form }: Props) {
       const fieldData = await axios.get(GET_FORM_FIELDS(form.id))
       if(fieldData.status < 200 || fieldData.status >= 300)
         throw `O servidor retornou um código de erro: ${fieldData.status}`
-      type ResultEntry = { [key: string]: string }
+      type ResultEntry = { [key: string]: string | string[] }
       let entryModel = {} as ResultEntry
-      type FieldNameMap = { [key: string]: string }
-      let fieldNames = {} as FieldNameMap
+      type FieldDataMap = { [key: string]: string }
+      let fieldNames = {} as FieldDataMap
+      let fieldTypes = {} as FieldDataMap
       type FieldOptionMap = { [key: string]: { [key: string]: string } }
       let fieldOptions = {} as FieldOptionMap
       for(let field of fieldData.data) {
         fieldNames[field.id] = field.label
-        entryModel[field.label] = ''
+        fieldTypes[field.id] = field.type
+        entryModel[field.label] = (field.type === "checkbox")? []: ''
         if(field.type === "checkbox" || field.type === "radio") {
           const optionData = await axios.get(GET_FIELD_OPTIONS(field.id))
           if(optionData.status < 200 || optionData.status >= 300)
@@ -73,7 +75,13 @@ export function FormListItem({ form }: Props) {
         let responseEntry = {...entryModel}
         for(let value of response.resultItems) {
           if(Array.isArray(value.optionValues) && value.optionValues.length > 0) {
-            for(let option of value.optionValues) {
+            if(value.optionValues.length > 1) {
+              let optionNames: string[] = []
+              for(let option of value.optionValues)
+                optionNames.push(fieldOptions[option.fieldId][option.optionId])
+              responseEntry[fieldNames[value.optionValues[0].fieldId]] = optionNames
+            }else {
+              const option = value.optionValues[0]
               responseEntry[fieldNames[option.fieldId]] = fieldOptions[option.fieldId][option.optionId]
             }
           }else {
