@@ -10,3 +10,4 @@ export const GET_FORM_FIELDS = (formId: string) => `${BASE_URL}/fields/form/${fo
 export const GET_FIELD_OPTIONS = (fieldId: string) => `${BASE_URL}/options/field/${fieldId}`
 
 export const SEND_ANWER = `${BASE_URL}/results`
+export const GET_FORM_RESULTS = (formId: string) => `${BASE_URL}/results/${formId}`
