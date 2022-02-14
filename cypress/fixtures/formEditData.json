@@ -1,0 +1,9 @@
+{
+    "editIndex": 2,
+    "newEditFieldName": "Marque a seguir os sistemas operacionais com os quais você tem contato diariamente:",
+    "newField": {
+        "name": "Se você escolheu outro, informe o nome do sistema que usa/mais gosta:",
+        "description": "Preencha esse campo apenas se escolheu \"Outro\" em alguma das opções acima..."
+    },
+    "deleteIndex": 0
+}
