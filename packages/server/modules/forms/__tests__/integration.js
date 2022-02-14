@@ -2,6 +2,8 @@ const { sequelize } = require("../../../sequelize")
 
 const request = require("supertest")
 const app = require("../../../app")
+const Form = require("../model")
+const createForm = require("../helpers/createForm")
 
 const validForm = {
   title: "Form title",
@@ -24,18 +26,6 @@ describe("[Forms] - Integration Tests", () => {
   })
 
   it(
-    "should fetch all first user forms",
-    (done) => {
-      request(app)
-        .get("/forms")
-        .set("Accept", "application/json")
-        .expect("Content-Type", /json/)
-        .expect(200, done)
-    },
-    timeout
-  )
-
-  it(
     "should create a form",
     (done) => {
       request(app)
@@ -44,6 +34,43 @@ describe("[Forms] - Integration Tests", () => {
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200, done)
+    },
+    timeout
+  )
+
+  it(
+    "should fetch user forms",
+    async () => {
+      const form1 = await request(app).post("/forms").send(validForm)
+      const form2 = await request(app).post("/forms").send(validForm)
+      const form3 = await request(app).post("/forms").send(validForm)
+      const res = await request(app)
+        .get("/forms")
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(200)
+
+      expect(Array.isArray(res.body)).toBeTruthy()
+
+      expect([form1, form2, form3].reduce((prev, curr) => {
+        return prev && res.body.map(f => f.id).includes(curr.body.id)
+      }, true)).toBeTruthy()
+    },
+    timeout
+  )
+
+  it(
+    "should delete a form",
+    async () => {
+      const form = await Form.create(createForm(validForm))
+
+      await request(app)
+        .delete("/forms/" + form.id)
+        .set("Accept", "application/json")
+        .expect(204)
+
+      const deleted = await Form.findByPk(form.id)
+      expect(deleted).toBeNull()
     },
     timeout
   )
