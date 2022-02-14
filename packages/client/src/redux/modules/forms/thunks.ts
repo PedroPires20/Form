@@ -7,6 +7,7 @@ import {
   UPDATE_FORM,
 } from "../../../shared/urls"
 import { AppThunk } from "../../store"
+import {clearNullFields} from "../fields/slice"
 import { fetchFormFields } from "../fields/thunks"
 import {
   currentFormChanged,
@@ -61,6 +62,7 @@ export function saveForm(
         .then((res) => {
           callback()
           dispatch(formAdded(res.data))
+          dispatch(clearNullFields())
         })
         .catch((err) => {
           dispatch(formRequestError())
