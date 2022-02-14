@@ -48,12 +48,21 @@ export const fieldsSlice = createSlice({
         }
       })
     },
+    clearNullFields: (state) => {
+      const ids = Object.keys(state.byId)
+      ids
+        .filter((id) => state.byId[id].formId === null)
+        .forEach((id) => {
+          delete state.byId[id]
+        })
+    },
   },
 })
 
 export const fieldsReducer = fieldsSlice.reducer
 
 export const {
+  clearNullFields,
   fieldAdded,
   fieldChanged,
   fieldOrderChanged,
