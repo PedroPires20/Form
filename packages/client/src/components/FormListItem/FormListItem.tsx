@@ -1,3 +1,4 @@
+import { useRef } from "react"
 import {
   FormListItemContainer,
   FormInfoContainer,
@@ -39,6 +40,7 @@ function objArrayToCSV(objects: any[]): string {
 export function FormListItem({ form }: Props) {
   const history = useHistory()
   const dispatch = useDispatch()
+  const downloadLink = useRef<HTMLAnchorElement>(null)
 
   async function handleResultsDownload() {
     try {
@@ -90,7 +92,14 @@ export function FormListItem({ form }: Props) {
         }
         results.push(responseEntry)
       }
-      console.log(objArrayToCSV(results))
+      const csvData = objArrayToCSV(results)
+      const dataBlob = new Blob(['\ufeff', csvData])
+      const downloadUrl = URL.createObjectURL(dataBlob)
+      if(!downloadLink.current)
+        throw "Erro: elemento de download não encontrado"
+      downloadLink.current.href = downloadUrl
+      downloadLink.current.download = `${form.title}-resultados.csv`
+      downloadLink.current.click()
     }catch(e) {
       console.log("Erro ao obter os resultados do formulário:")
       console.log(e)
@@ -134,6 +143,7 @@ export function FormListItem({ form }: Props) {
           }}
         />
       </FromButtonsContainer>
+      <a ref={downloadLink} style={{display: "none"}} href=""/>
     </FormListItemContainer>
   )
 }
